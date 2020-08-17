@@ -1,0 +1,433 @@
+<template>
+    <view class="index">
+		<!-- 站位导航 -->
+		<!-- #ifdef -->
+		<view class="status_bar">  
+		     <view class="top_view"></view>  
+		 </view>  
+		 <!-- #endif --> 
+		       <view>  
+		  </view> 
+		<view class="content">
+			<!-- 头部 -->
+			<view class="header">
+					<view class="tab-text">
+						<text class="text">首页</text>
+						<view class="text-border"></view>
+					</view>
+				<view class="btn">
+					+添加信用卡
+				</view>
+			</view>
+			<!-- 轮播图 -->
+				<!-- <swiper  class="swiper" :indicator-dots="true" :circular="true" :autoplay="true" :interval="3000" :duration="1000">
+					<swiper-item class="swiper-item">
+						<navigator url="#" class="swiper-banner">
+								<image class="swiper-img" src="../../static/image/lb-01.png" mode=""></image>
+						</navigator>
+					</swiper-item><swiper-item class="swiper-item">
+						<navigator url="#" class="swiper-banner">
+								<image class="swiper-img" src="../../static/image/lb-01.png" mode=""></image>
+						</navigator>
+					</swiper-item><swiper-item class="swiper-item">
+						<navigator url="#" class="swiper-banner">
+								<image class="swiper-img" src="../../static/image/lb-01.png" mode=""></image>
+						</navigator>
+					</swiper-item>
+				</swiper> -->
+				<uni-swiper-dot
+					:info="info"
+					:indicator-dots="true"
+					:dots-styles="dotsStyles"
+					:current="current"
+					field="content"
+					:mode="mode"
+					@change="change"
+					>
+					<swiper  class="swiper" :circular="true" :autoplay="true" :interval="3000" :duration="1000" @change="change">
+						<swiper-item class="swiper-item">
+							<navigator url="#" class="swiper-banner">
+									<image class="swiper-img" src="../../static/image/lb-01.png" mode=""></image>
+							</navigator>
+						</swiper-item><swiper-item class="swiper-item">
+							<navigator url="#" class="swiper-banner">
+									<image class="swiper-img" src="../../static/image/lb-01.png" mode=""></image>
+							</navigator>
+						</swiper-item><swiper-item class="swiper-item">
+							<navigator url="#" class="swiper-banner">
+									<image class="swiper-img" src="../../static/image/lb-01.png" mode=""></image>
+							</navigator>
+						</swiper-item>
+					</swiper>
+				</uni-swiper-dot>
+		</view>
+		<!-- nav导航区 -->
+		<view class="navs">
+			<view class="nav" @click="shoukuan">
+				<image src="../../static/image/shokuan.png" mode=""></image>
+				<text>商户收款</text>
+			</view>
+			<view  class="nav">
+				<image src="../../static/image/daikuan.png" mode=""></image>
+				<text>我要贷款</text>
+			</view>
+			<view  class="nav">
+				<image src="../../static/image/huankuan.png" mode=""></image>
+				<text>智能还款</text>
+			</view>
+			<view  class="nav">
+				<image  src="../../static/image/shenqing.png" mode=""></image>
+				<text>信用卡申请</text>
+			</view>
+		</view>
+		<!-- 账户管理 -->
+		<view class="account">
+			<!-- 账户管理头部 -->
+			<view class="head">
+				<text class="account-text1">账户管理</text>
+				<text class="account-text2">{{card_list.length}}页</text>
+			</view>
+			<!-- 账户管理内容 -->
+			<view class="account-content" v-for="(item,index) in card_list" :key="index">
+				<view class="account-card">
+					<text class="account-num">{{item.bannk_name}}  尾号 <text class="cardnum">{{item.accountNumber | cardFilter}}</text></text>
+					<text class="account-date">还款日<text class="refund-date">{{item.repayment}}</text>号 </text>
+				</view>
+				<view class="account-money ">
+					<text class="account-num">总额度<text class="sum-money">￥{{item.quota}}</text></text>
+					<text class="account-date">账单日<text class="bill">{{item.bill_day}}</text></text>
+					<text class="account-rate">费率<text class="rate">{{fee}}%</text></text>
+				</view>
+			</view>
+		</view>
+    </view>
+</template>
+<script>
+	import { uniCalendar,uniSwiperDot  } from "@dcloudio/uni-ui"
+export default {
+   data() {
+      return {
+		info: [
+			"123","45","66"
+			],
+			 current: 0,
+			 mode: 'round',
+			 dotsStyles: {
+				 backgroundColor:'rgba(255,255,255,.5)',
+				 selectedBackgroundColor: '#fff',
+				 border: '0',
+				 selectedBorder: '1px rgba(255, 255, 255, 1) solid'
+				 
+			 },
+			 userToken: '', // 用户token
+			 card_list: [], // 信用卡列表
+			 fee: '',
+			 level_name: '',
+			 fee_2: '',
+			 R16_fee: ''
+			 
+		}
+   },
+   filters:{
+	 cardFilter(value){
+		 
+	   return value.substring(value.length - 4)
+		}
+     },
+   components: {
+	   uniSwiperDot
+   },
+   methods:{
+	change(e) {
+			   this.current = e.detail.current;
+		   },
+   // 获取信用卡列表
+   async getCardlist() {
+	const { data } = await this.Request({
+		methods: 'GET',
+		url: '/Creditcard/card_list',
+		data: {
+			cre_id: this.userToken.cre_id,
+			token: this.userToken.token
+		}
+	})
+	if (data.status === 2) {
+		this.card_list = data.data
+	} else if (data.status === 4) {
+		this.baseLogout()
+	}
+	console.log(data);
+   }, // 返回会员等级
+   async DoMember () {
+	   const { data } = await this.Request({
+		   methods: 'GET',
+		   url: '/DoMember/grade',
+		   data: {
+			  cre_id: this.userToken.cre_id,
+			  token: this.userToken.token
+		   }
+	   })
+	   if (data.status === 1) {
+			this.level_name = data.data.level_name
+			this.fee = (data.data.fee * 10000) / 100
+			this.fee2 = (data.data.fee_2 * 10000) / 100
+			this.R16_fee=(data.data.R16_fee * 10000) / 100
+			// console.log(this.R16_fee)
+			// console.log(this.fee)
+			// console.log(this.fee_2)
+			// console.log(this.level_name)
+		} else if (data.status == 4) {
+			this.baseLogout()
+		} else {
+			uni.showToast({
+				title: data.msg,
+				icon: 'none',
+			})
+	   						}
+	   console.log(data);
+   },
+   // 商户收款
+   async shoukuan () {
+	   const { data } = await this.Request({
+		   methods: 'GET',
+		   url: '/Userforeign/user_query',
+		   data: {
+			   cre_id: this.userToken.cre_id,
+			   token: this.userToken.token
+		   }
+	   })
+	   if (data.status === 1) {
+		   uni.navigateTo({
+		   	url: '../Otherpages/gathering'
+		   })
+	   } else if (data.status === 4) {
+		   this.baseLogout()
+	   // } else {
+		  // uni.showModal({
+		  //     title: '提示',
+		  //     content: '你还没有进行实名认证，是否实名认证？',
+		  //     success: function (res) {
+		  //         if (res.confirm) {
+		  //             uni.switchTab({
+		  //             	url: ''
+		  //             })
+		  //         } else if (res.cancel) {
+		  //             console.log('用户点击取消');
+		  //         }
+		  //     }
+		  // });
+	   // }
+	   console.log(data);
+    }
+   }
+},
+onLoad() {
+	// 获取本地token
+	uni.getStorage({
+		key: 'usertoken',
+		success: res => {
+			this.userToken = res.data
+			// 获取信用卡列表
+			this.getCardlist()
+			// 会员等级获取
+			this.DoMember()
+		}
+	})
+},
+ mounted() {
+   }
+}
+</script>
+<style lang='scss' scoped>
+.status_bar {  
+    height: var(--status-bar-height);  
+    width: 100%;  
+    background-color: #F8F8F8;  
+}  
+.top_view {  
+    height: var(--status-bar-height);  
+    width: 100%;  
+    position: fixed;  
+    background-color: #F8F8F8;  
+    top: 0;  
+    z-index: 999;  
+} 
+.index {
+	box-sizing: border-box;
+	background-color: #f4f4f6;
+	height: 100%;
+	.content{
+		background:  url(../../static/image/swiper-bg.png) no-repeat;
+		background-size: 150%;
+		background-position: -188rpx -460rpx;
+	}
+	/* 头部 */
+	.header{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 0 30rpx;
+		/* margin-bottom: 15px; */
+		 border-bottom:1rpx solid rgba(255,0,0,.1);
+		/* background: linear-gradient(left, #209CFF,#005BEA); */
+		/* background: url(../../static/image/swiper-bg.png) no-repeat;
+		background-size: cover;
+		background-position-y: 20px; */
+		  .tab-text{
+			  display: flex;
+			  flex-direction: column;
+			  justify-content: space-between;
+			.text{
+				font-size: 40rpx;
+				padding: 20rpx;
+				color: #fff;
+				
+			}
+			.text-border{
+				width: 40rpx;
+				height: 10rpx;
+				background-color: #fff;
+				margin-left: 41rpx;
+				border-radius: 24rpx;
+			}
+		}
+		
+		.btn{
+			height: 40rpx;
+			line-height: 40rpx;
+			padding: 10rpx 20rpx;
+			border-radius: 40rpx;
+			background-color: #fff;
+			color: #4481EB;
+			font-size: 24rpx;
+		}
+	}
+}
+/* 伦播图 */
+
+	.swiper{
+		width: 690rpx;
+		height: 254rpx;
+		box-sizing: border-box;
+		margin: 0 auto;
+		margin-top: 50rpx;
+		border-radius: 20rpx;
+		overflow: hidden;
+			/* 兼容IOS，否则在swiper组件内的布局都不受border-radius和overflow的约束 */
+		transform: translateY(0);
+		.swiper-item{
+			width: 100%;
+			height: 254rpx;
+			overflow: hidden;
+			transform: translateY(0);
+			/* margin: 40rpx  20rpx;
+			margin-right: 20rpx; */
+			border-radius: 20rpx;
+			.swiper-img {
+				width: 100%;
+				height: 254rpx;
+				border-radius: 20rpx;
+			}
+		}
+		
+	}
+/* 导航 */
+   .navs {
+     display: flex;
+     justify-content: space-between;
+     padding: 30rpx 44rpx;
+	  .nav{
+		  display: flex;
+		  flex-direction: column;
+		  justify-content: center;
+		  align-items: center;
+	  }
+     image {
+       width: 120rpx;
+       height: 120rpx;
+     }
+	text{
+		font-size: 24rpx;
+		color: #464646;
+	 }
+   }
+/* 账户管理 */
+.account {
+	
+		.head{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 0 55rpx;
+			.account-text1{
+				font-size: 38rpx;
+				font-weight: bold;
+			}
+			.account-text2{
+				font-size: 28rpx;
+				color: #747474;
+			}
+		}
+		.account-content{
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			box-sizing: border-box;
+			 width: 716rpx;
+			 height: 200rpx;
+			 background-color: #fff;
+			 border-radius: 20rpx;
+			 margin: 20rpx auto;
+			 padding: 30rpx;
+			 .account-card{
+				 display: flex;
+				 justify-content: space-between;
+				 align-items: center;
+				  font-size: 32rpx;
+				 .account-num{
+					 .cardnum{
+						 color: #2475f8;
+						 font-size: 32rpx;
+						 font-weight: bold;
+					 }
+				 }
+				 .account-date{
+					 .refund-date{
+						  color:#2475f8;;
+						  font-size: 32rpx;
+						   font-weight: bold;
+					 }
+				 }
+			 }
+			 .account-money {
+				 display: flex;
+				 justify-content: space-between;
+				 align-items: center;
+				 font-size: 24rpx;
+				 color: #747474;
+				 .account-num{
+					 .sum-money{
+						  margin-left: 10rpx;
+						font-size: 30rpx;
+						color: #16A085;
+					 }
+				 }
+				 .account-date{
+					 .bill{
+						  margin-left: 10rpx;
+						font-size: 30rpx;
+						color: #16A085;
+					 }
+				 }
+				 .account-rate{
+					 .rate{
+						 margin-left: 10rpx;
+						 font-size: 30rpx;
+						 color: #FDA085;
+					 }
+				 }
+			 }
+		}
+	}
+ 
+</style>

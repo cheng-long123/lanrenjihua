@@ -64,8 +64,9 @@ methods:{
 				data: res.data.data
 			})
 			setTimeout( ()=> {
+				
 				uni.switchTab({
-					url: '../index/index'
+				    url: '/pages/index/index',
 				})
 			},1000)
 			

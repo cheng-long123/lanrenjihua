@@ -219,6 +219,9 @@ export default {
 									title: '退出成功',
 									icon: 'none'
 								})
+								// uni.reLaunch({
+								// 	url: '../login/index'
+								// })
 							}
 						})
 					} else if (res.cancel) {     

@@ -151,8 +151,9 @@ export default {
 			token: this.userToken.token
 		}
 	})
-	if (data.status === 2) {
+	if (data.status === 2 && this.userToken !== '') {
 		this.card_list = data.data
+		
 	} else if (data.status === 4) {
 		this.baseLogout()
 	}
@@ -184,7 +185,7 @@ export default {
 				icon: 'none',
 			})
 	   						}
-	   console.log(data);
+	   // console.log(data);
    },
    // 商户收款
    async shoukuan () {
@@ -196,7 +197,7 @@ export default {
 			   token: this.userToken.token
 		   }
 	   })
-	   if (data.status === 1) {
+	   if (data.data.is_real === 1) {
 		   uni.navigateTo({
 		   	url: '../Otherpages/gathering'
 		   })
@@ -233,6 +234,32 @@ onLoad() {
 			this.DoMember()
 		}
 	})
+},
+onShow() {
+	if (!uni.getStorageSync('usertoken')) {
+		this.card_list = []
+	} else {
+		uni.getStorage({
+			key: 'usertoken',
+			success: res => {
+				this.userToken = res.data
+				// 获取信用卡列表
+				this.getCardlist()
+				// 会员等级获取
+				this.DoMember()
+			}
+		})
+	}
+},
+onHide() {
+	if (!uni.getStorageSync('usertoken')) {
+		this.card_list = []
+	}
+},
+onPullDownRefresh () {
+	setTimeout( () => {
+		uni.stopPullDownRefresh()
+	},5000)
 },
  mounted() {
    }
@@ -379,6 +406,7 @@ onLoad() {
 			 border-radius: 20rpx;
 			 margin: 20rpx auto;
 			 padding: 30rpx;
+			 box-shadow: 0rpx 0rpx 8rpx #9D9D9D;
 			 .account-card{
 				 display: flex;
 				 justify-content: space-between;

@@ -5,29 +5,36 @@
 		</view>
 		<view class="form">
 			<view class="user_input">
+				 <text class="user_text" style="font-size: 32rpx;">姓名</text>
 				<input type="text" v-model="form.bank_name" placeholder="姓名"/>
 			</view>
 			<view class="user_input">
+				 <text class="user_text">身份证</text>
 				<input type="text" v-model="form.identity" placeholder="身份证号"/>
 			</view>
-			<view class="user_card" >
+			<view class="user_card">
+				 <text class="user_text" style="font-size: 28rpx; margin-bottom: 15rpx;">支付卡号</text>
 				<picker class="picker" :range="choosezfkh"  :value="index"  @change="getCradList" @click="getXingList">
 					<view>{{choosezfkh[index]}}</view>
 				</picker>
-				<view class="add_card">
+				<!-- <view class="add_card">
 					+添加信用卡
-				</view>
+				</view> -->
 			</view>
 			<view class="user_input">
+				 <text class="user_text">预留手机号</text>
 				<input type="text" v-model="form.bank_phone" placeholder="预留手机号"/>
 			</view>
 			<view class="user_input">
+				 <text class="user_text">收款金额</text>
 				<input type="text" v-model="form.money" placeholder="收款金额"/>
 			</view>
 			<view class="user_input">
+				 <text class="user_text">结算卡号</text>
 				<input type="text" v-model="form.bank_card" placeholder="结算卡号"/>
 			</view>
 			<view class="user_input">
+				 <text class="user_text">落款城市</text>
 				<input type="text" v-model="form.address" placeholder="落款城市"/>
 			</view>
 		</view>
@@ -181,36 +188,49 @@
 	box-sizing: border-box;
 	padding: 50rpx;
 	.user_info {
-		margin: 40rpx 0;
-		font-size: 32rpx;
+		margin: 30rpx 0;
+		font-size: 40rpx;
+		font-weight: 600;
 	}
 	.user_input {
-		padding: 37rpx 0;
-		border-bottom: 1rpx solid rgba(22,160,133,.5);
+		padding: 40rpx 0 0 0;
+		border-bottom: 1rpx solid rgba(22,160,133,.3);
+		display: flex;
+		flex-direction: column;
+		justify-content: space;
+		align-items: space;
+		.user_text{
+			font-size: 28rpx;
+			margin-bottom: 15rpx;
+		}
 		input {
-			font-size: 20rpx;
+			font-size: 28rpx;
+			color: rgba(0,0,0,.7);
 		}
 	}
 	.user_card {
 		display: flex;
+		flex-direction: column;
+		justify-content: space;
+		align-items: space;
 		justify-content: space-between;
-		
 		height: 30rpx;
-		padding: 50rpx 0;
-		
+		padding: 60rpx 0;
+		border-bottom: 1rpx solid rgba(22,160,133,.3);
 		.picker {
-			height: 50rpx;
-			width: 395rpx;
-			border-bottom: 1rpx solid rgba(22,160,133,.5);
-			font-size: 20rpx;
+			/* height: 90rpx; */
+			width: 100%;
+			color: rgba(0,0,0,.7);
+			font-size: 28rpx;
+			
 		}
 		.add_card {
-			width: 148rpx;
-			height: 57rpx;
+			width: 160rpx;
+			height: 60rpx;
 			line-height: 57rpx;
 			text-align: center;
 			border-radius: 40rpx;
-			background-color: #209CFF;
+			background:linear-gradient(left,#15BE73, #08BD9E, #16A085);
 			font-size: 20rpx;
 			color: #fff;
 		}

@@ -42,7 +42,7 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				width: 750rpx;
+				width: 100%;
 				height: 141rpx;
 				.left{
 					margin-left: 40rpx;

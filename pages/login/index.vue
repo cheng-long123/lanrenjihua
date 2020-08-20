@@ -71,7 +71,7 @@ methods:{
 			},1000)
 			
 		} else if (res.data.status === 2) {
-			
+			uni.hideLoading()
 			uni.showToast({
 				title: '用户名或密码错误',
 				icon: 'none'
@@ -150,8 +150,8 @@ methods:{
 			 align-items: center;
 			 margin-top: 30rpx;
 			 .image{
-				 width: 48rpx;
-				 height: 39rpx;
+				 width: 50rpx;
+				 height: 50rpx;
 				 &:nth-child(2) {
 					 margin: 0 115rpx;
 				 }

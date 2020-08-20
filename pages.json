@@ -82,6 +82,33 @@
 				}
 			}
         }
+        ,{
+            "path" : "pages/Otherpages/addCreditCard",
+            "style" : {
+				"navigationBarTitleText": "新增信用卡",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "新增信用卡",
+						"titleSize": "16px",
+						"titleColor":"#16A085"
+					}
+				}
+			}
+        }
+        ,{
+            "path" : "pages/setting/index",
+            "style" : {
+				"navigationBarTitleText": "设置",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "设置",
+						"titleSize": "16px",
+						"titleColor":"#16A085"
+					}
+				}
+				
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

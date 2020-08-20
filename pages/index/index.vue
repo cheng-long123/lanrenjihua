@@ -15,7 +15,7 @@
 						<text class="text">首页</text>
 						<view class="text-border"></view>
 					</view>
-				<view class="btn">
+				<view class="btn" @click="tocCreditcard">
 					+添加信用卡
 				</view>
 			</view>
@@ -45,17 +45,24 @@
 					@change="change"
 					>
 					<swiper  class="swiper" :circular="true" :autoplay="true" :interval="3000" :duration="1000" @change="change">
+						<!-- <swiper-item class="swiper-item" v-for="(item,index) in info" :key="index">
+							<navigator url="#" class="swiper-banner">
+									<image class="swiper-img" :src="'http://dh.weifoupay.com' + item.pic" mode=""></image>
+							</navigator>
+						</swiper-item> -->
 						<swiper-item class="swiper-item">
 							<navigator url="#" class="swiper-banner">
-									<image class="swiper-img" src="../../static/image/lb-01.png" mode=""></image>
+									<image class="swiper-img" src="../../static/image/banner/banner3.png" mode=""></image>
 							</navigator>
-						</swiper-item><swiper-item class="swiper-item">
+						</swiper-item>
+						<swiper-item class="swiper-item">
 							<navigator url="#" class="swiper-banner">
-									<image class="swiper-img" src="../../static/image/lb-01.png" mode=""></image>
+									<image class="swiper-img" src="../../static/image/banner/banner1.png" mode=""></image>
 							</navigator>
-						</swiper-item><swiper-item class="swiper-item">
+						</swiper-item>
+						<swiper-item class="swiper-item">
 							<navigator url="#" class="swiper-banner">
-									<image class="swiper-img" src="../../static/image/lb-01.png" mode=""></image>
+									<image class="swiper-img" src="../../static/image/banner/banner2.png" mode=""></image>
 							</navigator>
 						</swiper-item>
 					</swiper>
@@ -88,28 +95,50 @@
 				<text class="account-text2">{{card_list.length}}页</text>
 			</view>
 			<!-- 账户管理内容 -->
-			<view class="account-content" v-for="(item,index) in card_list" :key="index">
-				<view class="account-card">
-					<text class="account-num">{{item.bannk_name}}  尾号 <text class="cardnum">{{item.accountNumber | cardFilter}}</text></text>
-					<text class="account-date">还款日<text class="refund-date">{{item.repayment}}</text>号 </text>
-				</view>
-				<view class="account-money ">
-					<text class="account-num">总额度<text class="sum-money">￥{{item.quota}}</text></text>
-					<text class="account-date">账单日<text class="bill">{{item.bill_day}}</text></text>
-					<text class="account-rate">费率<text class="rate">{{fee}}%</text></text>
-				</view>
+			<view class="card_box" v-if="card_list.length !== 0"  >
+				<view  class="account-content" v-for="(item,index) in card_list" :key="index" @click="popup(item,index)">
+					<view class="account-card">
+						<text class="account-num">{{item.bannk_name}}  尾号 <text class="cardnum">{{item.accountNumber | cardFilter}}</text></text>
+						<text class="account-date">还款日<text class="refund-date">{{item.repayment}}</text>号 </text>
+					</view>
+					<view class="account-money ">
+						<text class="account-num">总额度<text class="sum-money">￥{{item.quota}}</text></text>
+						<text class="account-date">账单日<text class="bill">{{item.bill_day}}</text></text>
+						<text class="account-rate">费率<text class="rate">{{fee}}%</text></text>
+				   </view>
+				   
+			    </view>	
+				<wyb-popup ref="popup" type="center" :duration=300 height="580" width="700" radius="6" :maskAlpha=0.1 :showCloseIcon="false" bgColor='rgba(255,255,255,0)'>
+				    <view class="popup-content">
+				     
+					  <view class="popup_box">
+				      	
+				      </view>
+					   <view class="popup_box">
+				      	
+				      </view> 
+					  <view class="popup_box">
+				      	
+				      </view> 
+					  <view class="popup_box">
+				      	
+				      </view>
+				    </view>
+				</wyb-popup>
+			</view>
+			<view v-else class="tishi">
+				{{userToken !== '' && card_list.length !== 0  ? '您还没有绑卡，快去绑卡吧！！' : '您还没有登录，快去登录！！'}}
 			</view>
 		</view>
     </view>
 </template>
 <script>
 	import { uniCalendar,uniSwiperDot  } from "@dcloudio/uni-ui"
+	import wybPopup from '@/components/wyb-popup/wyb-popup.vue'
 export default {
    data() {
       return {
-		info: [
-			"123","45","66"
-			],
+		info: [],
 			 current: 0,
 			 mode: 'round',
 			 dotsStyles: {
@@ -124,7 +153,10 @@ export default {
 			 fee: '',
 			 level_name: '',
 			 fee_2: '',
-			 R16_fee: ''
+			 R16_fee: '',
+			 isShowBox: false,
+			 isindex: null,
+			 card_msg: {}
 			 
 		}
    },
@@ -135,12 +167,22 @@ export default {
 		}
      },
    components: {
-	   uniSwiperDot
+	   uniSwiperDot,
+	   wybPopup
    },
    methods:{
 	change(e) {
 			   this.current = e.detail.current;
 		   },
+		   // 获取banner
+	   async getBanner () {
+		   const { data } = await this.Request({
+			   methods: 'GET',
+			   url: '/Info/pic'
+		   })
+		   this.info = data.data
+		   console.log(this.info);
+	   },
    // 获取信用卡列表
    async getCardlist() {
 	const { data } = await this.Request({
@@ -220,6 +262,23 @@ export default {
 	   // }
 	   console.log(data);
     }
+   },
+   tocCreditcard () {
+	   uni.navigateTo({
+	   	url: '../Otherpages/addCreditCard'
+	   })
+   },
+   popup (item, index) {
+	   this.card_msg = item
+	   this.$refs.popup.show() 
+	   // if (this.isindex !== index) {
+		  //  this.isShowBox = true
+	   // } else {
+		  //  this.isShowBox = !this.isShowBox
+	   // }
+	   // this.isindex = index
+	   // console.log(index);
+	   console.log(this.card_msg);
    }
 },
 onLoad() {
@@ -234,6 +293,7 @@ onLoad() {
 			this.DoMember()
 		}
 	})
+	this.getBanner()
 },
 onShow() {
 	if (!uni.getStorageSync('usertoken')) {
@@ -395,6 +455,14 @@ onPullDownRefresh () {
 				color: #747474;
 			}
 		}
+		.tishi {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-top: 150rpx;
+			font-size: 32rpx;
+			color: rgba(0,0,0,.3);
+		}
 		.account-content{
 			display: flex;
 			flex-direction: column;
@@ -406,7 +474,7 @@ onPullDownRefresh () {
 			 border-radius: 20rpx;
 			 margin: 20rpx auto;
 			 padding: 30rpx;
-			 box-shadow: 0rpx 0rpx 8rpx #9D9D9D;
+			 box-shadow: 0rpx 3rpx 20rpx rgba(157,157,157,.3);
 			 .account-card{
 				 display: flex;
 				 justify-content: space-between;
@@ -456,6 +524,25 @@ onPullDownRefresh () {
 				 }
 			 }
 		}
+		.popup-content {
+			display: flex;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			padding: 0 32rpx;
+			.popup_box {
+				width: 297rpx;
+				height: 274rpx;
+				background-color: #fff;
+				border-radius: 32rpx;
+				&:nth-child(1) {
+					margin-bottom: 32rpx;
+				}
+				&:nth-child(2) {
+					margin-bottom: 32rpx;
+				}
+			}
+		}
+		
 	}
  
 </style>

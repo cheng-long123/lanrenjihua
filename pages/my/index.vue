@@ -159,6 +159,12 @@ export default {
 			}
 		})
 	},
+	onNavigationBarButtonTap(e) {
+		uni.navigateTo({
+			url: '../setting/index'
+		})
+	    console.log("success")        
+	},
 	methods: {
 		// 登录跳转
 		login () {

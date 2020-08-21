@@ -147,6 +147,11 @@ export default {
 		})
 	},
 	onLoad() {
+		var loginRes = this.checkLogin();
+			if (!loginRes) {
+				return false;
+			}
+
 		uni.getStorage({
 			key: 'usertoken',
 			success:res =>{
@@ -163,7 +168,7 @@ export default {
 		uni.navigateTo({
 			url: '../setting/index'
 		})
-	    console.log("success")        
+	    // console.log("success")        
 	},
 	methods: {
 		// 登录跳转

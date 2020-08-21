@@ -108,20 +108,32 @@
 				   </view>
 				   
 			    </view>	
-				<wyb-popup ref="popup" type="center" :duration=300 height="580" width="700" radius="6" :maskAlpha=0.1 :showCloseIcon="false" bgColor='rgba(255,255,255,0)'>
+				<wyb-popup ref="popup" type="center" centerAnim="bounce" :duration=300 height="580" width="700" radius="6" :maskAlpha=0.1 :showCloseIcon="false" bgColor='rgba(255,255,255,0)'>
 				    <view class="popup-content">
 				     
-					  <view class="popup_box">
-				      	
+					  <view class="popup_box" @click="autoRefund">
+						<image class="box_img" src="../../static/image/yijian.png" mode=""></image>
+						<view class="box_text">
+							一键还款
+						</view>
 				      </view>
-					   <view class="popup_box">
-				      	
+					   <view class="popup_box" @click="manual">
+				      	<image class="box_img" src="../../static/image/shoudong.png" mode=""></image>
+				      	<view class="box_text">
+				      		手动还款
+				      	</view>
 				      </view> 
 					  <view class="popup_box">
-				      	
+				      	<image class="box_img" src="../../static/image/jisu.png" mode=""></image>
+				      	<view class="box_text">
+				      		极速还款
+				      	</view>
 				      </view> 
 					  <view class="popup_box">
-				      	
+				      	<image class="box_img" src="../../static/image/xiangqing.png" mode=""></image>
+				      	<view class="box_text">
+				      		还款详情
+				      	</view>
 				      </view>
 				    </view>
 				</wyb-popup>
@@ -231,6 +243,21 @@ export default {
    },
    // 商户收款
    async shoukuan () {
+	   if (uni.getStorageSync('usertoken') === '') {
+		   uni.showModal({
+		       title: '提示',
+		       content: '该功能需要登录，是否登录》',
+		       success: function (res) {
+		           if (res.confirm) {
+		              uni.navigateTo({
+		              	url: '../login/index'
+		              })
+		           } else if (res.cancel) {
+		               console.log('用户点击取消');
+		           }
+		       }
+		   });
+	   }
 	   const { data } = await this.Request({
 		   methods: 'GET',
 		   url: '/Userforeign/user_query',
@@ -279,7 +306,18 @@ export default {
 	   // this.isindex = index
 	   // console.log(index);
 	   console.log(this.card_msg);
-   }
+   },// 手动还款
+   manual (item) {
+	   
+	   uni.navigateTo({
+	   	url: '../Otherpages/manual'
+	   })
+   },
+   autoRefund () {
+   	   uni.navigateTo({
+   	   	url: '../Otherpages/autoRefund'
+   	   })
+     }
 },
 onLoad() {
 	// 获取本地token
@@ -296,6 +334,11 @@ onLoad() {
 	this.getBanner()
 },
 onShow() {
+	var loginRes = this.checkLogin();
+		if (!loginRes) {
+			return false;
+		}
+
 	if (!uni.getStorageSync('usertoken')) {
 		this.card_list = []
 	} else {
@@ -530,6 +573,10 @@ onPullDownRefresh () {
 			flex-wrap: wrap;
 			padding: 0 32rpx;
 			.popup_box {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
 				width: 297rpx;
 				height: 274rpx;
 				background-color: #fff;
@@ -539,6 +586,17 @@ onPullDownRefresh () {
 				}
 				&:nth-child(2) {
 					margin-bottom: 32rpx;
+				}
+				.box_img{
+					width: 99rpx;
+					height: 99rpx;
+					line-height: 99rpx;
+					margin-bottom: 10rpx;
+				}
+				.box_text{
+					font-size: 28rpx;
+					color: #000;
+					font-weight: 700rpx;
 				}
 			}
 		}

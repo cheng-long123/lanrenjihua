@@ -23,6 +23,12 @@ const home = [
 		requiresAuth: true,
 		meta: {
 			title: "我的"
+		},{
+		path: "/pages/login/index",
+		name: 'login',
+		requiresAuth: true,
+		meta: {
+			title: "登录"
 		}
 	},
 ]

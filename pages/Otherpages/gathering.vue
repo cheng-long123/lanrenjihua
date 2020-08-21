@@ -187,6 +187,7 @@
 .shuokuan {
 	box-sizing: border-box;
 	padding: 50rpx;
+	/* background-color: #fff; */
 	.user_info {
 		margin: 30rpx 0;
 		font-size: 40rpx;
@@ -194,7 +195,7 @@
 	}
 	.user_input {
 		padding: 40rpx 0 0 0;
-		border-bottom: 1rpx solid rgba(22,160,133,.3);
+		/* border-bottom: 1rpx solid rgba(22,160,133,.3); */
 		display: flex;
 		flex-direction: column;
 		justify-content: space;
@@ -206,6 +207,9 @@
 		input {
 			font-size: 28rpx;
 			color: rgba(0,0,0,.7);
+			border-radius: 40rpx;
+			background-color: #E8E8E8 !important;
+			padding: 20rpx 15rpx;
 		}
 	}
 	.user_card {
@@ -216,11 +220,15 @@
 		justify-content: space-between;
 		height: 30rpx;
 		padding: 60rpx 0;
-		border-bottom: 1rpx solid rgba(22,160,133,.3);
+		margin-bottom: 40rpx;
+		/* border-bottom: 1rpx solid rgba(22,160,133,.3); */
 		.picker {
 			/* height: 90rpx; */
+			border-radius: 40rpx;
 			width: 100%;
+			background-color: #E8E8E8 !important;
 			color: rgba(0,0,0,.7);
+			padding: 20rpx 0rpx 20rpx 5rpx;
 			font-size: 28rpx;
 			
 		}
@@ -230,7 +238,7 @@
 			line-height: 57rpx;
 			text-align: center;
 			border-radius: 40rpx;
-			background:linear-gradient(left,#15BE73, #08BD9E, #16A085);
+			background:linear-gradient(to left,#15BE73, #08BD9E, #16A085);
 			font-size: 20rpx;
 			color: #fff;
 		}
@@ -239,7 +247,7 @@
 		width: 590rpx;
 		height: 80rpx;
 		border-radius: 40rpx;
-		background: linear-gradient(left, #15BE73, #08BD9E, #16A085);
+		background: linear-gradient(to left, #15BE73, #08BD9E, #16A085);
 		text-align: center;
 		line-height: 80rpx;
 		color: #fff;

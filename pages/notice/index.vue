@@ -26,6 +26,12 @@
 				
 			}
 		},
+		onLoad() {
+			var loginRes = this.checkLogin();
+				if (!loginRes) {
+					return false;
+				}
+		},
 		methods: {
 			
 		}

@@ -34,7 +34,7 @@
 				<input type="text" v-model="form.cvv" placeholder="卡背面末3位"/>
 			</view>
 			<view class="user_input">
-				 <text class="user_text">落款城市</text>
+				 <text class="user_text">城市</text>
 				<input type="text" v-model="form.address" placeholder="落款城市"/>
 			</view>
 			<view class="user_input">
@@ -134,6 +134,65 @@
 			},
 			bankCardChang (e) {
 				this.index = e.target.value
+				this.bank_name = this.bank_list[e.target.value]
+			}, //提交绑卡
+			async confirmSubmit () {
+				if (this.form.bill_day % 1 == 0 && this.form.bill_day <= 31 && this.form.bill_day >= 1 && this.form.repayment % 1 ==
+					0 && this.form.repayment <= 31 && this.form.repayment >= 1) {
+					const { data } = await this.Request({
+						methods: 'POST',
+						url:　'/Dongfang/quan_add',
+						data: {
+							cre_id: this.usertoken.cre_id,
+							channelType: 'df',
+							holderName: this.fprm.username,
+							idCard: this.form.identity,
+							accountNumber: this.form.cardNumber,
+							phone: this.form.phone,
+							city: this.address,
+							bank_name: this.bank_name,
+							cvv: this.form.cvv,
+							expired: this.form.expired,
+							quota: this.form.quota,
+							bill_day: this.form.bill_day,
+							repayment: this.form.repayment
+							
+						}
+					})
+					// var arraywaibu={
+					// 	channelType: 'df',
+					// 	token: this.usertoken.token,
+					// 	cre_id: this.usertoken.cre_id,
+					// 	accountNumber: this.form.cardNumber,
+					// 	phone: this.form.phone,
+					// 	holderName: this.form.username,
+					// 	cvv: this.form.cvv,
+					// 	idCard: this.form.identity,
+					// 	expired: this.form.expired,
+					// 	city: this.form.address,
+					// 	repayment: this.form.repayment,
+					// 	bill_day: this.form.bill_day,
+					// 	quota: this.form.quota,
+					// 	bank_name: this.form.bank_name,
+					// }
+					console.log(data)
+					var k=JSON.stringify(data)
+					k=k.replace('&','')
+					k=k.replace(/\+/g,'88888')
+					k=k.replace(/\+/g,'%2B')
+					console.log(k)
+					uni.navigateTo({
+						url:"fornsbumit?data="+k
+						// url:"fornsbumit?data="+arraywaibu.data
+					})
+				}else {
+					uni.showToast({
+						title: '请输入正确的账单日或还款日',
+						duration: 2000,
+						icon: "none",
+					});
+				}
+				
 			}
 		}
 		
@@ -187,7 +246,7 @@
 			line-height: 57rpx;
 			text-align: center;
 			border-radius: 40rpx;
-			background:linear-gradient(left,#15BE73, #08BD9E, #16A085);
+			background:linear-gradient(to left,#15BE73, #08BD9E, #16A085);
 			font-size: 20rpx;
 			color: #fff;
 		}

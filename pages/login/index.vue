@@ -1,15 +1,16 @@
 <template>
     <view id="login">
 			<view class="login-text">
-				登录
+				<text>手机号密码登录</text>
+				<text class="text">未注册的手机号登录成功后将自动注册</text>
 			</view>
 			<view class="form">
 				<input type="text" v-model="phone" placeholder="请输入手机号码"/>
 				<input type="password" v-model="password" placeholder="请输入密码" />
 			</view>
-			<view class="zhuce">
+			<!-- <view class="zhuce">
 				<navigator url="../register/index">去注册</navigator>
-			</view>
+			</view> -->
 			<view class="login-btn">
 				<image @click="login"  class="btn-img" src="../../static/image/denglu.png" mode=""></image>
 			</view>
@@ -35,6 +36,12 @@ export default {
 		 phone: '13915550562', //账号
 		 password: '56559745' //密码
       }
+   },
+   onNavigationBarButtonTap(e) {
+   	uni.navigateTo({
+   		url: '../register/index'
+   	})
+       console.log("success")        
    },
 methods:{
 	//登录
@@ -89,23 +96,35 @@ methods:{
  box-sizing: border-box;
  width: 100%;
  height: 100%;
- background: url(../../static/image/login-bg.png) no-repeat;
- background-size: cover;
+ background-color: #fff;
+ /* background: url(../../static/image/login-bg.png) no-repeat; */
+ /* background-size: cover; */
  .login-text {
+	 box-sizing: border-box;
 	 width: 100%;
 	 height: 360rpx;
 	 display: flex;
-	 justify-content: center;
-	 align-items: center;
+	 flex-direction: column;
+	 justify-content: space;
+	 align-items: space;
 	 font-size: 40rpx;
 	 font-weight: 600;
+	 padding-top: 100rpx;
+	 margin-left: 68rpx;
+	 .text {
+		font-size: 24rpx;
+		color: #8D8D8D;
+		font-weight: 400;
+		margin-top: 10rpx;
+	 }
 	 }
 	 .form {
 		 input {
 			 width: 590rpx;
 			 height: 78rpx;
 			 margin: 40rpx auto;
-			 border: 1px solid #ccc;
+			 /* border: 1px solid #ccc; */
+			 background-color: #F4F4F6 !important;
 			 border-radius: 40rpx; 
 			 background-color: #fff;
 			 padding-left: 20rpx;
@@ -125,8 +144,8 @@ methods:{
 			 justify-content: center;
 			 align-items: center;
 			 .btn-img {
-				 width: 125rpx;
-				 height: 125rpx;
+				 width: 150rpx;
+				 height: 150rpx;
 			 }
 		 }
 		 .otherways {

@@ -59,14 +59,39 @@
         ,{
             "path" : "pages/login/index",
             "style" : {
-				"navigationBarTitleText": "登录",
-				"navigationStyle":"custom"
+				"navigationBarTitleText": " ",
+				"navigationBarBackgroundColor": "#fff",
+				// "navigationStyle":"custom"
+				"app-plus": {
+					// "type" : "transparent",
+					"titleNView": {
+						"titleSize": "16px",
+						"buttons": [
+							{
+								"type":"none",
+								"text": "注册",
+								"fontSrc":"/static/iconfont/iconfont.ttf",
+								"float":"right",
+								"fontSize":"16px"
+							}
+						]
+						
+					}
+				}
 			}
         }
         ,{
             "path" : "pages/register/index",
             "style" : {
-				"navigationBarTitleText": "注册"
+				"navigationBarTitleText": "注册",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "注册",
+						"titleSize": "16px",
+						"titleColor":"#16A085"
+						
+					}
+				}
 			}
         }
         ,{
@@ -89,8 +114,7 @@
 				"app-plus": {
 					"titleNView": {
 						"titleText": "新增信用卡",
-						"titleSize": "16px",
-						"titleColor":"#16A085"
+						"titleSize": "16px"
 					}
 				}
 			}
@@ -102,11 +126,49 @@
 				"app-plus": {
 					"titleNView": {
 						"titleText": "设置",
+						"titleSize": "16px"
+					}
+				}
+				
+			}
+        }
+        ,{
+            "path" : "pages/Otherpages/manual",
+            "style" : {
+				"navigationBarTitleText": "手动还款",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "手动还款",
 						"titleSize": "16px",
 						"titleColor":"#16A085"
 					}
 				}
-				
+			}
+        },{
+            "path" : "pages/setting/changemm",
+            "style" : {
+				"navigationBarTitleText": "修改密码"
+			}
+        },{
+            "path" : "pages/Otherpages/formsubmit",
+            "style" : {}
+        },{
+            "path" : "pages/setting/changeXinUpdate",
+            "style" : {
+				"navigationBarTitleText": "信用卡修改"
+			}
+        }
+        ,{
+            "path" : "pages/Otherpages/autoRefund",
+            "style" : {
+				"navigationBarTitleText": "一键还款",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "一键还款",
+						"titleSize": "16px",
+						"titleColor":"#16A085"
+					}
+				}
 			}
         }
     ],

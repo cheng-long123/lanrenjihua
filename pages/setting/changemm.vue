@@ -25,7 +25,7 @@
 				usertoken: {},
 				old_pass: '',
 				newpass: '',
-				repass: ''
+				renewpass: ''
 			}
 		},
 		onLoad() {
@@ -51,9 +51,12 @@
 				})
 				if (data.status === 1) {
 					uni.showToast({
-						title: data.msg,
+						title: '修改密码成功',
 						duration: 2000,
 						icon: 'none'
+					})
+					uni.reLaunch({
+						url: '../login/index'
 					})
 					setTimeout( () => {
 						uni.navigateBack({

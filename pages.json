@@ -171,6 +171,19 @@
 				}
 			}
         }
+        ,{
+            "path" : "pages/Otherpages/fastRefund",
+            "style" : {
+				"navigationBarTitleText": "极速还款",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "极速还款",
+						"titleSize": "16px",
+						"titleColor":"#16A085"
+					}
+				}
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

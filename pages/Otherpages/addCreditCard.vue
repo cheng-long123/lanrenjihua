@@ -6,7 +6,7 @@
 		<view class="form">
 			<view class="user_input">
 				 <text class="user_text" style="font-size: 32rpx;">姓名</text>
-				<input type="text" v-model="form.bank_name" placeholder="姓名"/>
+				<input type="text" v-model="form.username" placeholder="姓名"/>
 			</view>
 			<view class="user_input">
 				 <text class="user_text">身份证</text>
@@ -145,7 +145,7 @@
 						data: {
 							cre_id: this.usertoken.cre_id,
 							channelType: 'df',
-							holderName: this.fprm.username,
+							holderName: this.form.username,
 							idCard: this.form.identity,
 							accountNumber: this.form.cardNumber,
 							phone: this.form.phone,
@@ -155,8 +155,13 @@
 							expired: this.form.expired,
 							quota: this.form.quota,
 							bill_day: this.form.bill_day,
-							repayment: this.form.repayment
-							
+							repayment: this.form.repayment,
+							//#ifdef APP-PLUS
+							imei: this.imei,
+							//#endif
+							//#ifdef H5
+							imei: 863064460026299,
+							//#endif
 						}
 					})
 					// var arraywaibu={
@@ -175,14 +180,15 @@
 					// 	quota: this.form.quota,
 					// 	bank_name: this.form.bank_name,
 					// }
-					console.log(data)
+					// console.log(data)
 					var k=JSON.stringify(data)
+					console.log(k)
 					k=k.replace('&','')
 					k=k.replace(/\+/g,'88888')
 					k=k.replace(/\+/g,'%2B')
-					console.log(k)
+					// console.log(k)
 					uni.navigateTo({
-						url:"fornsbumit?data="+k
+						url:"./formsubmit?data="+ k
 						// url:"fornsbumit?data="+arraywaibu.data
 					})
 				}else {

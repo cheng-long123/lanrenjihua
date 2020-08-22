@@ -1,123 +1,75 @@
 <template>
-    <view id="autorefund">
+<view class="manual">
 		<view class="h1">
 			输入信息
 		</view>
 		<view class="input_text">
 			<text class="text">姓名</text>
-			<input type="text" v-model="cardinfo.holderName"  placeholder-class="input-placeholder" placeholder="请输入姓名"/>
+			<input type="text" v-model="holderName"  placeholder-class="input-placeholder" placeholder="请输入姓名"/>
+		</view>
+		<view class="input_text">
+			<text class="text">信用卡号</text>
+			<input type="text" v-model="accountNumber"  placeholder-class="input-placeholder" placeholder="请输入信用卡号"/>
 		</view>
 		<view class="input_text">
 			<text class="text">预还款金额</text>
 			<input type="text" v-model="pre_money"  placeholder-class="input-placeholder" placeholder="请输入预还款金额"/>
 		</view>
 		<view class="input_text">
-			<text class="text">信用卡号</text>
-			<input type="text" v-model="cardinfo.accountNumber"  placeholder-class="input-placeholder" placeholder="请输入信用卡号"/>
+			<text class="text">预还款笔数</text>
+			<input type="text" v-model="day_num"  placeholder-class="input-placeholder" placeholder="请输入预还款笔数"/>
 		</view>
 		<view class="bottom_text">
-			<view style="margin-bottom: 20rpx;">信用卡预留本金 &nbsp;<text style="margin-left: 20rpx; font-size: 30rpx; font-weight: bold;">{{Meterrate !== '' ? Meterrate.ensure_money : '0'}}元</text></view>
-			<view>手续费&nbsp; <text style="margin-left: 20rpx; font-size: 30rpx; font-weight: bold;">{{ Meterrate !== '' ? Meterrate.charge : '0'}}元</text></view>
+			<view style="margin-bottom: 20rpx;">手续费<text style="margin-left: 20rpx; font-size: 30rpx; font-weight: 600;">
+			{{Meterrate !== '' ?　Meterrate.procedures_money　:　'0'}}
+			</text></view>
+			<view style="margin-bottom: 20rpx;">预留金额<text style="margin-left: 20rpx; font-size: 30rpx; font-weight: 600;">{{Meterrate !== '' ?　Meterrate.ensure_money　:　'0'}}</text></view>
+			<view>笔数费<text style="margin-left: 20rpx; font-size: 30rpx; font-weight: 600;">{{Meterrate !== '' ?　Meterrate.num_money　:　'0'}}</text></view>
 		</view>
-		<view class="radio_content">
-			<view class="day">
-				日还款笔数
-			</view>
-			<radio-group class="radio-group" @change="radioChange">
-			        <label class="radio" v-for="(item,index) in highestNum " :key="index">
-						<view class="radio_item">
-							<text class="radio_text">{{item.value}}</text>
-							<radio :value="item.value" :checked="index === cardinfo.current"></radio>
-						</view>
-					</label>
-			 </radio-group>
-		</view>
-		<view class="auto_btn" @click="autoRefund">
+		
+		<view class="auto_btn" @click="fastRefund">
 			提交
 		</view>
-    </view>
+	</view>
 </template>
 <script>
 export default {
    data() {
-      return {
+	  return {
 		usertoken: '',
-		cardinfo: {
-			card_id: '',
-			holderName: '',
-			accountNumber: '',
-			fee: '',
-			pre_money: '',
-			current: 0,
-		},
+		card_id: '',
+		holderName: '',
+		accountNumber: '',
+		fee: '',
 		pre_money: '',
 		day_num: '',
-		highestNum: [{
-				value: "1"
-			}, {
-				value: "2"
-			}, {
-				value: "3"
-			}],
 		Meterrate: ''
-      }
+	  }
    },
    onLoad(option) {
-   	console.log(option);
-	this.cardinfo.card_id = option.card_id
-	this.cardinfo.holderName = option.holderName
-	this.cardinfo.accountNumber = option.accountNumber
-	this.cardinfo.fee = option.fee / 100
-	
-	// this.cardinfo = JSON.parse(option)
-	uni.getStorage({
-		key: 'usertoken',
-		success: (res) => {
-			this.usertoken = res.data
-		}
-	})
-   },
-   watch: {
-	   pre_money() {
-		   if (this.$data.pre_money <= 500) {
-				uni.showToast({
-					title: "金额不能小于500",
-					icon: "none",
-				});
-			} else if (this.$data.pre_money >= 500 && this.$data.day_num != '') {
-				this.getMeterrate();
+	    this.card_id = option.card_id
+	   	this.holderName = option.holderName
+	   	this.accountNumber = option.accountNumber
+	   	this.fee = option.fee / 100
+		uni.getStorage({
+			key: 'usertoken',
+			success: (res) => {
+				this.usertoken = res.data
 			}
-			// console.log(123);
-	   },
-	   day_num() {
-		if (this.$data.pre_money >= 500 && this.$data.day_num != '') {
-			this.getMeterrate();
-		}
-
-	}
+		})
    },
 methods:{
-	radioChange (e) {
-		for (let i = 0; i < this.highestNum.length; i++) {
-			if (this.highestNum[i].value === e.target.value) {
-				this.cardinfo.current = i;
-				this.day_num = e.target.value
-				// console.log(this.day_num)
-				break;
-			}
-		}
-	},
 	// 计算费率
 	async getMeterrate () {
 		const { data } = await this.Request({
 			methods: 'POST',
-			url: '/Ttfrepayment/meter_rate',
+			url: '/Ttfrepayment/speed_rate',
 			data: {
 				token: this.usertoken.token,
-				card_id: this.cardinfo.card_id,
+				card_id: this.card_id,
 				day_num: this.day_num,
 				pre_money: this.pre_money,
-				fee: this.cardinfo.fee
+				fee: this.fee
 			}
 		})
 		if (data.status === 1) {
@@ -129,15 +81,14 @@ methods:{
 			})
 		}
 		
-		// console.log(data);
+		console.log(data);
 	},
-	async autoRefund () {
+	async fastRefund () {
 		const { data } = await this.Request({
 			methods: 'POST',
-			url: '/Ttfrepayment/generate_lazy',
+			url: '/Ttfrepayment/generate_speed',
 			data: {
-				cre_id: this.usertoken.cre_id,
-				card_id: this.cardinfo.card_id,
+				card_id: this.card_id,
 				day_num: this.day_num,
 				pre_money: this.pre_money,
 				repayment: this.Meterrate.repayment,
@@ -151,16 +102,17 @@ methods:{
 				token: this.usertoken.token
 			}
 		})
-		if (data.status === 2) {
+		if (data.status === 1) {
+			uni.showToast({
+				title: '计划提交成功',
+				icon: 'none',
+			})
+			
+		} else if (data.status === 2) {
 			uni.showToast({
 				title: data.msg,
 				duration: 2000,
 				icon: 'none'
-			})
-		} else {
-			uni.showToast({
-				title: '计划提交成功',
-				icon: 'none',
 			})
 			setTimeout( ()=> {
 				uni.redirectTo({
@@ -168,16 +120,35 @@ methods:{
 				})
 			},1500)
 		}
-		console.log(data);
+		// console.log(data);
 	}
 	
 },
- mounted() {
+watch: {
+   pre_money() {
+	   if (this.$data.pre_money <= 500) {
+			uni.showToast({
+				title: "金额不能小于500",
+				icon: "none",
+			});
+		} else if (this.$data.pre_money >= 500 && this.$data.day_num != '') {
+			this.getMeterrate();
+		}
+		// console.log(123);
+   },
+   day_num() {
+	if (this.$data.pre_money >= 500 && this.$data.day_num != '') {
+		this.getMeterrate();
+	}
+
+}
+   },
+   mounted() {
    }
 }
 </script>
 <style lang='scss' scoped>
-#autorefund{
+.manual{
 	box-sizing: border-box;
 	padding: 50rpx;
 	.h1 {
@@ -216,18 +187,17 @@ methods:{
 			font-weight: 400;
 		}
 		.radio-group {
-			display: flex;
-			justify-content: space-around;
 				margin-top: 30rpx;
 				.radio{
-					
+					display: flex;
+					justify-content: space-around;
 					/deep/ .uni-radio-input-checked {
 						background-color: #15BE73 !important;
 						border: none;
 						
 						&::before{
-							    content: "";
-							    color: #fff; 
+								content: "";
+								color: #fff; 
 						}
 					}
 				}

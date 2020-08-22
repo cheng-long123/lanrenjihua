@@ -123,7 +123,7 @@
 				      		手动还款
 				      	</view>
 				      </view> 
-					  <view class="popup_box">
+					  <view class="popup_box" @click="fastRefund">
 				      	<image class="box_img" src="../../static/image/jisu.png" mode=""></image>
 				      	<view class="box_text">
 				      		极速还款
@@ -168,7 +168,8 @@ export default {
 			 R16_fee: '',
 			 isShowBox: false,
 			 isindex: null,
-			 card_msg: {}
+			 card_msg: {},
+			 card_index: ''
 			 
 		}
    },
@@ -297,7 +298,8 @@ export default {
    },
    popup (item, index) {
 	   this.card_msg = item
-	   this.$refs.popup.show() 
+	    this.card_index = index
+	   this.$refs.popup.show()
 	   // if (this.isindex !== index) {
 		  //  this.isShowBox = true
 	   // } else {
@@ -307,17 +309,82 @@ export default {
 	   // console.log(index);
 	   console.log(this.card_msg);
    },// 手动还款
-   manual (item) {
+   manual () {
 	   
 	   uni.navigateTo({
-	   	url: '../Otherpages/manual'
+			url: '../Otherpages/manual'
 	   })
-   },
-   autoRefund () {
-   	   uni.navigateTo({
-   	   	url: '../Otherpages/autoRefund'
-   	   })
-     }
+   }, // 一键还款
+  async autoRefund () {
+	   const { data } = await this.Request({
+		   methods: 'GET',
+		   url: '/Plan/get_bankStatus',
+		   data: {
+			   token: this.userToken.token,
+			   cid: this.card_msg.cid
+		   }
+	   })
+	   if (data.status === 4) {
+		   this.baseLogout()
+	   } else {
+		   if (!data.data) {
+			   if (this.card_msg.df === 1) {
+				   console.log(this.card_msg);
+				   uni.navigateTo({
+				   			url: '../Otherpages/autoRefund?card_id=' + this.card_msg.cid + 
+							'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
+							 '&fee=' + this.fee
+				   })
+			   } else {
+				   uni.navigateTo({
+				   			url: '../Otherpages/addCreditCard?cardinfo' + JSON.stringify(this.card_msg)
+				   })
+			   }
+		   } else {
+			   uni.showToast({
+			   	title: '当前信用卡已有计划正在执行',
+				duration: 2000,
+				icon: 'none'
+			   })
+		   }
+	   }
+	   console.log(data);
+   	  
+     },
+	 async fastRefund (item) {
+		 const { data } = await this.Request({
+		 		   methods: 'GET',
+		 		   url: '/Plan/get_bankStatus',
+		 		   data: {
+		 			   token: this.userToken.token,
+		 			   cid: this.card_msg.cid
+		 		   }
+		 })
+		 if (data.status === 4) {
+		 		   this.baseLogout()
+		 } else {
+		 		   if (!data.data) {
+		 			   if (this.card_msg.df === 1) {
+		 				   console.log(this.card_msg);
+		 				   uni.navigateTo({
+		 				   			url: '../Otherpages/fastRefund?card_id=' + this.card_msg.cid + 
+		 							'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
+		 							 '&fee=' + this.fee
+		 				   })
+		 			   } else {
+		 				   uni.navigateTo({
+		 				   			url: '../Otherpages/addCreditCard?cardinfo' + JSON.stringify(this.card_msg)
+		 				   })
+		 			   }
+		 		   } else {
+		 			   uni.showToast({
+		 			   	title: '当前信用卡已有计划正在执行',
+		 				duration: 2000,
+		 				icon: 'none'
+		 			   })
+		 		   }
+		 }
+	 }
 },
 onLoad() {
 	// 获取本地token

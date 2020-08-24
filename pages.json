@@ -152,7 +152,7 @@
         },{
             "path" : "pages/Otherpages/formsubmit",
             "style" : {
-				
+				"navigationBarTitleText": ""
 			}
         },{
             "path" : "pages/setting/changeXinUpdate",
@@ -182,6 +182,20 @@
 						"titleText": "极速还款",
 						"titleSize": "16px",
 						"titleColor":"#16A085"
+					}
+				}
+			}
+        }
+        ,{
+            "path" : "pages/Otherpages/planDetails",
+            "style" : {
+				"navigationBarBackgroundColor": "#005BEA",
+				"navigationBarTitleText": "还款详情",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "还款详情",
+						"titleSize": "16px",
+						"titleColor":"#fff"
 					}
 				}
 			}

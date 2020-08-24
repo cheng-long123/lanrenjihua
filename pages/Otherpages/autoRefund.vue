@@ -110,7 +110,7 @@ methods:{
 	// 计算费率
 	async getMeterrate () {
 		const { data } = await this.Request({
-			methods: 'POST',
+			method: 'POST',
 			url: '/Ttfrepayment/meter_rate',
 			data: {
 				token: this.usertoken.token,

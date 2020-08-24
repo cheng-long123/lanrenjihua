@@ -69,7 +69,7 @@ export default {
 	   },
 	  async getCardList() {
 	  		   const { data } = await this.Request({
-	  			   methods: 'GET',
+	  			   method: 'GET',
 	  			   url: '/Creditcard/card_list',
 	  			   data: {
 	  				   cre_id: this.usertoken.cre_id,
@@ -84,7 +84,7 @@ export default {
 	  },
 	  async confirm () {
 		  const { data } = await this.Request({
-			  methods: 'POST',
+			  method: 'POST',
 			  url: '/Change/xycard',
 			  data: {
 				  cre_id: this.usertoken.cre_id,

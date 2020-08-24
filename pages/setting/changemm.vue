@@ -39,7 +39,7 @@
 		methods: {
 			async updatePsd () {
 				const { data } = await this.Request({
-					methods: 'POST',
+					method: 'POST',
 					url: '/Change/password',
 					data: {
 						cre_id: this.usertoken.cre_id,

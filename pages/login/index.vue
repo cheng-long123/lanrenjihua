@@ -51,7 +51,7 @@ methods:{
 		   });
 		   
 		const res = await this.Request({
-			methods: 'GET',
+			method: 'GET',
 			url: '/Userforeign/login',
 			data: {
 				phone: this.$data.phone.trim(),

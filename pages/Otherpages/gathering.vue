@@ -68,7 +68,7 @@
 			async getXingList () {
 				this.choosezfkh = []
 				const { data } = await this.Request({
-					methods: 'POST',
+					method: 'POST',
 					url: '/Creditcard/card_list',
 					data: {
 						cre_id: this.usertoken.cre_id,
@@ -93,7 +93,7 @@
 			// 获取用户信息
 			async getUserInfo () {
 				const { data } = await this.Request({
-					methods: 'GET',
+					method: 'GET',
 					url: '/Userforeign/user_query',
 					data: {
 						token: this.usertoken.token,
@@ -128,7 +128,7 @@
 					mask: true
 				})
 				const {data} = await this.Request({
-					methods: 'POST',
+					method: 'POST',
 					url: '/Samecard/card_tm',
 					data: {
 						holderName: this.form.bank_name,

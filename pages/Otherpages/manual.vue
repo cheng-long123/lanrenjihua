@@ -27,6 +27,7 @@
 				:startDate="time"
 				:endDate="info.endDate"
 			    ref="calendar"
+				:description="info.description"
 				:lunar="info.lunar"
 			    :insert="info.insert"
 				:range="info.range"
@@ -150,7 +151,7 @@ methods:{
 		 // console.log(e);
 		 // console.log(this.range.data.length);
 		 // console.log(this.range.data.toString());
-		 console.log(e);
+		 // console.log(e);
 		 // console.log(this.timeList);
 	 },
 	 change (e) {
@@ -192,7 +193,7 @@ methods:{
 	async getCalculate () {
 		// console.log(this.range.data.length);
 		const { data } = await this.Request({
-				methods: 'POST',
+				method: 'POST',
 				url: '/Ttfrepayment/ttf_fee_calculate',
 				data: {
 					token: this.usertoken.token,
@@ -213,43 +214,62 @@ methods:{
 		console.log(data);
 	},
 	async subnitPlan () {
+		console.log(this.range.data.toString());
 		this.isdisabled = false
-		const { data } = await this.Request({
-			methods: 'POST',
-			url: '/Ttfrepayment/add_ttf_plan',
-			data: {
-				token: this.usertoken.token,
-				cre_id: this.usertoken.cre_id,
-				pre_money: this.pre_money,
-				repayment_date: this.range.data.toString(),
-				day_num: this.day_num,
-				card_id: this.card_id,
-				accountNumber: this.accountNumber,
-				procedures_money: this.calculate.show_fee_money,
-				num_money: this.num_money,
-				ensure_money: this.calculate.last_money,
-				fee: this.fee,
-				passageway: '1',
-				total: this.calculate.tatol_money
+		if (this.$data.pre_money < 500) {
+			uni.showToast({
+				title: "预还款金额不能低于500",
+				icon: "none",
+			});
+		} else if (this.$data.day_num < 0 || this.$data.day_num > 3) {
+			uni.showToast({
+				title: "还款笔数输入有误",
+				icon: "none",
+			});
+			} else {
+				const { data } = await this.Request({
+					method: 'POST',
+					url: '/Ttfrepayment/add_ttf_plan',
+					data: {
+						token: this.usertoken.token,
+						cre_id: this.usertoken.cre_id,
+						number: this.usertoken.number,
+						pre_money: this.pre_money,
+						repayment_date: this.range.data.toString(),
+						day_num: this.day_num,
+						card_id: this.card_id,
+						accountNumber: this.accountNumber,
+						turnover_money: this.calculate.last_money,
+						procedures_money: this.calculate.show_fee_money,
+						num_money: this.num_money,
+						ensure_money: this.calculate.last_money,
+						fee: this.fee,
+						passageway: '1',
+						total: this.calculate.tatol_money,
+						total: this.calculate.tatol_money
+					}
+				})
+				this.isdisabled = true
+				if (data.status === 1) {
+					uni.showToast({
+						title: '计划提交成功',
+						icon: 'none'
+					})
+					setTimeout( () => {
+						uni.redirectTo({
+							url: '../index/index'
+						},2000)
+					})
+				} else if (data.status === 2) {
+					uni.showToast({
+						title: data.msg,
+						icon: 'none'
+					})
+				}
+				console.log(data);
 			}
-		})
-		this.isdisabled = true
-		if (data.status === 1) {
-			uni.showToast({
-				title: '计划提交成功',
-				icon: 'none'
-			})
-			setTimeout( () => {
-				uni.redirectTo({
-					url: '../index/index'
-				},2000)
-			})
-		} else if (data.status === 2) {
-			uni.showToast({
-				title: data.msg,
-				icon: 'none'
-			})
-		}
+			
+		
 	}
 },
 components: {

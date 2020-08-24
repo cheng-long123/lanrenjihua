@@ -93,7 +93,7 @@
 			// 获取信息
 			async getUserInfo() {
 				const { data } = await this.Request({
-					methods: 'GET',
+					method: 'GET',
 					url: '/Userforeign/user_query',
 					data: {
 						token: this.usertoken.token,
@@ -127,7 +127,7 @@
 					})
 				}
 				const { data } = await this.Request({
-					methods: 'POST',
+					method: 'POST',
 					url: '/Userforeign/user_update',
 					data: {
 						token: this.usertoken.token,
@@ -174,7 +174,7 @@
 			},
 			async updateCard () {
 				const { data } = await this.Request({
-					methods: 'POST',
+					method: 'POST',
 					url: '/Change/Jcard',
 					data: {
 						cre_id: this.usertoken.cre_id,

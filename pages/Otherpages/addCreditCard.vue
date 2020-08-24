@@ -102,7 +102,7 @@
 			// 获取用户信息
 			async getUserInfo () {
 				const { data } = await this.Request({
-					methods: 'GET',
+					method: 'GET',
 					url: '/Userforeign/user_query',
 					data: {
 						token: this.usertoken.token,
@@ -141,7 +141,7 @@
 				if (this.form.bill_day % 1 == 0 && this.form.bill_day <= 31 && this.form.bill_day >= 1 && this.form.repayment % 1 ==
 					0 && this.form.repayment <= 31 && this.form.repayment >= 1) {
 					const { data } = await this.Request({
-						methods: 'POST',
+						method: 'POST',
 						url:　'/Dongfang/quan_add',
 						data: {
 							cre_id: this.usertoken.cre_id,

@@ -129,7 +129,7 @@
 				      		极速还款
 				      	</view>
 				      </view> 
-					  <view class="popup_box">
+					  <view class="popup_box" @click="planDetails">
 				      	<image class="box_img" src="../../static/image/xiangqing.png" mode=""></image>
 				      	<view class="box_text">
 				      		还款详情
@@ -199,7 +199,7 @@ export default {
    // 获取信用卡列表
    async getCardlist() {
 	const { data } = await this.Request({
-		methods: 'GET',
+		method: 'GET',
 		url: '/Creditcard/card_list',
 		data: {
 			cre_id: this.userToken.cre_id,
@@ -260,7 +260,7 @@ export default {
 		   });
 	   }
 	   const { data } = await this.Request({
-		   methods: 'GET',
+		   method: 'GET',
 		   url: '/Userforeign/user_query',
 		   data: {
 			   cre_id: this.userToken.cre_id,
@@ -311,7 +311,7 @@ export default {
    },// 手动还款
    async manual () {
 	   const { data } = await this.Request({
-	   		   methods: 'GET',
+	   		   method: 'GET',
 	   		   url: '/Plan/get_bankStatus',
 	   		   data: {
 	   			   token: this.userToken.token,
@@ -347,7 +347,7 @@ export default {
    }, // 一键还款
   async autoRefund () {
 	   const { data } = await this.Request({
-		   methods: 'GET',
+		   method: 'GET',
 		   url: '/Plan/get_bankStatus',
 		   data: {
 			   token: this.userToken.token,
@@ -380,10 +380,10 @@ export default {
 	   }
 	   console.log(data);
    	  
-     },
+     }, //极速还款
 	 async fastRefund (item) {
 		 const { data } = await this.Request({
-		 		   methods: 'GET',
+		 		   method: 'GET',
 		 		   url: '/Plan/get_bankStatus',
 		 		   data: {
 		 			   token: this.userToken.token,
@@ -414,7 +414,15 @@ export default {
 		 			   })
 		 		   }
 		 }
-	 }
+	 },// 还款详情
+	 planDetails () {
+		 let weihao = this.card_msg.accountNumber.substring(this.card_msg.accountNumber.length - 4)
+		 uni.navigateTo({
+		 	url: '../Otherpages/planDetails?card_id=' +  this.card_msg.cid + '&accountNumber=' + 
+			this.card_msg.accountNumber + '&quota=' + this.card_msg.quota + '&bill_day=' +  this.card_msg.bill_day +
+			 '&repayment=' + this.card_msg.repayment + '&weihao=' + weihao + '&bannk_name=' + this.card_msg.bannk_name
+		 })
+	}
 },
 onLoad() {
 	// 获取本地token
@@ -608,7 +616,7 @@ onPullDownRefresh () {
 			flex-direction: column;
 			justify-content: space-between;
 			box-sizing: border-box;
-			 width: 716rpx;
+			 width: 95%;
 			 height: 200rpx;
 			 background-color: #fff;
 			 border-radius: 20rpx;

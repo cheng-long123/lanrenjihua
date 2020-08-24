@@ -181,7 +181,7 @@ export default {
 		async getUserInfo () {
 
 			const { data } = await this.Request({
-				methods: 'GET',
+				method: 'GET',
 				url: '/Userforeign/user_query',
 				data: {
 					cre_id: this.$data.userToken.cre_id,

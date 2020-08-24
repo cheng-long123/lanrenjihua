@@ -61,7 +61,7 @@ methods:{
 				});
 		}
 		const { data } = await this.Request({
-			methods: 'GET',
+			method: 'GET',
 			url: '/Userforeign/message',
 			data: {
 				phone: this.phone

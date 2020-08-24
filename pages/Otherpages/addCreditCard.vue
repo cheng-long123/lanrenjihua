@@ -92,7 +92,8 @@
 				},
 			})
 			this.bank_list = ['请选择银行名称']
-			console.log(option);
+			var a = JSON.parse(decodeURIComponent(option))
+			console.log(a);
 		},
 		onShow() {
 			

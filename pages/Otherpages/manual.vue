@@ -5,19 +5,21 @@
 		</view>
 		<view class="input_text">
 			<text class="text">姓名</text>
-			<input type="text" value=""  placeholder-class="input-placeholder" placeholder="请输入姓名"/>
+			<input type="text" v-model="holderName"  placeholder-class="input-placeholder" placeholder="请输入姓名"/>
 		</view>
 		<view class="input_text">
 			<text class="text">预还款金额</text>
-			<input type="text" value=""  placeholder-class="input-placeholder" placeholder="请输入预还款金额"/>
+			<input type="text" v-model="pre_money"  placeholder-class="input-placeholder" placeholder="请输入预还款金额"/>
 		</view>
 		<view class="input_text">
 			<text class="text">信用卡号</text>
-			<input type="text" value=""  placeholder-class="input-placeholder" placeholder="请输入信用卡号"/>
+			<input type="text" v-model="accountNumber"  placeholder-class="input-placeholder" placeholder="请输入信用卡号"/>
 		</view>
 		<view class="bottom_text">
-			<view style="margin-right: 20rpx;">信用卡预留本金 &nbsp;<text style="margin-left: 20rpx; font-size: 30rpx; font-weight: bold;">10000</text></view>
-			<view>手续费&nbsp; <text style="margin-left: 20rpx; font-size: 30rpx; font-weight: bold;">3.0</text></view>
+			<view style="margin-right: 20rpx;">信用卡预留本金 &nbsp;
+			<text style="margin-left: 20rpx; font-size: 30rpx; font-weight: bold;">{{ calculate !== '' ? calculate.last_money : '0'}}元</text></view>
+			<view>手续费&nbsp; <text style="margin-left: 20rpx; font-size: 30rpx; font-weight: bold;">
+			{{ calculate !== '' ? calculate.show_fee_money : '0'}}元</text></view>
 		</view>
 		<view class="calendar">
 			    <uni-calendar 
@@ -28,36 +30,29 @@
 				:lunar="info.lunar"
 			    :insert="info.insert"
 				:range="info.range"
+				:selected="info.selected"
 			    @confirm="confirm"
 				@change="change"
 			     />
 			<view v-if="range === ''" class="open_btn" @click="open">选择时间</view>
-			<view  v-else class="date">{{range.before}}至{{range.after}}</view>
+			<view  v-else class="date" @click="open">{{range.before}}至{{range.after}}</view>
 		</view>
 		<view class="radio_content">
 			<view class="day">
 				日还款笔数
 			</view>
-			<radio-group class="radio-group">
-			        <label class="radio">
+			<radio-group class="radio-group" @change="radioChange">
+			        <label class="radio" v-for="(item, index) in highestNum" :key="index">
 						<view class="radio_item">
-							<text class="radio_text">1</text>
-							<radio  checked=""></radio>
-						</view>
-						<view class="radio_item">
-							<text class="radio_text">1</text>
-							<radio  checked=""></radio>
-						</view>
-						<view class="radio_item">
-							<text class="radio_text">1</text>
-							<radio  checked=""></radio>
+							<text class="radio_text">{{item.value}}</text>
+							<radio :value="item.value"  :checked="index===current"></radio>
 						</view>
 					</label>
 			 </radio-group>
 		</view>
-		<view class="auto_btn">
+		<button class="auto_btn" :isabled="isdisabled" @click="subnitPlan">
 			提交
-		</view>
+		</button>
     </view>
 </template>
 <script>
@@ -66,6 +61,7 @@ export default {
    data() {
       return {
 		 time: '',
+		 usertoken: '',
 		 info: {
 			date: '', //自定义当前时间,默认今天
 			startDate: '',
@@ -76,11 +72,68 @@ export default {
 			selected: [],
 		},
 		 isCalendaar: true,
-		 range: ''
+		 isdisabled: true,
+		 range: '',
+		 highestNum: [{
+		 		value: "1"
+		 	}, {
+		 		value: "2"
+		 	}],
+			current: 0,
+			card_id: '',
+			holderName: '',
+			accountNumber: '',
+			fee: '',
+			pre_money: '',
+			day_num: '1',
+			timeList: [],
+			timeStr: '',
+			calculate: '',
+			num_money: 0
       }
+   },
+  onLoad(option) {
+   	this.card_id = option.card_id
+   	this.holderName = option.holderName
+   	this.accountNumber = option.accountNumber
+   	this.fee = option.fee / 100
+	console.log(option);
+   	uni.getStorage({
+   		key: 'usertoken',
+   		success: (res) => {
+   			this.usertoken = res.data
+   		}
+   	})
    },
 created() {
 this.getStartTime()
+},
+watch: {
+	// 预还款金额
+	pre_money() {
+
+		if (this.$data.pre_money <= 500) {
+			uni.showToast({
+				title: "金额不能小于500",
+				icon: "none",
+			});
+		} else if (this.$data.pre_money > 500 && this.range.data != '' && this.day_num != '') {
+			this.getCalculate();
+		}
+	},
+	
+	// 时间列表
+	timeList() {
+		if (this.$data.pre_money > 500 && this.range.data != '' && this.day_num != '') {
+			this.getCalculate();
+		}
+	},
+	// 日还款数
+	day_num() {
+		if (this.$data.pre_money > 500 && this.range.data != '' && this.day_num != '') {
+			this.getCalculate();
+		}
+	}
 },
 methods:{
   open(){
@@ -88,20 +141,116 @@ methods:{
 	 },
 	 confirm(e) {
 		 this.range = e.range
+		 // console.log(this.time);
+		 // this.timeList = []
+			// for (var i = 0; i < this.info.selected.length; i++) {
+			// 	this.timeList.push(this.info.selected[i].date)
+			// }
+			// this.timeStr = this.timeList.toString()
+		 // console.log(e);
+		 // console.log(this.range.data.length);
+		 // console.log(this.range.data.toString());
 		 console.log(e);
-		 console.log(this.range);
+		 // console.log(this.timeList);
 	 },
 	 change (e) {
-		
+			// var index = null;
+			// for (var i = 0; i < this.info.selected.length; i++) {
+
+			// 	if (this.info.selected[i].date == e.fulldate) {
+			// 		index = i;
+			// 		break;
+			// 	}
+			// }
+
+			// if (index != null) {
+			// 	this.info.selected.splice(index, 1);
+			// } else {
+			// 	this.info.selected.push({
+			// 		date: e.fulldate,
+			// 	})
+			// }
+	 },
+	 radioChange (e) {
+	 	for (let i = 0; i < this.highestNum.length; i++) {
+	 		if (this.highestNum[i].value === e.target.value) {
+	 			this.current = i;
+	 			this.day_num = e.target.value
+	 			// console.log(this.day_num)
+	 			break;
+	 		}
+	 	}
 	 },
 	 getStartTime() {
 		var myDate = new Date();
 		let year = myDate.getFullYear(); //完整的年份
 		let month = myDate.getMonth() + 1; //获取当前月份(0-11,0代表1月)
 		var newMonth = month.toString().padStart(2, '0');
-		let date = myDate.getDate(); //获取当前日(1-31)
+		let date = myDate.getDate() + 1; //获取当前日(1-31)
 		this.time = year.toString() + "-" + newMonth.toString() + '-' + date.toString()
 	},
+	async getCalculate () {
+		// console.log(this.range.data.length);
+		const { data } = await this.Request({
+				methods: 'POST',
+				url: '/Ttfrepayment/ttf_fee_calculate',
+				data: {
+					token: this.usertoken.token,
+					money: this.pre_money,
+					days: this.range.data.length,
+					counts: this.day_num || 1,
+					fee: this.fee
+				}
+			})
+				if (data.status === 1) {
+					this.calculate = data.data
+				} else {
+					uni.showToast({
+						title: data.msg,
+						icon: 'none'
+					})
+				}
+		console.log(data);
+	},
+	async subnitPlan () {
+		this.isdisabled = false
+		const { data } = await this.Request({
+			methods: 'POST',
+			url: '/Ttfrepayment/add_ttf_plan',
+			data: {
+				token: this.usertoken.token,
+				cre_id: this.usertoken.cre_id,
+				pre_money: this.pre_money,
+				repayment_date: this.range.data.toString(),
+				day_num: this.day_num,
+				card_id: this.card_id,
+				accountNumber: this.accountNumber,
+				procedures_money: this.calculate.show_fee_money,
+				num_money: this.num_money,
+				ensure_money: this.calculate.last_money,
+				fee: this.fee,
+				passageway: '1',
+				total: this.calculate.tatol_money
+			}
+		})
+		this.isdisabled = true
+		if (data.status === 1) {
+			uni.showToast({
+				title: '计划提交成功',
+				icon: 'none'
+			})
+			setTimeout( () => {
+				uni.redirectTo({
+					url: '../index/index'
+				},2000)
+			})
+		} else if (data.status === 2) {
+			uni.showToast({
+				title: data.msg,
+				icon: 'none'
+			})
+		}
+	}
 },
 components: {
 	uniCalendar
@@ -151,10 +300,10 @@ components: {
 			font-weight: 400;
 		}
 		.radio-group {
-				margin-top: 30rpx;
+			display: flex;
+			justify-content: space-around;
+			margin-top: 30rpx;
 				.radio{
-					display: flex;
-					justify-content: space-around;
 					/deep/ .uni-radio-input-checked {
 						background-color: #15BE73 !important;
 						border: none;
@@ -169,8 +318,8 @@ components: {
 					
 					display: flex;
 					/deep/.uni-radio-input {
-						width: 60rpx !important;
-						height: 60rpx !important;
+						width: 50rpx !important;
+						height: 50rpx !important;
 					}
 					.radio_text {
 						margin-right: 20rpx;

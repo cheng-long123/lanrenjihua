@@ -309,11 +309,41 @@ export default {
 	   // console.log(index);
 	   console.log(this.card_msg);
    },// 手动还款
-   manual () {
-	   
-	   uni.navigateTo({
-			url: '../Otherpages/manual'
+   async manual () {
+	   const { data } = await this.Request({
+	   		   methods: 'GET',
+	   		   url: '/Plan/get_bankStatus',
+	   		   data: {
+	   			   token: this.userToken.token,
+	   			   cid: this.card_msg.cid
+	   		   }
 	   })
+	   console.log(data);
+	   if (data.status === 4) {
+	   		   this.baseLogout()
+	   } else {
+	   		   if (!data.data) {
+	   			   if (this.card_msg.df === 1) {
+	   				   // console.log(this.card_msg);
+	   				   uni.navigateTo({
+	   				   			url: '../Otherpages/manual?card_id=' + this.card_msg.cid + 
+	   							'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
+	   							 '&fee=' + this.fee
+	   				   })
+	   			   } else {
+					  // let cardmsg =  encodeURIComponent(JSON.stringify(this.card_msg))
+	   				   uni.navigateTo({
+	   				   			url: '../Otherpages/addCreditCard?cardinfo' + this.card_msg
+	   				   })
+	   			   }
+	   		   } else {
+	   			   uni.showToast({
+	   			   	title: '当前信用卡已有计划正在执行',
+	   				duration: 2000,
+	   				icon: 'none'
+	   			   })
+	   		   }
+	   }
    }, // 一键还款
   async autoRefund () {
 	   const { data } = await this.Request({

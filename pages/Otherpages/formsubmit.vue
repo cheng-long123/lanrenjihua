@@ -3,7 +3,7 @@
 
 
 		<!-- <button type="default" @click="towaibu()">11</button> -->
-		<button type="default" @click="goback()">返回</button>
+		<button type="primary" @click="goback()">返回</button>
 		<!-- <view class="htmlcontainer" v-html="src2"> -->
 			
 		</view>

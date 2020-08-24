@@ -151,7 +151,9 @@
 			}
         },{
             "path" : "pages/Otherpages/formsubmit",
-            "style" : {}
+            "style" : {
+				
+			}
         },{
             "path" : "pages/setting/changeXinUpdate",
             "style" : {

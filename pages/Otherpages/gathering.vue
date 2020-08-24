@@ -34,7 +34,7 @@
 				<input type="text" v-model="form.bank_card" placeholder="结算卡号"/>
 			</view>
 			<view class="user_input">
-				 <text class="user_text">落款城市</text>
+				 <text class="user_text">城市</text>
 				<input type="text" v-model="form.address" placeholder="落款城市"/>
 			</view>
 		</view>

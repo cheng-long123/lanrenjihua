@@ -38,7 +38,7 @@
 				<input type="text" v-model="form.address" placeholder="落款城市"/>
 			</view>
 		</view>
-		<view class="btn" @click="confirmSubmit">提交</view>
+		<button class="btn" @click="confirmSubmit">提交</button>
 	</view>
 </template>
 
@@ -247,7 +247,7 @@
 		width: 590rpx;
 		height: 80rpx;
 		border-radius: 40rpx;
-		background: linear-gradient(to left, #15BE73, #08BD9E, #16A085);
+		background: linear-gradient(to right, #04BEFE, #005BEA);
 		text-align: center;
 		line-height: 80rpx;
 		color: #fff;

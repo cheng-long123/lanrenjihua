@@ -74,11 +74,11 @@
 				<image src="../../static/image/shokuan.png" mode=""></image>
 				<text>商户收款</text>
 			</view>
-			<view  class="nav">
+			<view  class="nav" @click="toposMachineApplication">
 				<image src="../../static/image/daikuan.png" mode=""></image>
 				<text>我要贷款</text>
 			</view>
-			<view  class="nav">
+			<view  class="nav" @click="intelligent ">
 				<image src="../../static/image/huankuan.png" mode=""></image>
 				<text>智能还款</text>
 			</view>
@@ -291,6 +291,20 @@ export default {
 	   console.log(data);
     }
    },
+   intelligent () {
+	   uni.navigateTo({
+	   	url: '../my/account'
+	   })
+   },
+   toposMachineApplication() {
+	//#ifdef APP-PLUS
+	plus.runtime.openURL('http://mall.juzifenqi.com/channel_register/register_loan/index-v2.html?channel=jsbaofutong');
+	//#endif
+	//#ifdef H5
+	window.location.href =
+		'http://mall.juzifenqi.com/channel_register/register_loan/index-v2.html?channel=jsbaofutong'
+	//#endif
+   	},
    tocCreditcard () {
 	   uni.navigateTo({
 	   	url: '../Otherpages/addCreditCard'

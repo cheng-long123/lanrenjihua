@@ -52,9 +52,7 @@
 					<text class="content_text">计划时间</text>
 				 <view class="date">
 				 	<text class="content_num"
-					v-for="(date, index ) in item.hk_date.split(',')"
-					 :key="index"
-					>{{date}}</text>
+					>{{item.hk_date.split(',')[item.hk_date.split(',').length - 1]}}</text>
 				 </view>
 				</view>
 			</view>

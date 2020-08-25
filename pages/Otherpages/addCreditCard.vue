@@ -54,7 +54,7 @@
 				<input type="text" v-model="form.expired" placeholder="示例:0524"/>
 			</view>
 		</view>
-		<view class="btn" @click="confirmSubmit">提交绑定</view>
+		<button class="btn"  type="filled" @click="confirmSubmit">提交绑定</button>
 	</view>
 </template>
 
@@ -217,7 +217,7 @@
 	}
 	.user_input {
 		padding: 40rpx 0 0 0;
-		border-bottom: 1rpx solid rgba(22,160,133,.3);
+		border-bottom: 1rpx solid rgba(68,129,235,.3);
 		display: flex;
 		flex-direction: column;
 		justify-content: space;
@@ -239,7 +239,7 @@
 		justify-content: space-between;
 		height: 30rpx;
 		padding: 60rpx 0;
-		border-bottom: 1rpx solid rgba(22,160,133,.3);
+		border-bottom: 1rpx solid rgba(68,129,235,.3);
 		.picker {
 			/* height: 90rpx; */
 			width: 100%;
@@ -259,10 +259,8 @@
 		}
 	}
 	.btn {
-		width: 590rpx;
-		height: 80rpx;
 		border-radius: 40rpx;
-		background: linear-gradient(left, #15BE73, #08BD9E, #16A085);
+		background: linear-gradient(to left, #04BEFE, #005BEA);
 		text-align: center;
 		line-height: 80rpx;
 		color: #fff;

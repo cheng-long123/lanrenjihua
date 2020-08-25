@@ -23,7 +23,7 @@
 					"titleNView": {
 						"titleText": "公告",
 						"titleSize": "16px",
-						"titleColor":"#16A085"
+						"titleColor":"#4481EB"
 					}
 				}
 			}
@@ -88,7 +88,7 @@
 					"titleNView": {
 						"titleText": "注册",
 						"titleSize": "16px",
-						"titleColor":"#16A085"
+						"titleColor":"#4481EB"
 						
 					}
 				}
@@ -102,7 +102,7 @@
 					"titleNView": {
 						"titleText": "商户收款",
 						"titleSize": "16px",
-						"titleColor":"#16A085"
+						"titleColor":"#4481EB"
 					}
 				}
 			}
@@ -140,7 +140,7 @@
 					"titleNView": {
 						"titleText": "手动还款",
 						"titleSize": "16px",
-						"titleColor":"#16A085"
+						"titleColor":"#4481EB"
 					}
 				}
 			}
@@ -168,7 +168,7 @@
 					"titleNView": {
 						"titleText": "一键还款",
 						"titleSize": "16px",
-						"titleColor":"#16A085"
+						"titleColor":"#4481EB"
 					}
 				}
 			}
@@ -181,7 +181,7 @@
 					"titleNView": {
 						"titleText": "极速还款",
 						"titleSize": "16px",
-						"titleColor":"#16A085"
+						"titleColor":"#4481EB"
 					}
 				}
 			}
@@ -211,7 +211,7 @@
 					"titleNView": {
 						"titleText": "计划详情",
 						"titleSize": "16px",
-						"titleColor":"#16A085"
+						"titleColor":"#4481EB"
 					}
 				}
 			}
@@ -224,7 +224,7 @@
 					"titleNView": {
 						"titleText": "账户管理",
 						"titleSize": "16px",
-						"titleColor":"#16A085"
+						"titleColor":"#4481EB"
 					}
 				}
 			}
@@ -245,6 +245,12 @@
 					}
 				}
 				
+			}
+        }
+        ,{
+            "path" : "pages/my/Certification",
+            "style" : {
+				"navigationBarTitleText": "实名认证"
 			}
         }
     ],

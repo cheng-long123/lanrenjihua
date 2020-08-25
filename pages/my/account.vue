@@ -2,10 +2,10 @@
 		<!-- 账户管理 -->
 		<view class="account">
 			<!-- 账户管理头部 -->
-			<view class="head">
+			<!-- <view class="head">
 				<text class="account-text1">账户管理</text>
 				<text class="account-text2">{{card_list.length}}页</text>
-			</view>
+			</view> -->
 			<!-- 账户管理内容 -->
 			<view class="card_box" v-if="card_list.length !== 0"  >
 				<view  class="account-content" v-for="(item,index) in card_list" :key="index" @click="popup(item,index)">

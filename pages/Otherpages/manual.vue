@@ -325,7 +325,7 @@ components: {
 			margin-top: 30rpx;
 				.radio{
 					/deep/ .uni-radio-input-checked {
-						background-color: #15BE73 !important;
+						background-color: #4481EB !important;
 						border: none;
 						
 						&::before{
@@ -351,7 +351,7 @@ components: {
 		width: 90%;
 		height: 80rpx;
 		line-height: 80rpx;
-		background: linear-gradient(to left, #15BE73,#08BD9E,#16A085);
+		background: linear-gradient(to right, #04BEFE,#005BEA);
 		margin:  50rpx auto;
 		border-radius: 40rpx;
 		text-align: center;
@@ -362,10 +362,10 @@ components: {
 			width: 220rpx;
 			height: 85rpx;
 			border-radius: 40rpx;
-			border: 1rpx solid #16A085;
+			border: 1rpx solid #4481EB;
 			line-height: 85rpx;
 			text-align: center;
-			color: #16A085;
+			color: #4481EB;
 			font-size: 28rpx;
 			margin: 30rpx auto;
 		}

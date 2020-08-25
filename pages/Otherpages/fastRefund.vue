@@ -26,10 +26,7 @@
 			<view style="margin-bottom: 20rpx;">预留金额<text style="margin-left: 20rpx; font-size: 30rpx; font-weight: 600;">{{Meterrate !== '' ?　Meterrate.ensure_money　:　'0'}}</text></view>
 			<view>笔数费<text style="margin-left: 20rpx; font-size: 30rpx; font-weight: 600;">{{Meterrate !== '' ?　Meterrate.num_money　:　'0'}}</text></view>
 		</view>
-		
-		<view class="auto_btn" @click="fastRefund">
-			提交
-		</view>
+		<button class="btn" type="filled" @click="fastRefund">提交</button>
 	</view>
 </template>
 <script>
@@ -214,11 +211,10 @@ watch: {
 				}
 			}
 	}
-	.auto_btn {
+	.btn {
 		width: 90%;
-		height: 80rpx;
 		line-height: 80rpx;
-		background: linear-gradient(to left, #15BE73,#08BD9E,#16A085);
+		background: linear-gradient(to right, #04BEFE,#005BEA);
 		margin:  50rpx auto;
 		border-radius: 40rpx;
 		text-align: center;

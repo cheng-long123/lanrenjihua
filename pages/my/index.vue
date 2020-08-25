@@ -49,7 +49,7 @@
 			</view>
 			<view class="function-content">
 				<view class="card">
-					<view class="card-left">
+					<view class="card-left" @click="toshiming">
 						<image class="card-img" src="../../static/image/shiming.png" mode=""></image>
 						<text class="card-text">实名认证</text>
 					</view>
@@ -249,6 +249,27 @@ export default {
 			uni.navigateTo({
 				url: './promotionCenter'
 			})
+		},
+		async toshiming () {
+			const { data } = await this.Request({
+				method: 'POST',
+				url: '/Userforeign/user_query',
+				data: {
+					token: this.userToken.token,
+					cre_id: this.userToken.cre_id
+				}
+			})
+			if (data.data.is_real === 1) {
+				uni.showToast({
+					title: '已实名',
+					duration: 2000,
+					icon: 'none'
+				})
+			} else {
+				uni.redirectTo({
+					url: './Certification'
+				})
+			}
 		}
 	}
 }

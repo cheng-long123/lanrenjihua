@@ -32,9 +32,7 @@
 					</label>
 			 </radio-group>
 		</view>
-		<view class="auto_btn" @click="autoRefund">
-			提交
-		</view>
+		<button class="btn" type="filled" @click="autoRefund">提交</button>
     </view>
 </template>
 <script>
@@ -222,7 +220,7 @@ methods:{
 				.radio{
 					
 					/deep/ .uni-radio-input-checked {
-						background-color: #15BE73 !important;
+						background-color: #4481EB !important;
 						border: none;
 						
 						&::before{
@@ -244,14 +242,13 @@ methods:{
 				}
 			}
 	}
-	.auto_btn {
+	.btn {
 		width: 90%;
-		height: 80rpx;
-		line-height: 80rpx;
-		background: linear-gradient(to left, #15BE73,#08BD9E,#16A085);
+		background: linear-gradient(to right, #04BEFE,#005BEA);
 		margin:  50rpx auto;
 		border-radius: 40rpx;
 		text-align: center;
+		font-size: 30rpx;
 		color: #fff;
 	}
 }

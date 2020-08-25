@@ -266,7 +266,7 @@ methods:{
 						icon: 'none'
 					})
 				}
-				console.log(data);
+				// console.log(data);
 			}
 			
 		

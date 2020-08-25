@@ -196,9 +196,29 @@
 						"titleText": "还款详情",
 						"titleSize": "16px",
 						"titleColor":"#fff"
+						
+						
 					}
 				}
 			}
+        }
+        ,{
+            "path" : "pages/Otherpages/planDetailsList",
+            "style" : {
+				// "navigationBarBackgroundColor": "#005BEA",
+				"navigationBarTitleText": "计划详情",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "计划详情",
+						"titleSize": "16px",
+						"titleColor":"#16A085"
+					}
+				}
+			}
+        }
+        ,{
+            "path" : "pages/my/account",
+            "style" : {}
         }
     ],
 	"globalStyle": {

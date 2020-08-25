@@ -22,7 +22,7 @@
 				<view style="color: #000;">每月{{repayment}}日</view>
 			</view>
 		</view>
-		<view class="plan_info" v-show="isShow" v-for="(item, index) in planlist" :key="index">
+		<view class="plan_info" v-show="isShow" v-for="(item, index) in planlist" :key="index" >
 			<view class="plan_head">
 				<view class="head_left">
 					<text style="font-size: 35rpx; margin-right: 10rpx;">计划列表</text>
@@ -35,7 +35,7 @@
 					<text class="del"  @click="delPlan(item.id)">+</text>
 				</view>
 			</view>
-			<view class="paln_content" >
+			<view class="paln_content" @click="toPlan(item.id,item.card_id)" >
 				<view class="paln_card">
 					<text class="content_text">信用卡号</text>
 					<text class="content_num" style="color: #005BEA; font-weight: 600;">{{accountNumber}}</text>
@@ -100,6 +100,11 @@ export default {
 		})
 	},
 	methods: {
+		toPlan (id,cardid) {
+			uni.navigateTo({
+				url: './planDetailsList?id=' + id + '&cardid=' + cardid
+			})
+		},
 		async getPlanList () {
 			const { data } = await this.Request({
 				method: 'POST',
@@ -141,7 +146,7 @@ export default {
 			           	}
 			           })
 			           if (data.status === 1) {
-						   this.delPlan()
+						   this.getPlanList()
 			           	uni.showToast({
 			           		title: data.msg,
 			           		icon: 'none'

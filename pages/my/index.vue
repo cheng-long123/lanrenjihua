@@ -57,7 +57,7 @@
 						<image class="right-btn" src="../../static/image/right-btn.png" mode=""></image>
 					</view>
 				</view>
-				<view class="card">
+				<view class="card" @click="toAccount">
 					<view class="card-left">
 						<image class="card-img" src="../../static/image/zhanghu.png" mode=""></image>
 						<text class="card-text">账户管理</text>
@@ -102,7 +102,7 @@
 						<image class="right-btn" src="../../static/image/right-btn.png" mode=""></image>
 					</view>
 				</view>
-				<view class="card">
+				<view class="card" @click="toPromotionCenter">
 					<view class="card-left">
 						<image class="card-img" src="../../static/image/tuiguang.png" mode=""></image>
 						<text class="card-text">推广中心</text>
@@ -238,6 +238,16 @@ export default {
 					} else if (res.cancel) {     
 					}
 				}
+			})
+		}, // 跳转账户管理
+		toAccount () {
+			uni.navigateTo({
+				url: './account'
+			})
+		},
+		toPromotionCenter  () {
+			uni.navigateTo({
+				url: './promotionCenter'
 			})
 		}
 	}

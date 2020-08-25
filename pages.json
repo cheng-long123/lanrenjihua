@@ -218,7 +218,34 @@
         }
         ,{
             "path" : "pages/my/account",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "账户管理",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "账户管理",
+						"titleSize": "16px",
+						"titleColor":"#16A085"
+					}
+				}
+			}
+        }
+        ,{
+            "path" : "pages/my/promotionCenter",
+            "style" : {
+				"navigationBarTitleText": "推广中心",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [
+							{
+							"text": "分享",
+							 "fontSize": "14px",
+							 "color": "#898989"
+							}
+						]
+					}
+				}
+				
+			}
         }
     ],
 	"globalStyle": {

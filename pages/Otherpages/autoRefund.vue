@@ -61,7 +61,7 @@ export default {
       }
    },
    onLoad(option) {
-   	console.log(option);
+   	// console.log(option);
 	this.cardinfo.card_id = option.card_id
 	this.cardinfo.holderName = option.holderName
 	this.cardinfo.accountNumber = option.accountNumber
@@ -131,7 +131,7 @@ methods:{
 	},
 	async autoRefund () {
 		const { data } = await this.Request({
-			methods: 'POST',
+			method: 'POST',
 			url: '/Ttfrepayment/generate_lazy',
 			data: {
 				cre_id: this.usertoken.cre_id,
@@ -166,7 +166,7 @@ methods:{
 				})
 			},1500)
 		}
-		console.log(data);
+		// console.log(data);
 	}
 	
 },

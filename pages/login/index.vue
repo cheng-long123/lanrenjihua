@@ -41,7 +41,7 @@ export default {
    	uni.navigateTo({
    		url: '../register/index'
    	})
-       console.log("success")        
+       // console.log("success")        
    },
 methods:{
 	//登录

@@ -93,7 +93,7 @@
 			})
 			this.bank_list = ['请选择银行名称']
 			var a = JSON.parse(decodeURIComponent(option))
-			console.log(a);
+			// console.log(a);
 		},
 		onShow() {
 			
@@ -118,11 +118,11 @@
 				} else if (data.status === 4) {
 					this.baseLogout()
 				}
-				console.log(data);
+				// console.log(data);
 			},// 获取银行卡名称
 			async getBankName () {
 				const { data } = await this.Request({
-					methods: 'GET',
+					method: 'GET',
 					url: '/Creditcard/bank_name',
 					data: {
 						token: this.usertoken.token
@@ -183,7 +183,7 @@
 					// }
 					// console.log(data)
 					var k=JSON.stringify(data)
-					console.log(k)
+					// console.log(k)
 					k=k.replace('&','')
 					k=k.replace(/\+/g,'88888')
 					k=k.replace(/\+/g,'%2B')

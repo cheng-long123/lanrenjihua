@@ -55,7 +55,7 @@ export default {
 			})
 			if (data.status === 1) {
 				this.planList = data.data
-				console.log(data);
+				// console.log(data);
 			} else if (data.status === 2) {
 				uni.showToast({
 					title: data.msg,

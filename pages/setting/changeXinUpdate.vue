@@ -56,7 +56,7 @@ export default {
 					this.cardinfo = this.cardinfoList[i]
 				}
 			}
-	   	console.log(this.cardinfo);
+	   	// console.log(this.cardinfo);
 		// const { data } = await this.Request({
 		// 		methods: 'GET',
 		// 		url: '/Creditcard/card_list',
@@ -80,7 +80,7 @@ export default {
 			   for (var i = 0; i < data.data.length; i++) {
 				   this.cardlist.push(data.data[i].accountNumber) 
 			   }
-			   console.log(data);
+			   // console.log(data);
 	  },
 	  async confirm () {
 		  const { data } = await this.Request({

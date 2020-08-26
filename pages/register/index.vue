@@ -114,9 +114,9 @@ methods:{
 		// }if (this.code === ''){
 		// 	return uni.showToast({title: '请输入验证码',icon: 'none'})
 		// }
-		console.log(this.$data);
+		// console.log(this.$data);
 		const { data } = await this.Request({
-			methods: 'POST',
+			method: 'POST',
 			url: '/Userforeign/user_instan',
 			data: {
 				phone: this.phone,

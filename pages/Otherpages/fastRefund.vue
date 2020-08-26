@@ -78,11 +78,11 @@ methods:{
 			})
 		}
 		
-		console.log(data);
+		// console.log(data);
 	},
 	async fastRefund () {
 		const { data } = await this.Request({
-			methods: 'POST',
+			method: 'POST',
 			url: '/Ttfrepayment/generate_speed',
 			data: {
 				card_id: this.card_id,

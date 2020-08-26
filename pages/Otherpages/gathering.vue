@@ -87,8 +87,8 @@
 						}
 					}
 				}
-				console.log(data);
-				console.log(this.choosezfkh);
+				// console.log(data);
+				// console.log(this.choosezfkh);
 			},
 			// 获取用户信息
 			async getUserInfo () {

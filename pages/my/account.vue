@@ -99,7 +99,7 @@ export default {
 	} else if (data.status === 4) {
 		this.baseLogout()
 	}
-	console.log(data);
+	// console.log(data);
    }, // 返回会员等级
    async DoMember () {
 	   const { data } = await this.Request({
@@ -141,7 +141,7 @@ export default {
 		              	url: '../login/index'
 		              })
 		           } else if (res.cancel) {
-		               console.log('用户点击取消');
+		               // console.log('用户点击取消');
 		           }
 		       }
 		   });
@@ -194,7 +194,7 @@ export default {
 	   // }
 	   // this.isindex = index
 	   // console.log(index);
-	   console.log(this.card_msg);
+	   // console.log(this.card_msg);
    },// 手动还款
    async manual () {
 	   const { data } = await this.Request({
@@ -246,7 +246,7 @@ export default {
 	   } else {
 		   if (!data.data) {
 			   if (this.card_msg.df === 1) {
-				   console.log(this.card_msg);
+				   // console.log(this.card_msg);
 				   uni.navigateTo({
 				   			url: '../Otherpages/autoRefund?card_id=' + this.card_msg.cid + 
 							'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
@@ -282,7 +282,7 @@ export default {
 		 } else {
 		 		   if (!data.data) {
 		 			   if (this.card_msg.df === 1) {
-		 				   console.log(this.card_msg);
+		 				   // console.log(this.card_msg);
 		 				   uni.navigateTo({
 		 				   			url: '../Otherpages/fastRefund?card_id=' + this.card_msg.cid + 
 		 							'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
@@ -323,7 +323,6 @@ onLoad() {
 			this.DoMember()
 		}
 	})
-	this.getBanner()
 },
 onShow() {
 	var loginRes = this.checkLogin();

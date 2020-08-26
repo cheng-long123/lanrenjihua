@@ -250,7 +250,70 @@
         ,{
             "path" : "pages/my/Certification",
             "style" : {
-				"navigationBarTitleText": "实名认证"
+				"navigationBarTitleText": "实名认证",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "实名认证",
+						"titleSize": "16px",
+						"titleColor":"#4481EB"
+					}
+				}
+			}
+        }
+        ,{
+            "path" : "pages/my/orderDetail",
+            "style" : {
+				"navigationBarTitleText": "订单明细",
+				"navigationBarBackgroundColor":"#005BEA",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "订单明细",
+						"titleSize": "16px",
+						"titleColor":"#fff"
+					}
+				}
+			}
+        }
+        ,{
+            "path" : "pages/my/orderParticulars",
+            "style" : {
+				"navigationBarTitleText": "订单详情",
+				"navigationBarBackgroundColor":"#005BEA",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "订单详情",
+						"titleSize": "16px",
+						"titleColor":"#fff"
+					}
+				}
+			}
+        }
+        ,{
+            "path" : "pages/my/profitDetail",
+            "style" : {
+				"navigationBarTitleText": "分润明细",
+				"navigationBarBackgroundColor":"#005BEA",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "分润明细",
+						"titleSize": "16px",
+						"titleColor":"#fff"
+					}
+				}
+			}
+        }
+        ,{
+            "path" : "pages/my/profitParticulars",
+            "style" : {
+				"navigationBarTitleText": "分润详情",
+				"navigationBarBackgroundColor":"#005BEA",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "分润详情",
+						"titleSize": "16px",
+						"titleColor":"#fff"
+					}
+				}
 			}
         }
     ],

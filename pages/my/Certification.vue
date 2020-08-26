@@ -92,7 +92,7 @@ export default {
 	methods: {
 		 handleGetRegion(region){
 				this.region = region
-				console.log(region);
+				console.log(region[0].name);
 				console.log(this.gender);
 			},
 			radioChange (e) {

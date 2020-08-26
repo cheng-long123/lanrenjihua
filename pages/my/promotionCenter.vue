@@ -161,45 +161,38 @@
 		},
 
 		methods: {
-			getimgformapi() {
-				uni.request({
-					url: 'http://dh.weifoupay.com/payapi/Info/advertisement',
-					success: res => {
-
-						this.$data.imgfromapi = res.data.data
-						console.log(this.$data.imgfromapi)
-					}
+			async getimgformapi() {
+				const { data } = await this.Request({
+					url: '/Info/advertisement'
 				})
+				this.$data.imgfromapi = data.data
+				
 			},
-			geterweima() {
-				uni.request({
-					url: 'http://dh.weifoupay.com/payapi/Real/generalize',
+			async geterweima() {
+				const { data } = await this.Request({
+					url: '/Real/generalize',
 					method: 'POST',
 					data: {
 						cre_id: this.$data.cre_id,
 						token: this.$data.token
 					},
-					success: res => {
-						if (res.data.status == 4) {
-							this.baselogout()
-						} else {
-							console.log(res)
-							// let base64 = wx.arrayBufferToBase64(res.data); //把arraybuffer转成base64
-							// toBase64Url = 'data:image/jpeg;base64,' + base64; //不加上这串字符，在页面无法显示
-							let toBase64Url = 'data:image/jpeg;base64,' + res.data
-
-							console.log(toBase64Url);
-							this.erweimaImg = 'data:image/jpeg;base64,' + res.data
-							console.log(this.erweimaImg)
-							// console.log(GetImageInfoOption(res.data))
-							// uni.getImageInfo({
-
-							// })
-						}
-
-					},
-
 				})
+				if (data.status === 4) {
+					this.baseLogout()
+				} else {
+					// console.log(res)
+					// let base64 = wx.arrayBufferToBase64(res.data); //把arraybuffer转成base64
+					// toBase64Url = 'data:image/jpeg;base64,' + base64; //不加上这串字符，在页面无法显示
+					let toBase64Url = 'data:image/jpeg;base64,' + data
+				
+					console.log(toBase64Url);
+					this.erweimaImg = 'data:image/jpeg;base64,' + data
+					console.log(this.erweimaImg)
+					// console.log(GetImageInfoOption(res.data))
+					// uni.getImageInfo({
+				
+					// })
+				}
 			},
 			hidehongbao() {
 				this.showhongbao = false

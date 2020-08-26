@@ -127,7 +127,7 @@ export default {
 			} else {
 				this.isShow = false
 			}
-			console.log(data);
+			// console.log(data);
 		},
 		 delPlan (id) {
 			uni.showModal({
@@ -136,7 +136,7 @@ export default {
 			    success: async (res)=> {
 			        if (res.confirm) {
 			           const { data } = await this.Request({
-			           	methods: 'POST',
+			           	method: 'POST',
 			           	url: '/Plan/plan_delete',
 			           	data: {
 			           		id,

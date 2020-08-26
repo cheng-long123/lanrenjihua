@@ -98,7 +98,7 @@ export default {
    	this.holderName = option.holderName
    	this.accountNumber = option.accountNumber
    	this.fee = option.fee / 100
-	console.log(option);
+	// console.log(option);
    	uni.getStorage({
    		key: 'usertoken',
    		success: (res) => {
@@ -211,10 +211,10 @@ methods:{
 						icon: 'none'
 					})
 				}
-		console.log(data);
+		// console.log(data);
 	},
 	async subnitPlan () {
-		console.log(this.range.data.toString());
+		// console.log(this.range.data.toString());
 		this.isdisabled = false
 		if (this.$data.pre_money < 500) {
 			uni.showToast({

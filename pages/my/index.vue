@@ -47,9 +47,9 @@
 			<view class="head">
 				功能专区
 			</view>
-			<view class="function-content">
-				<view class="card">
-					<view class="card-left" @click="toshiming">
+			<view class="function-content" >
+				<view class="card"  @click="toshiming">
+					<view class="card-left">
 						<image class="card-img" src="../../static/image/shiming.png" mode=""></image>
 						<text class="card-text">实名认证</text>
 					</view>
@@ -66,7 +66,7 @@
 						<image class="right-btn" src="../../static/image/right-btn.png" mode=""></image>
 					</view>
 				</view>
-				<view class="card">
+				<view class="card" @click="toorderDetail">
 					<view class="card-left">
 						<image class="card-img" src="../../static/image/dingdan.png" mode=""></image>
 						<text class="card-text">订单明细</text>
@@ -75,7 +75,7 @@
 						<image class="right-btn" src="../../static/image/right-btn.png" mode=""></image>
 					</view>
 				</view>
-				<view class="card">
+				<view class="card" @click="toprofitDetail">
 					<view class="card-left">
 						<image class="card-img" src="../../static/image/jinglirun.png" mode=""></image>
 						<text class="card-text">分润明细</text>
@@ -114,7 +114,7 @@
 				<view class="card" @click="quitLogin">
 					<view class="card-left">
 						<image class="card-img" src="../../static/image/tuichu.png" mode=""></image>
-						<text class="card-text">退出</text>
+						<text class="card-text">退出登录</text>
 					</view>
 				</view>
 			</view>
@@ -230,6 +230,11 @@ export default {
 									title: '退出成功',
 									icon: 'none'
 								})
+								setTimeout( () => {
+									uni.reLaunch({
+										url: '../login/index'
+									})
+								},1200)
 								// uni.reLaunch({
 								// 	url: '../login/index'
 								// })
@@ -244,10 +249,20 @@ export default {
 			uni.navigateTo({
 				url: './account'
 			})
-		},
+		},//推广中心
 		toPromotionCenter  () {
 			uni.navigateTo({
 				url: './promotionCenter'
+			})
+		},//订单明细
+		toorderDetail () {
+			uni.navigateTo({
+				url: './orderDetail'
+			})
+		},
+		toprofitDetail () {
+			uni.navigateTo({
+				url: './profitDetail'
 			})
 		},
 		async toshiming () {

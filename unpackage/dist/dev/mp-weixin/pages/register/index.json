@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "注册",
+  "usingComponents": {
+    "wyb-button": "/components/wyb-button/wyb-button"
+  }
+}

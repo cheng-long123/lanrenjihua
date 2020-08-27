@@ -316,6 +316,20 @@
 				}
 			}
         }
+        ,{
+            "path" : "pages/my/withdrawDeposit",
+            "style" : {
+				"navigationBarTitleText": "余额提现",
+				// "navigationBarBackgroundColor":"#005BEA",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "余额提现",
+						"titleSize": "16px",
+						"titleColor":"#4481EB"
+					}
+				}
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -1,0 +1,1 @@
+<block wx:if="{{isShow}}"><view class="{{[contentClass]}}" style="{{(root+contentStyle)}}" id="content" animation="{{animData}}"><slot></slot></view></block>

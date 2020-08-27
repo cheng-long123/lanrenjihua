@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "信用卡修改",
+  "usingComponents": {
+    "wyb-button": "/components/wyb-button/wyb-button"
+  }
+}

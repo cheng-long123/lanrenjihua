@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "首页",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#f4f4f6",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "wyb-popup": "/components/wyb-popup/wyb-popup",
+    "uni-swiper-dot": "/node-modules/@dcloudio/uni-ui/lib/uni-swiper-dot/uni-swiper-dot"
+  }
+}

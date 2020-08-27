@@ -1,0 +1,61 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/notice/index",
+    "pages/my/index",
+    "pages/text/text",
+    "pages/login/index",
+    "pages/register/index",
+    "pages/Otherpages/gathering",
+    "pages/Otherpages/addCreditCard",
+    "pages/setting/index",
+    "pages/Otherpages/manual",
+    "pages/setting/changemm",
+    "pages/Otherpages/formsubmit",
+    "pages/setting/changeXinUpdate",
+    "pages/Otherpages/autoRefund",
+    "pages/Otherpages/fastRefund",
+    "pages/Otherpages/planDetails",
+    "pages/Otherpages/planDetailsList",
+    "pages/my/account",
+    "pages/my/promotionCenter",
+    "pages/my/Certification",
+    "pages/my/orderDetail",
+    "pages/my/orderParticulars",
+    "pages/my/profitDetail",
+    "pages/my/profitParticulars"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "懒人计划",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#747474",
+    "selectedColor": "#209CFF",
+    "list": [
+      {
+        "text": "首页",
+        "pagePath": "pages/index/index",
+        "iconPath": "./static/image/index.png",
+        "selectedIconPath": "./static/image/select-index.png"
+      },
+      {
+        "text": "公告",
+        "pagePath": "pages/notice/index",
+        "iconPath": "./static/image/notice.png",
+        "selectedIconPath": "./static/image/select-notice.png"
+      },
+      {
+        "text": "我的",
+        "pagePath": "pages/my/index",
+        "iconPath": "./static/image/my.png",
+        "selectedIconPath": "./static/image/select-my.png"
+      }
+    ]
+  },
+  "usingComponents": {},
+  "sitemapLocation": "sitemap.json"
+}

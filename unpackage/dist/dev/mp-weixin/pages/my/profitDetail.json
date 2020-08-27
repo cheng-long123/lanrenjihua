@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "分润明细",
+  "navigationBarBackgroundColor": "#005BEA",
+  "usingComponents": {
+    "w-picker": "/components/w-picker/w-picker"
+  }
+}

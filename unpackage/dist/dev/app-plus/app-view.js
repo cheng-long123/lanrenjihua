@@ -2936,7 +2936,7 @@ var render = function() {
                       _c(
                         "v-uni-text",
                         { staticClass: _vm._$g(68, "sc"), attrs: { _i: 68 } },
-                        [_vm._v("退出")]
+                        [_vm._v("退出登录")]
                       )
                     ],
                     1

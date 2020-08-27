@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "wyb-transition": "/components/wyb-transition/wyb-transition"
+  }
+}

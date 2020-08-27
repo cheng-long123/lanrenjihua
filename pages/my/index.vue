@@ -20,7 +20,7 @@
 						点击登录
 					</view>
 				</view>
-				<view class="get-deposit">
+				<view class="get-deposit" v-show="userInfo !== ''" @click="toTixian">
 					去提现
 				</view>
 			</view>
@@ -259,10 +259,15 @@ export default {
 			uni.navigateTo({
 				url: './orderDetail'
 			})
-		},
+		}, // 分润明细
 		toprofitDetail () {
 			uni.navigateTo({
 				url: './profitDetail'
+			})
+		}, // 余额提现
+		toTixian () {
+			uni.navigateTo({
+				url: './withdrawDeposit'
 			})
 		},
 		async toshiming () {

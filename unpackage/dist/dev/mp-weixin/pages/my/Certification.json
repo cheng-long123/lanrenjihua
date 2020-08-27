@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "实名认证",
+  "usingComponents": {
+    "pick-regions": "/components/pick-regions/pick-regions"
+  }
+}

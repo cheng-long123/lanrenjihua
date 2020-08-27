@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "设置",
+  "usingComponents": {
+    "wyb-popup": "/components/wyb-popup/wyb-popup",
+    "wyb-button": "/components/wyb-button/wyb-button"
+  }
+}

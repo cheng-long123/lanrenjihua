@@ -93,7 +93,7 @@
 						<image class="right-btn" src="../../static/image/right-btn.png" mode=""></image>
 					</view>
 				</view>
-				<view class="card">
+				<view class="card" @click="tovip">
 					<view class="card-left">
 						<image class="card-img" src="../../static/image/huiyuan.png" mode=""></image>
 						<text class="card-text">会员中心</text>
@@ -268,6 +268,11 @@ export default {
 		toTixian () {
 			uni.navigateTo({
 				url: './withdrawDeposit'
+			})
+		},
+		tovip () {
+			uni.navigateTo({
+				url: './vip'
 			})
 		},
 		async toshiming () {

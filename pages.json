@@ -330,6 +330,21 @@
 				}
 			}
         }
+        ,{
+            "path" : "pages/my/vip",
+            "style" : {
+				"navigationBarTitleText": "会员中心",
+				// "navigationStyle":"custom",
+				"navigationBarBackgroundColor":"#005BEA",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "会员中心",
+						"titleSize": "16px",
+						"titleColor":"#fff"
+					}
+				}
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

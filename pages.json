@@ -362,11 +362,12 @@
             "path" : "pages/my/profitSummary",
             "style" : {
 				"navigationBarTitleText": "分润汇总",
+				"navigationBarBackgroundColor":"#005BEA",
 				"app-plus": {
 					"titleNView": {
 						"titleText": "分润汇总",
 						"titleSize": "16px",
-						"titleColor":"#4481EB"
+						"titleColor":"#fff"
 					}
 				}
 			}

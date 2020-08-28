@@ -8,7 +8,7 @@
 					<image src="../../static/image/right-btn.png" mode=""></image>
 				</view>
 			</view>
-			<wyb-popup ref="update_name" type="bottom" height="400" width="500" radius="6" >
+			<wyb-popup ref="update_name" zIndex="22" type="bottom" height="400" width="500" radius="6" >
 			    <view class="popup-content">
 			        <view class="name">
 			        	编辑昵称
@@ -44,7 +44,7 @@
 		        <text class="update_text">借记卡号修改</text>
 				<textarea class="card_text" v-model="bank_card" placeholder="请输入借记卡号" />
 				<view class="btn">
-					<wyb-button class="submit_btn" width="50%" :ripple="true" type="filled" @click="updateCard" >确认修改</wyb-button>
+					<wyb-button class="submit_btn" zIndex="22" width="50%" :ripple="true" type="filled" @click="updateCard" >确认修改</wyb-button>
 					<wyb-button class="call_btn" width="50%" :ripple="true" type="hollow" @click="updatecall">取消</wyb-button>
 				</view>
 		    </view>
@@ -125,6 +125,11 @@
 							title: '不能与当前昵称一致',
 							icon: 'none'
 					})
+				} else if ( this.nickname === '') {
+					return uni.showToast({
+							title: '昵称不能为空',
+							icon: 'none'
+					})
 				}
 				const { data } = await this.Request({
 					method: 'POST',
@@ -136,15 +141,16 @@
 					}
 				})
 				if (data.status === 1) {
-					this.call()
 					 uni.showToast({
 					 	title: data.msg,
 						duration: 2000,
 					 	icon: 'none'
 					 })
+					 setTimeout( () => {
+						 this.call()
+					 },100)
 					this.getUserInfo()
 				} else if (data.status === 2) {
-					this.call()
 					uni.showToast({
 						title: data.msg,
 						duration: 2000,

@@ -1,6 +1,8 @@
 
 <script>
 	import Vue from 'vue'
+	import './static/iconfont/iconfont.css'
+	import './static/iconfont/iconfont.ttf'
 	export default {
 		onLaunch: function() {
 			  uni.getSystemInfo({  

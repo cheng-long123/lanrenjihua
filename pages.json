@@ -345,6 +345,32 @@
 				}
 			}
         }
+        ,{
+            "path" : "pages/my/teamManagement",
+            "style" : {
+				"navigationBarTitleText": "团队管理",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "团队管理",
+						"titleSize": "16px",
+						"titleColor":"#4481EB"
+					}
+				}
+			}
+        }
+        ,{
+            "path" : "pages/my/profitSummary",
+            "style" : {
+				"navigationBarTitleText": "分润汇总",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "分润汇总",
+						"titleSize": "16px",
+						"titleColor":"#4481EB"
+					}
+				}
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

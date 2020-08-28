@@ -26,7 +26,7 @@
 			</view>
 			 <!-- 金额 -->
 			<view class="user-money">
-				<view class="left-money">
+				<view class="left-money" @click="toprofitSummary">
 					<text class="left-money">{{userInfo.balance}}</text>
 					<text class="left-text">分润</text>
 				</view>
@@ -84,7 +84,7 @@
 						<image class="right-btn" src="../../static/image/right-btn.png" mode=""></image>
 					</view>
 				</view>
-				<view class="card">
+				<view class="card" @click="toteamManagement ">
 					<view class="card-left">
 						<image class="card-img" src="../../static/image/tuandui.png" mode=""></image>
 						<text class="card-text">团队管理</text>
@@ -244,7 +244,13 @@ export default {
 					}
 				}
 			})
-		}, // 跳转账户管理
+		},
+		toprofitSummary () {
+			uni.navigateTo({
+				url: './profitSummary'
+			})
+		},
+		 // 跳转账户管理
 		toAccount () {
 			uni.navigateTo({
 				url: './account'
@@ -269,10 +275,15 @@ export default {
 			uni.navigateTo({
 				url: './withdrawDeposit'
 			})
-		},
+		}, // vip中心
 		tovip () {
 			uni.navigateTo({
 				url: './vip'
+			})
+		}, // 团队管理
+		toteamManagement () {
+			uni.navigateTo({
+				url: './teamManagement'
 			})
 		},
 		async toshiming () {

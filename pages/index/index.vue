@@ -8,6 +8,14 @@
 		 <!-- #endif --> 
 		       <view>  
 		  </view> 
+		  <wyb-popup ref="renovate" type="center" height="635" width="570" radius="6" >
+		      <view class="popup-renovate">
+		         <view class="renovate">
+		         	<image src="../../static/image/gengxin.png" mode=""></image>
+		         </view>
+				<button class="renovate-btn" type="default" @click="updateApp">立即更新</button>
+		      </view>
+		  </wyb-popup>
 		<view class="content">
 			<!-- 头部 -->
 			<view class="header">
@@ -139,7 +147,7 @@
 				</wyb-popup>
 			</view>
 			<view v-else class="tishi">
-				{{userToken !== '' && card_list.length !== 0  ? '您还没有绑卡，快去绑卡吧！！' : '您还没有登录，快去登录！！'}}
+				{{userToken !== ''  || card_list.length !== 0  ? '您还没有绑卡，快去绑卡吧！！' : '您还没有登录，快去登录！！'}}
 			</view>
 		</view>
     </view>
@@ -169,7 +177,9 @@ export default {
 			 isShowBox: false,
 			 isindex: null,
 			 card_msg: {},
-			 card_index: ''
+			 card_index: '',
+			 version: '',
+			 download_url: ''
 			 
 		}
    },
@@ -436,9 +446,48 @@ export default {
 			this.card_msg.accountNumber + '&quota=' + this.card_msg.quota + '&bill_day=' +  this.card_msg.bill_day +
 			 '&repayment=' + this.card_msg.repayment + '&weihao=' + weihao + '&bannk_name=' + this.card_msg.bannk_name
 		 })
+	}, // 版本更新
+	async getrenovate () {
+		// #ifdef APP-PLUS
+		plus.runtime.getProperty(plus.runtime.appid,async (wgtinfo) => {
+			if (this.platform == 'android') {
+					this.version = 1
+				} else {
+					this.version = 2
+				}
+			const { data } = await this.Request({
+				method: 'GET',
+				url: '/Edition/renovate',
+				type: this.version
+			})
+		})
+			if (data.status === 1) {
+				this.$nextTick(() =>{
+					this.$refs.renovate.show() // 显示
+					// console.log(123);
+				})
+				if (wgtinfo.version < data.data.version) {
+					this.download_url = data.data.download_url
+				}
+			}
+			// #endif
+		// console.log(data);
+	},
+	updateApp () {
+		plus.runtime.openURL(this.download_url)
+	},
+	getStsyem () {
+		uni.getSystemInfo({
+			success: (res) => {
+				this.platform = res.platform
+				console.log(res);
+			}
+		})
 	}
 },
 onLoad() {
+	this.getrenovate()
+	this.getStsyem()
 	// 获取本地token
 	uni.getStorage({
 		key: 'usertoken',
@@ -451,13 +500,14 @@ onLoad() {
 		}
 	})
 	this.getBanner()
+	
 },
 onShow() {
 	var loginRes = this.checkLogin();
 		if (!loginRes) {
 			return false;
 		}
-
+	
 	if (!uni.getStorageSync('usertoken')) {
 		this.card_list = []
 	} else {
@@ -602,7 +652,6 @@ onPullDownRefresh () {
    }
 /* 账户管理 */
 .account {
-	
 		.head{
 			display: flex;
 			justify-content: space-between;
@@ -624,6 +673,7 @@ onPullDownRefresh () {
 			margin-top: 150rpx;
 			font-size: 32rpx;
 			color: rgba(0,0,0,.3);
+			min-height: 800rpx;
 		}
 		.account-content{
 			display: flex;
@@ -720,6 +770,32 @@ onPullDownRefresh () {
 			}
 		}
 		
+		
 	}
- 
+ .popup-renovate {
+ 	.renovate {
+ 		width: 100%;
+ 		height: 458rpx;
+ 		/* background: url(../../static/image/gengxin.png) no-repeat;
+ 		background-size: cover; */
+ 		image {
+ 			width: 100%;
+ 			height: 100%;
+			text-align: center;
+ 		}
+ 		
+ 	}
+	.renovate-btn {
+		width: 300rpx;
+		height: 69rpx;
+		line-height: 69rpx;
+		text-align: center;
+		background-color: #19C6FB;
+		color: #fff;
+		border-radius: 40rpx;
+		margin: 0rpx auto;
+		margin-top: 40rpx;
+	}
+ 	
+ }
 </style>

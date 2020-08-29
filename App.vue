@@ -1,8 +1,7 @@
 
 <script>
 	import Vue from 'vue'
-	import './static/iconfont/iconfont.css'
-	import './static/iconfont/iconfont.ttf'
+
 	export default {
 		onLaunch: function() {
 			  uni.getSystemInfo({  
@@ -38,7 +37,8 @@
 	}
 </script>
 
-<style>
+<style src="./static/iconfont/iconfont.css">
+	/* @import url("./static/iconfont/iconfont.css") */
 	/*每个页面公共css */
 	 /* @import url("./uni.scss"); */
 	 page {

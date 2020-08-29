@@ -119,7 +119,7 @@
 		margin: 40rpx auto;
 		background: url(../../static/image/card-bg.png) no-repeat;
 		// background-size: 200%;
-		background-position: -218rpx -170rpx;
+		background-position: -228rpx -190rpx;
 		border-radius: 40rpx;
 		text-align: center;
 		color: #fff;

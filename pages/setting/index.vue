@@ -52,7 +52,7 @@
 		<view class="bottom">
 			<view class="banben">
 				<text class="banben_text">版本号</text>
-				<view class="banben_right">1.2.1.9</view>
+				<view class="banben_right">{{version}}</view>
 			</view>
 			<view class="banben"  @click="tuichu">
 				<text class="banben_text">退出</text>
@@ -70,13 +70,18 @@
 				userinfo: {},
 				usertoken: '',
 				nickname: '',
-				bank_card: ''
+				bank_card: '',
+				version: ''
 			}
 		},
 		components:{
 			  wybPopup
 		},
 		onLoad() {
+			// #ifdef APP-PLUS
+			this.getVersion()
+			// this.version = plus.runtime.version
+			// #endif
 			uni.getStorage({
 				key: 'usertoken',
 				success: (res) => {
@@ -201,7 +206,28 @@
 				} else if (data.status === 4) {
 					this.baseLogout()
 				}
+			},
+			getVersion ()  {
+				plus.runtime.getProperty( plus.runtime.appid,  ( wgtinfo ) => {
+					  this.version = wgtinfo.version
+						//appid属性
+						// var wgtStr = "appid:"+wgtinfo.appid;
+						//version属性
+						// wgtStr += "<br/>version:"+wgtinfo.version;
+						//name属性
+						// wgtStr += "<br/>name:"+wgtinfo.name;
+						//description属性
+						// wgtStr += "<br/>description:"+wgtinfo.description;
+						//author属性
+						// wgtStr += "<br/>author:"+wgtinfo.author;
+						//email属性
+						// wgtStr += "<br/>email:"+wgtinfo.email;
+						//features 属性
+						// wgtStr += "<br/>features:"+wgtinfo.features;
+						// console.log( wgtStr );
+					} );
 			}
+		
 		}
 	}
 </script>

@@ -185,7 +185,7 @@
 					this.phone = ''
 					this.getTema()
 					setTimeout( () => {
-						this.$refs.popup.hide() // 隐藏
+						this.cancel() // 隐藏
 					},100)
 					uni.showToast({
 						title: data.msg,
@@ -202,16 +202,16 @@
 <style lang="scss" scoped>
 .toteamManagement {
 	.search {
-		position: fixed;
-		top: 86rpx;
-		left: 0;
-		right: 0;
+		// position: fixed;
+		// top: 86rpx;
+		// left: 0;
+		// right: 0;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		height: 102rpx;
 		background-color: #fff;
-		z-index: 99;
+		// z-index: 99;
 		.search-box {
 			box-sizing: border-box;
 			display: flex;
@@ -250,7 +250,7 @@
 		color: #818181;
 		text-align: center;
 		padding: 20rpx 0;
-		margin-top: 100rpx;
+		// margin-top: 100rpx;
 	}
 	.content {
 		box-sizing: border-box;
@@ -275,9 +275,7 @@
 			}
 			.head-right {
 				.icon-xiugai {
-					width: 30rpx;
-					height: 30rpx;
-					font-size: 14rpx;
+					font-size: 28rpx;
 				}
 				.update-text {
 					font-size: 28rpx;

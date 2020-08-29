@@ -667,13 +667,14 @@ onPullDownRefresh () {
 			}
 		}
 		.tishi {
+			box-sizing: border-box;
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			margin-top: 150rpx;
+			margin-top: 40rpx;
 			font-size: 32rpx;
 			color: rgba(0,0,0,.3);
-			min-height: 800rpx;
+			min-height: 515rpx;
 		}
 		.account-content{
 			display: flex;

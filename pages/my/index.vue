@@ -10,7 +10,7 @@
 					</view>
 					<view class="user" v-show="userInfo !== ''">
 						<view class="user-name" >
-							{{userInfo.bank_name}}
+							{{userInfo.bank_name == '' ? '先实名认证' : userInfo.bank_name }}
 						</view>
 						<view class="vip">
 							{{userInfo.member === 1 ?　'普通会员' : userInfo.member === 2 ? '白金会员' : '钻石会员'　}}
@@ -27,14 +27,14 @@
 			 <!-- 金额 -->
 			<view class="user-money">
 				<view class="left-money" @click="toprofitSummary">
-					<text class="left-money">{{userInfo.balance}}</text>
+					<text class="left-money">{{ userInfo.balance == 0 ? 0.00  : userInfo.balance }}</text>
 					<text class="left-text">分润</text>
 				</view>
 				<view class="border">
 					
 				</view>
 				<view class="right-balance">
-					<text class="rightmoney">{{userInfo.total}}</text>
+					<text class="rightmoney">{{userInfo.total == null ? 0.00 : userInfo.total }}</text>
 					<text class="right-text">余额</text>
 				</view>
 			</view>

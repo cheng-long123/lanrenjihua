@@ -4,6 +4,15 @@
 
 	export default {
 		onLaunch: function() {
+			plus.navigator.closeSplashscreen()
+			uni.getStorage({
+				key: 'usertoken',
+				success() {
+					uni.switchTab({
+						url: 'pages/index/index'
+					})
+				}
+			})
 			  uni.getSystemInfo({  
 			        success:function(e){  
 			            Vue.prototype.statusBar = e.statusBarHeight  

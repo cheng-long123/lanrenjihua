@@ -166,7 +166,7 @@
 <style lang="scss" scoped>
 .profitSummary {
 	.summarizing {
-		height: 400rpx;
+		height: 440rpx;
 		background-color: #005BEA;
 		border-radius: 0 0 40rpx 40rpx;
 		.month-num {
@@ -220,20 +220,20 @@
 		}
 		.tabs {
 			
-			height: 80rpx;
+			height: 60rpx;
 			width: 80%;
 			display: flex;
 			justify-content: space-around;
 			align-items: center;
 			text-align: center;
 			border-radius: 40rpx;
-			margin: 0 auto;
-			margin-top: 20rpx;
+			margin: 40rpx auto;
+			// margin-top: 20rpx;
 			.tab-item {
 				// width: 33.33%;
 				width: 150rpx;
-				height: 80rpx;
-				line-height: 80rpx;
+				height: 60rpx;
+				line-height: 60rpx;
 				color: rgba($color: #fff, $alpha: .7);
 			}
 			.active-tab {

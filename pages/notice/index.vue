@@ -1,14 +1,14 @@
 <template>
  	<view class="index">
 		<view style="width: 100%; height: 20rpx;"></view>
- 		<view class="content">
- 			<view class="left">
+ 		<view class="content" @click="toAuthenticated">
+ 			<view class="left" >
  				<view class="left-img">
  					<image  src="../../static/image/notice-1.png" mode=""></image>
  				</view>
  				<view class="left-text">
  					<text class="text1">系统通知</text>
- 					<text class="text2">您已实名认证成功</text>
+ 					<text class="text2">{{is_real == 1 ? '您已实名认证成功' : '您还没实名' }}</text>
  				</view>
  			</view>
  			<view class="right">
@@ -23,17 +23,42 @@
 	export default {
 		data() {
 			return {
-				
+				usertoken: '',
+				is_real: ''
 			}
 		},
 		onLoad() {
+			uni.getStorage({
+				key: 'usertoken',
+				success: (res) => {
+					this.usertoken = res.data
+					this.getAuthenticated()
+				}
+			})
 			var loginRes = this.checkLogin();
 				if (!loginRes) {
 					return false;
 				}
+				
 		},
 		methods: {
-			
+			async getAuthenticated () {
+				const { data } = await this.Request({
+					method: 'POST',
+					url: '/Userforeign/user_query',
+					data: {
+						token: this.usertoken.token,
+						cre_id: this.usertoken.cre_id
+					}
+				})
+				console.log(data);
+				this.is_real = data.data.is_real
+			},
+			toAuthenticated () {
+				uni.navigateTo({
+					url: 'authenticated?is_real=' + this.is_real
+				})
+			}
 		}
 	}
 </script>

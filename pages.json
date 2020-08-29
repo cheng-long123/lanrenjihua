@@ -372,6 +372,19 @@
 				}
 			}
         }
+        ,{
+            "path" : "pages/notice/authenticated",
+            "style" : {
+				"navigationBarTitleText": "实名认证",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "实名认证",
+						"titleSize": "16px",
+						"titleColor":"#4481EB"
+					}
+				}
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

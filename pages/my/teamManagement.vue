@@ -250,7 +250,7 @@
 		color: #818181;
 		text-align: center;
 		padding: 20rpx 0;
-		// margin-top: 100rpx;
+		// margin-top: 40rpx;
 	}
 	.content {
 		box-sizing: border-box;

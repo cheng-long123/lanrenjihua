@@ -33,8 +33,8 @@ import request from '../../api/request.js'
 export default {
    data() {
       return {
-		 phone: '13915550562', //账号
-		 password: '56559745' //密码
+		 phone: '', //账号
+		 password: '' //密码
       }
    },
    onNavigationBarButtonTap(e) {

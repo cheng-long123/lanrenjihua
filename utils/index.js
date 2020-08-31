@@ -17,7 +17,7 @@ export const baselogout = function() {
 		})
 	},1500)
 }
-export const checkLogin = function(){
+export const  checklogin = function(){
 	 var usertoken = uni.getStorageSync('usertoken')
 	if(usertoken === ''){ // 本地没有token表示未登录
 	
@@ -45,15 +45,9 @@ export const checkLogin = function(){
 	}
 
 //校验手机格式
-function checkMobile(mobile){
+export const  checkMobile = function(mobile){
 	return RegExp(/^1(3[0-9]|5[0-3,5-9]|7[1-3,5-8]|8[0-9])\d{8}$/).test(mobile)
 }
-function checkPassword(password){
+export const checkPassword = function (password){
 	return RegExp(/^\d{6}$/).test(password)
-}
-
-module.exports = {
-	checkMobile : checkMobile,
-	checkPassword : checkPassword
-	
 }

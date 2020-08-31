@@ -151,7 +151,6 @@ export default {
 			if (!loginRes) {
 				return false;
 			}
-
 		uni.getStorage({
 			key: 'usertoken',
 			success:res =>{
@@ -199,21 +198,9 @@ export default {
 					icon: 'none'
 				})
 			}
-			 // else if (data.status === 4) {
-			// 	uni.showModal({
-			// 	    title: '提示',
-			// 	    content: '登录过期，是否重新登录!',
-			// 	    success: function (res) {
-			// 	        if (res.confirm) {
-			// 	            uni.navigateTo({
-			// 	            	url: '../login/index'
-			// 	            })
-			// 	        } else if (res.cancel) {
-			// 	            console.log('用户点击取消');
-			// 	        }
-			// 	    }
-			// 	})
-			// }
+			 else if (data.status === 4) {
+				this.baseLogout()
+			}
 			console.log(this.userInfo)
 		}, // 退出登录
 		quitLogin () {

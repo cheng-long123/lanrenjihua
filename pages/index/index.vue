@@ -216,7 +216,7 @@ export default {
 			token: this.userToken.token
 		}
 	})
-	if (data.status === 2 && this.userToken !== '') {
+	if (data.status === 2 ) {
 		this.card_list = data.data
 		
 	} else if (data.status === 4) {
@@ -503,10 +503,7 @@ onLoad() {
 	
 },
 onShow() {
-	var loginRes = this.checkLogin();
-		if (!loginRes) {
-			return false;
-		}
+	
 	
 	if (!uni.getStorageSync('usertoken')) {
 		this.card_list = []
@@ -522,6 +519,10 @@ onShow() {
 			}
 		})
 	}
+	var loginRes = this.checkLogin();
+		if (!loginRes) {
+			return false;
+		}
 },
 onHide() {
 	if (!uni.getStorageSync('usertoken')) {

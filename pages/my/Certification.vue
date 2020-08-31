@@ -129,12 +129,13 @@ export default {
 					uni.hideLoading()
 					uni.showToast({
 						title: '实名认证成功',
+						duration: 2000,
 						icon: 'none'
 					})
 					setTimeout(()=> {
 						uni.reLaunch({
 							url: './index'
-						},1500)
+						},2000)
 					})
 					uni.setStorage({
 						key: 'shiming',

@@ -385,6 +385,19 @@
 				}
 			}
         }
+        ,{
+            "path" : "pages/login/alterPsd",
+            "style" : {
+				"navigationBarTitleText": "修改密码",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "修改密码",
+						"titleSize": "16px",
+						"titleColor":"#4481EB"
+					}
+				}
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

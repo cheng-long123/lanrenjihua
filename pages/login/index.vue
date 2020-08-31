@@ -8,9 +8,9 @@
 				<input type="text" v-model="phone" placeholder="请输入手机号码"/>
 				<input type="password" v-model="password" placeholder="请输入密码" />
 			</view>
-			<!-- <view class="zhuce">
-				<navigator url="../register/index">去注册</navigator>
-			</view> -->
+			<view class="zhuce">
+				<navigator url="../register/index">忘记密码</navigator>
+			</view>
 			<view class="login-btn">
 				<image @click="login"  class="btn-img" src="../../static/image/denglu.png" mode=""></image>
 			</view>

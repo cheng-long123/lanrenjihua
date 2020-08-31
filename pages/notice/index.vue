@@ -55,9 +55,27 @@
 				this.is_real = data.data.is_real
 			},
 			toAuthenticated () {
-				uni.navigateTo({
-					url: 'authenticated?is_real=' + this.is_real
-				})
+				if (this.is_real ===1) {
+					uni.navigateTo({
+						url: 'authenticated?is_real=' + this.is_real
+					})
+				} else {
+					uni.showModal({
+					    title: '提示',
+					    content: '您还没有实名认证，是否实名认证',
+					    success: function (res) {
+					        if (res.confirm) {
+								uni.redirectTo({
+									url: '../my/Certification'
+								})
+					            // console.log('用户点击确定');
+					        } else if (res.cancel) {
+					            console.log('用户点击取消');
+					        }
+					    }
+					});
+				}
+				
 			}
 		}
 	}

@@ -50,8 +50,8 @@
 				    </view>
 				</wyb-popup>
 			</view>
-			<view v-else class="tishi">
-				{{userToken !== '' && card_list.length !== 0  ? '您还没有绑卡，快去绑卡吧！！' : '您还没有登录，快去登录！！'}}
+			<view v-else class="tishi" >
+				{{userToken !== '' || card_list.length !== 0  ? '您还没有绑卡，快去绑卡吧！！' : '您还没有登录，快去登录！！'}}
 			</view>
 		</view>
 </template>
@@ -134,7 +134,7 @@ export default {
 	   if (uni.getStorageSync('usertoken') === '') {
 		   uni.showModal({
 		       title: '提示',
-		       content: '该功能需要登录，是否登录》',
+		       content: '该功能需要登录，是否登录',
 		       success: function (res) {
 		           if (res.confirm) {
 		              uni.navigateTo({
@@ -160,23 +160,22 @@ export default {
 		   })
 	   } else if (data.status === 4) {
 		   this.baseLogout()
-	   // } else {
-		  // uni.showModal({
-		  //     title: '提示',
-		  //     content: '你还没有进行实名认证，是否实名认证？',
-		  //     success: function (res) {
-		  //         if (res.confirm) {
-		  //             uni.switchTab({
-		  //             	url: ''
-		  //             })
-		  //         } else if (res.cancel) {
-		  //             console.log('用户点击取消');
-		  //         }
-		  //     }
-		  // });
-	   // }
+	   } else {
+		  uni.showModal({
+		      title: '提示',
+		      content: '你还没有进行实名认证，是否实名认证？',
+		      success: function (res) {
+		          if (res.confirm) {
+		              uni.switchTab({
+		              	url: './Certification'
+		              })
+		          } else if (res.cancel) {
+		              console.log('用户点击取消');
+		          }
+		      }
+		  });
+	   }
 	   // console.log(data);
-    }
    },
    tocCreditcard () {
 	   uni.navigateTo({
@@ -385,7 +384,7 @@ onPullDownRefresh () {
 }
 /* 账户管理 */
 .account {
-	
+	 /* min-height: 623rpx; */
 		.head{
 			display: flex;
 			justify-content: space-between;
@@ -404,7 +403,8 @@ onPullDownRefresh () {
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			margin-top: 150rpx;
+			/* height: 100%; */
+			/* margin-top: 150rpx; */
 			font-size: 32rpx;
 			color: rgba(0,0,0,.3);
 		}

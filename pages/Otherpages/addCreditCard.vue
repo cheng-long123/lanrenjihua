@@ -35,7 +35,7 @@
 			</view>
 			<view class="user_input">
 				 <text class="user_text">城市</text>
-				<input type="text" v-model="form.address" placeholder="落款城市"/>
+				<input type="text" v-model="form.address" placeholder="城市"/>
 			</view>
 			<view class="user_input">
 				 <text class="user_text">账单日</text>
@@ -79,7 +79,8 @@
 					quota: '',
 					expired: '',
 				},
-				bank_list: ['请选择银行名称']
+				bank_list: ['请选择银行名称'],
+				imei: ''
 			}
 		},
 		onLoad(option) {
@@ -144,13 +145,14 @@
 						method: 'POST',
 						url:　'/Dongfang/quan_add',
 						data: {
+							token: this.usertoken.token,
 							cre_id: this.usertoken.cre_id,
 							channelType: 'df',
 							holderName: this.form.username,
 							idCard: this.form.identity,
 							accountNumber: this.form.cardNumber,
-							phone: this.form.phone,
-							city: this.address,
+							phone: this.form.bank_phone,
+							city: this.form.address,
 							bank_name: this.bank_name,
 							cvv: this.form.cvv,
 							expired: this.form.expired,
@@ -181,7 +183,7 @@
 					// 	quota: this.form.quota,
 					// 	bank_name: this.form.bank_name,
 					// }
-					// console.log(data)
+					console.log(data)
 					var k=JSON.stringify(data)
 					// console.log(k)
 					k=k.replace('&','')
@@ -189,7 +191,7 @@
 					k=k.replace(/\+/g,'%2B')
 					// console.log(k)
 					uni.navigateTo({
-						url:"./formsubmit?data="+ k
+						url:"./formsubmit?data=" + k
 						// url:"fornsbumit?data="+arraywaibu.data
 					})
 				}else {

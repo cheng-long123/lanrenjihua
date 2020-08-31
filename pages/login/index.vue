@@ -9,7 +9,7 @@
 				<input type="password" v-model="password" placeholder="请输入密码" />
 			</view>
 			<view class="zhuce">
-				<navigator url="../register/index">忘记密码</navigator>
+				<navigator url="./alterPsd">忘记密码</navigator>
 			</view>
 			<view class="login-btn">
 				<image @click="login"  class="btn-img" src="../../static/image/denglu.png" mode=""></image>

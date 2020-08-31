@@ -144,12 +144,22 @@ export default {
 					})
 				}
 			} else if (data.status === 2) {
+				this.isshow = false
+				uni.hideLoading()
 				uni.showToast({
 					title: data.msg,
 					icon: 'none'
 				})
 			} else if (data.status === 4) {
 				this.baseLogout()
+			} else {
+				uni.hideLoading()
+				this.isshow = false
+				uni.showToast({
+					title: '没有相关记录',
+					duration: 2000,
+					icon: 'none'
+				})
 			}
 		},
 		toOrderPariculars (oid) {

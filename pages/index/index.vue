@@ -147,7 +147,7 @@
 				</wyb-popup>
 			</view>
 			<view v-else class="tishi">
-				{{userToken !== ''  || card_list.length !== 0  ? '您还没有绑卡，快去绑卡吧！！' : '您还没有登录，快去登录！！'}}
+				{{userToken !== ''  || card_list.length === 0  ? '您还没有绑卡，快去绑卡吧！！' : '您还没有登录，快去登录！！'}}
 			</view>
 		</view>
     </view>
@@ -222,7 +222,7 @@ export default {
 	} else if (data.status === 4) {
 		this.baseLogout()
 	}
-	// console.log(data);
+	console.log(data);
    }, // 返回会员等级
    async DoMember () {
 	   const { data } = await this.Request({

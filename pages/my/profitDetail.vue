@@ -130,6 +130,9 @@ export default {
 				uni.hideLoading()
 				if (data.msg === "当日无数据") {
 					this.isshow = false
+					uni.showToast({
+						title: '查询成功,暂无数据'
+					})
 				} else {
 					this.isshow = true
 					this.profitList = data.data
@@ -140,12 +143,21 @@ export default {
 					})
 				}
 			} else if (data.status === 2) {
+				uni.hideLoading()
 				uni.showToast({
 					title: data.msg,
 					icon: 'none'
 				})
 			} else if (data.status === 4) {
 				this.baseLogout()
+			} else {
+				uni.hideLoading()
+				this.isshow = false
+				uni.showToast({
+					title: '没有相关记录',
+					duration:2000,
+					icon: 'none'
+				})
 			}
 		},
 		toProfitParticulars (id) {

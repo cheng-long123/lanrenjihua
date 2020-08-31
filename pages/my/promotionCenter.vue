@@ -10,7 +10,7 @@
 							<view class="">
 								<image :src="'http://dh.weifoupay.com'+item.curl" mode="" class="tuiguang"></image>
 								<view class="" v-if="index==0" style="display: flex;width: 100%;justify-content: center;">
-									<image class="erweima" aspectFit :src="erweimaImg" alt="" style="z-index: 1000;margin-top: -600rpx;"></image>
+									<image class="erweima" aspectFit :src="erweimaImg" alt="" style="z-index: 1000;margin-top: -642rpx;"></image>
 								</view >
 								<view class="" v-if="index==1" style="display: flex;width: 100%;justify-content: center;">
 									<image class="erweima " aspectFit :src="erweimaImg" alt="" style="z-index: 1000;margin-top: -380rpx;"></image>
@@ -19,10 +19,10 @@
 									<image class="erweima " aspectFit :src="erweimaImg" alt="" style="z-index: 1000;margin-top: -355rpx;margin-left: 118rpx;"></image>
 								</view>
 								<view class="" v-if="index==3" style="text-align: center">
-									<image class="erweima " aspectFit :src="erweimaImg" alt="" style="z-index: 1000;margin-top: -330rpx;margin-left: -100rpx;"></image>
+									<image class="erweima " aspectFit :src="erweimaImg" alt="" style="z-index: 1000;margin-top: -330rpx;margin-left: -150rpx;"></image>
 								</view>
 								<view class="" v-if="index==4"  style="text-align: center">
-									<image class="erweima " aspectFit :src="erweimaImg" alt="" style="z-index: 1000;margin-top: -300rpx;margin-left: 100rpx;"></image>
+									<image class="erweima " aspectFit :src="erweimaImg" alt="" style="z-index: 1000;margin-top: -440rpx;margin-left: -100rpx; width: 200rpx; height: 200rpx;"></image>
 								</view>
 								<view class="" v-if="index==5" style="display: flex;width: 100%;justify-content: center;">
 									<image class="erweima " aspectFit :src="erweimaImg" alt="" style="z-index: 1000;margin-top: -900rpx; "></image>
@@ -405,6 +405,8 @@
 
 	.mybankcard {
 		.erweima {
+			width: 300rpx;
+			height: 300rpx;
 			position: absolute;
 			z-index: 1000;
 			width: pxToRem(180);

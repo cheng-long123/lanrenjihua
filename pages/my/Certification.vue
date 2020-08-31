@@ -133,10 +133,10 @@ export default {
 						icon: 'none'
 					})
 					setTimeout(()=> {
-						uni.reLaunch({
+						uni.redirectTo({
 							url: './index'
-						},2000)
-					})
+						})
+					},2000)
 					uni.setStorage({
 						key: 'shiming',
 						data: 1

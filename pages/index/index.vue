@@ -116,7 +116,7 @@
 				   </view>
 				   
 			    </view>	
-				<wyb-popup ref="popup" type="center" centerAnim="bounce" :duration=300 height="580" width="700" radius="6" :maskAlpha=0.1 :showCloseIcon="false" bgColor='rgba(255,255,255,0)'>
+				<wyb-popup ref="popup" type="center" z-index='22' centerAnim="bounce" :duration=300 height="580" width="700" radius="6" :maskAlpha=0.1 :showCloseIcon="false" bgColor='rgba(255,255,255,0)'>
 				    <view class="popup-content">
 				     
 					  <view class="popup_box" @click="autoRefund">
@@ -358,7 +358,8 @@ export default {
 	   				   uni.navigateTo({
 	   				   			url: '../Otherpages/manual?card_id=' + this.card_msg.cid + 
 	   							'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
-	   							 '&fee=' + this.fee
+	   							 '&fee=' + this.fee + '&bank_name=' + this.card_msg.bannk_name + '&quota=' + this.card_msg.quota +
+								 '&bill_day=' + this.card_msg.bill_day + '&repayment=' + this.card_msg.repayment 
 	   				   })
 	   			   } else {
 					  // let cardmsg =  encodeURIComponent(JSON.stringify(this.card_msg))
@@ -394,9 +395,10 @@ export default {
 			   if (this.card_msg.df === 1) {
 				   // console.log(this.card_msg);
 				   uni.navigateTo({
-				   			url: '../Otherpages/autoRefund?card_id=' + this.card_msg.cid + 
-							'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
-							 '&fee=' + this.fee
+				   			url: '../Otherpages/manual?card_id=' + this.card_msg.cid +
+				   			'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
+				   			 '&fee=' + this.fee + '&bank_name=' + this.card_msg.bannk_name + '&quota=' + this.card_msg.quota +
+				   			 '&bill_day=' + this.card_msg.bill_day + '&repayment=' + this.card_msg.repayment 
 				   })
 			   } else {
 				   uni.navigateTo({
@@ -433,9 +435,10 @@ export default {
 		 			   if (this.card_msg.df === 1) {
 		 				   // console.log(this.card_msg);
 		 				   uni.navigateTo({
-		 				   			url: '../Otherpages/fastRefund?card_id=' + this.card_msg.cid + 
-		 							'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
-		 							 '&fee=' + this.fee
+		 				   			url: '../Otherpages/manual?card_id=' + this.card_msg.cid +
+		 				   			'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
+		 				   			 '&fee=' + this.fee + '&bank_name=' + this.card_msg.bannk_name + '&quota=' + this.card_msg.quota +
+		 				   			 '&bill_day=' + this.card_msg.bill_day + '&repayment=' + this.card_msg.repayment 
 		 				   })
 		 			   } else {
 		 				   uni.navigateTo({

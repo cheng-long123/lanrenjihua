@@ -90,7 +90,11 @@ export default {
 			timeList: [],
 			timeStr: '',
 			calculate: '',
-			num_money: 0
+			num_money: 0,
+			bank_name: '', // 银行卡名称
+			quota: '', // 总泽度
+			bill_day: '', //账单日
+			repayment: '' // 还款日
       }
    },
   onLoad(option) {
@@ -98,6 +102,10 @@ export default {
    	this.holderName = option.holderName
    	this.accountNumber = option.accountNumber
    	this.fee = option.fee / 100
+	this.bank_name = option.bank_name
+	this.quota = option.quota
+	this.bill_day = option.bill_day
+	this.repayment = option.repayment
 	// console.log(option);
    	uni.getStorage({
    		key: 'usertoken',
@@ -255,11 +263,14 @@ methods:{
 						title: '计划提交成功',
 						icon: 'none'
 					})
+					var weihao = this.accountNumber.substring(this.accountNumber.length - 4)
 					setTimeout( () => {
 						uni.redirectTo({
-							url: '../index/index'
-						},2000)
-					})
+							url: './planDetails?card_id=' + this.card_id + '&weihao=' + weihao +
+							'&bannk_name=' + this.bank_name + '&quota=' + this.quota + '&bill_day=' + this.bill_day +
+							 '&repayment=' + this.repayment
+						})
+					},2000)
 				} else if (data.status === 2) {
 					uni.showToast({
 						title: data.msg,

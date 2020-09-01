@@ -90,7 +90,7 @@
 				<image src="../../static/image/huankuan.png" mode=""></image>
 				<text>智能还款</text>
 			</view>
-			<view  class="nav">
+			<view  class="nav" @click="cardApplyfor">
 				<image  src="../../static/image/shenqing.png" mode=""></image>
 				<text>信用卡申请</text>
 			</view>
@@ -300,12 +300,12 @@ export default {
 	   // }
 	   // console.log(data);
     }
-   },
+   }, // 智能还款
    intelligent () {
 	   uni.navigateTo({
 	   	url: '../my/account'
 	   })
-   },
+   }, // 我要贷款
    toposMachineApplication() {
 	//#ifdef APP-PLUS
 	plus.runtime.openURL('http://mall.juzifenqi.com/channel_register/register_loan/index-v2.html?channel=jsbaofutong');
@@ -314,10 +314,16 @@ export default {
 	window.location.href =
 		'http://mall.juzifenqi.com/channel_register/register_loan/index-v2.html?channel=jsbaofutong'
 	//#endif
-   	},
+   	}, // 新增信用卡
    tocCreditcard () {
 	   uni.navigateTo({
 	   	url: '../Otherpages/addCreditCard'
+	   })
+   }, // 信用卡申请
+   cardApplyfor () {
+	   uni.showToast({
+	   	title: '此功能未开通',
+		icon: 'none'
 	   })
    },
    popup (item, index) {

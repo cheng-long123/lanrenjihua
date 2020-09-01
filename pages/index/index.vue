@@ -357,7 +357,10 @@ export default {
 	   			   } else {
 					  // let cardmsg =  encodeURIComponent(JSON.stringify(this.card_msg))
 	   				   uni.navigateTo({
-	   				   			url: '../Otherpages/addCreditCard?cardinfo' + this.card_msg
+	   				   			url: '../Otherpages/addCreditCard?card_id=' + this.card_msg.cid +
+	   				   			'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
+	   				   			 '&bank_name=' + this.card_msg.bannk_name + '&bill_day=' + this.card_msg.bill_day + '&quota=' + this.card_msg.quota +
+	   				   			 '&repayment=' + this.card_msg.repayment + '&expired=' + this.card_msg.expired + '&cvv2=' + this.card_msg.cvv2
 	   				   })
 	   			   }
 	   		   } else {
@@ -391,7 +394,10 @@ export default {
 				   })
 			   } else {
 				   uni.navigateTo({
-				   			url: '../Otherpages/addCreditCard?cardinfo' + JSON.stringify(this.card_msg)
+				   			url: '../Otherpages/addCreditCard?card_id=' + this.card_msg.cid +
+				   			'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
+				   			 '&bank_name=' + this.card_msg.bannk_name + '&bill_day=' + this.card_msg.bill_day + '&quota=' + this.card_msg.quota +
+				   			 '&repayment=' + this.card_msg.repayment + '&expired=' + this.card_msg.expired + '&cvv2=' + this.card_msg.cvv2
 				   })
 			   }
 		   } else {
@@ -427,7 +433,10 @@ export default {
 		 				   })
 		 			   } else {
 		 				   uni.navigateTo({
-		 				   			url: '../Otherpages/addCreditCard?cardinfo' + JSON.stringify(this.card_msg)
+		 				   			url: '../Otherpages/addCreditCard?card_id=' + this.card_msg.cid + 
+		 							'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
+		 							 '&bank_name=' + this.card_msg.bannk_name + '&bill_day=' + this.card_msg.bill_day + '&quota=' + this.card_msg.quota +
+									 '&repayment=' + this.card_msg.repayment + '&expired=' + this.card_msg.expired + '&cvv2=' + this.card_msg.cvv2
 		 				   })
 		 			   }
 		 		   } else {
@@ -528,6 +537,7 @@ onHide() {
 	if (!uni.getStorageSync('usertoken')) {
 		this.card_list = []
 	}
+	this.$refs.popup.hide()
 },
 onPullDownRefresh () {
 	setTimeout( () => {

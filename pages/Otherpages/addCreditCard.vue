@@ -19,7 +19,7 @@
 			<view class="user_card">
 				 <text class="user_text" style="font-size: 28rpx; margin-bottom: 15rpx;">银行名称</text>
 				<picker class="picker" :range="bank_list"  :value="index"  @change="bankCardChang" >
-					<view>{{bank_list[index]}}</view>
+					<view>{{bank_list[index] }}</view>
 				</picker>
 				<!-- <view class="add_card">
 					+添加信用卡
@@ -62,7 +62,7 @@
 	export default {
 		data() {
 			return {
-				bank_cardname: ['请选择银行名称'],
+				bank_cardname: '请选择银行名称',
 				index: 0,
 				usertoken: '',
 				form: {
@@ -80,10 +80,18 @@
 					expired: '',
 				},
 				bank_list: ['请选择银行名称'],
-				imei: ''
+				imei: '',
+				card_msg: '',
+				bank_name: ''
 			}
 		},
 		onLoad(option) {
+			this.$data.form.bill_day = option.bill_day
+			this.$data.form.cardNumber = option.accountNumber
+			this.$data.form.repayment = option.repayment
+			this.$data.form.expired = option.expired
+			this.$data.form.cvv = option.cvv2
+			this.$data.form.quota = option.quota
 			uni.getStorage({
 				key: 'usertoken',
 				success: (res) => {
@@ -92,9 +100,20 @@
 					this.getBankName()
 				},
 			})
-			this.bank_list = ['请选择银行名称']
-			var a = JSON.parse(decodeURIComponent(option))
+			// this.bank_list = ['请选择银行名称']
+			
+			// var a = JSON.parse(decodeURIComponent(option))
 			// console.log(a);
+			console.log(option.bank_name)
+			
+			
+			if (option.bank_name !== undefined) {
+				this.bank_list[0] = option.bank_name
+				this.cardname = option.bank_name
+			} else {
+				this.bank_list[0] = '请选择银行名称'
+			}
+			
 		},
 		onShow() {
 			
@@ -137,8 +156,16 @@
 			bankCardChang (e) {
 				this.index = e.target.value
 				this.bank_name = this.bank_list[e.target.value]
+				// this.bank_list.shift()
 			}, //提交绑卡
 			async confirmSubmit () {
+				if (this.form.cardNumber === undefined) {
+					return uni.showToast({title: '信用卡号不能为空',icon: 'none'})
+				} else if (this.form.cvv === undefined) {
+					return uni.showToast({title: 'cvv不能为空',icon: 'none'})
+				} else if (this.form.quota === undefined) {
+					return uni.showToast({title: '信用额度不能为空',icon: 'none'})
+				}
 				if (this.form.bill_day % 1 == 0 && this.form.bill_day <= 31 && this.form.bill_day >= 1 && this.form.repayment % 1 ==
 					0 && this.form.repayment <= 31 && this.form.repayment >= 1) {
 					const { data } = await this.Request({
@@ -153,7 +180,7 @@
 							accountNumber: this.form.cardNumber,
 							phone: this.form.bank_phone,
 							city: this.form.address,
-							bank_name: this.bank_name,
+							bank_name: this.bank_name || this.cardname,
 							cvv: this.form.cvv,
 							expired: this.form.expired,
 							quota: this.form.quota,
@@ -167,6 +194,24 @@
 							//#endif
 						}
 					})
+					if (data.status === 2) {
+						uni.showToast({
+							title:  data.msg,
+							duration: 2000,
+							icon: 'none'
+						})
+					} else {
+						var k=JSON.stringify(data)
+						// console.log(k)
+						k=k.replace('&','')
+						k=k.replace(/\+/g,'88888')
+						k=k.replace(/\+/g,'%2B')
+						// console.log(k)
+						uni.navigateTo({
+							url:"./formsubmit?data=" + k
+							// url:"fornsbumit?data="+arraywaibu.data
+						})
+					}
 					// var arraywaibu={
 					// 	channelType: 'df',
 					// 	token: this.usertoken.token,
@@ -184,17 +229,8 @@
 					// 	bank_name: this.form.bank_name,
 					// }
 					console.log(data)
-					var k=JSON.stringify(data)
-					// console.log(k)
-					k=k.replace('&','')
-					k=k.replace(/\+/g,'88888')
-					k=k.replace(/\+/g,'%2B')
-					// console.log(k)
-					uni.navigateTo({
-						url:"./formsubmit?data=" + k
-						// url:"fornsbumit?data="+arraywaibu.data
-					})
-				}else {
+					
+				} else {
 					uni.showToast({
 						title: '请输入正确的账单日或还款日',
 						duration: 2000,

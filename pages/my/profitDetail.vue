@@ -80,7 +80,8 @@ export default {
 			enddate: '',
 			usertoken: '',
 			profitList: '',
-			id:''
+			id:'',
+			cre_id: ''
 		}
 	},
 	onLoad(option) {
@@ -88,12 +89,13 @@ export default {
 			key: 'usertoken',
 			success: (res) => {
 				this.usertoken = res.data
-				this.id = res.data.cre_id
+				this.cre_id = res.data.cre_id
 			}
 		})
-		if (option.id !== undefined) {
-			this.id = option.id
-		}
+		// if (option.id !== undefined) {
+		// 	this.id = option.id
+		// }
+		this.id = option.id
 		
 	},
 	components:{
@@ -126,7 +128,7 @@ export default {
 				url: '/OrderPart/arelist',
 				data: {
 					token: this.usertoken.token,
-					cre_id: this.id,
+					cre_id: this.id || this.cre_id,
 					start_time: this.stardate,
 					end_time: this.enddate
 				}

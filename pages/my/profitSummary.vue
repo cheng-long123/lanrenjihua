@@ -347,12 +347,12 @@
 	}
 	/deep/.vipList, .profitList{	
 		overflow: hidden;
-		height: 668rpx;
+		height: 720rpx;
 		// height: 600rpx;
 		overflow: auto;
 		box-sizing: border-box;
 		background-color: #fff !important;
-		border-radius: 40rpx 40rpx 0 0;
+		border-radius: 40rpx 40rpx 40rpx 40rpx;
 		padding: 10rpx 0;
 		/deep/.cover-container {
 			background-color: #fff !important;

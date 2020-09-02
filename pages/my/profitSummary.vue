@@ -41,7 +41,7 @@
 			<view :class="['vip-profit', type === 3 ? 'active' : '']" @click="changeVipProfit(3,month)">会员</view>
 			<view :class="['vip-profit', type === 1 ? 'active' : '']" @click="changeVipProfit(1,month)">分润</view>
 		</view>
-		<view class="vipList" v-show="type === 3">
+		<view class="" v-if="type === 3">
 			<view class="viphead">收益金额</view>
 			<view class="vipitem">
 				<view class="vipheader">
@@ -49,16 +49,17 @@
 					<text>金额</text>
 					<text>姓名</text>
 				</view>
-				<view class="vipcontent" v-for="(item,index) in personal.daylist" :key="index">
-					<text>{{item.date_time}}</text>
-					<text>{{item.fee_money}}</text>
-					<text>{{item.bank_name}}</text>
+			<view class="vipList">
+					<view class="vipcontent" v-for="(item,index) in daylist" :key="index">
+						<text>{{item.date_time}}</text>
+						<text>{{item.fee_money}}</text>
+						<text>{{item.bank_name}}</text>
+					</view>
 				</view>
 			</view>
 		</view>
-		<view class="profitList"  v-show="type === 1">
+		<view class=""  v-else-if="type === 1">
 			<view class="profithead">分润情况</view>
-			<view class="profititem">
 				<view class="profitheader">
 					<text>时间</text>
 					<text>收益金额</text>
@@ -66,12 +67,32 @@
 					<text>姓名</text>
 					<text>订单类型</text>
 				</view>
-				<view class="profitcontent" v-for="(item,index) in personal.daylist" :key="index">
-					<text>{{item.date_time}}</text>
-					<text>{{item.fee_money}}</text>
-					<text>{{item.money}}</text>
-					<text>{{item.bank_name}}</text>
-					<text>{{item.business_type}}</text>
+			<view class="profitList">
+				<view class="profititem">
+					<load-refresh
+					  ref="loadRefresh"
+					  :isRefresh="true"
+					  :refreshTime="800"
+					  :heightReduce="600"
+					  :backgroundCover="'#F3F5F5'"
+					  :pageNo="currPage"
+					  :totalPageNo="totalPage" 
+					  @loadMore="loadMore" 
+					  @refresh="refresh"
+					  >
+					  <view slot="content-list">
+					  <!-- 数据列表 -->
+					   <view class="profitcontent" v-for="(item,index) in daylist" :key="index">
+							<text>{{item.date_time}}</text>
+							<text>{{item.fee_money}}</text>
+							<text>{{item.money}}</text>
+							<text>{{item.bank_name}}</text>
+							<text>{{item.business_type}}</text>
+					   </view>
+					  </view>
+					</load-refresh>
+					
+						 
 				</view>
 			</view>
 		</view>
@@ -79,11 +100,12 @@
 </template>
 
 <script>
+	import loadRefresh from '@/components/load-refresh/load-refresh.vue'
 	export default {
 		data() {
 			return {
 				usertoken: '',
-				current: 10 ,
+				// current: 10 ,
 				 tabs: [
 					{}
 				  ],
@@ -94,9 +116,16 @@
 				  month2: '',
 				  month3: '',
 				  month: '',
-				  personal: ''
+				  personal: '',
+				  daylist: [],
+				  bottomTips: '',
+				  currPage: 12, // 当前页码
+				  totalPage: ''
 			}
 		},
+		components: {
+		    loadRefresh
+		  },
 		onLoad() {
 			uni.getStorage({
 				key: 'usertoken',
@@ -111,13 +140,31 @@
 			 changeDte(state,month) {
 				 this.monthstate = state
 				 this.month = month
+				 this.totalPage = this.currPage + 6
+				 // this.currPage = this.currPage + 6
 			      // console.log('当前选中的项：' + this.index)
 				  this.getInfo(this.year,month,this.type)
 			    },
 			 changeVipProfit (type,month) {
 				 console.log(this.month);
 					this.type = type
+	
 					this.getInfo(this.year,month,this.type)
+					this.daylist = []
+			},
+			loadMore () {
+				 if (this.totalPage - 6 === this.daylist.length) {
+					   this.currPage = this.currPage + 6
+					   this.totalPage = this.currPage + 6
+					   this.getInfo(this.year,this.month,this.type)
+				 } else {
+					   this.totalPage = this.daylist.length
+					   this.$refs.loadRefresh.loadOver()
+				 }
+			},
+			refresh () {
+				  this.getInfo(this.year,this.month,this.type)
+				  this.$refs.loadRefresh.runRefresh()
 			},
 			getTime () {
 				var date = new Date(),
@@ -146,7 +193,8 @@
 						cre_id: this.usertoken.cre_id,
 						years,
 						month,
-						type
+						type,
+						page: this.currPage
 					}
 				})
 				if (data.data.daylist.length === 0) {
@@ -157,6 +205,8 @@
 						})
 				}
 				this.personal= data.data
+				this.daylist = data.data.daylist
+				this.$refs.loadRefresh.loadOver()
 			console.log(data);
 			}
 		}
@@ -165,10 +215,13 @@
 
 <style lang="scss" scoped>
 .profitSummary {
+	overflow: hidden;
+	box-sizing: border-box;
 	.summarizing {
 		height: 440rpx;
 		background-color: #005BEA;
 		border-radius: 0 0 40rpx 40rpx;
+		box-sizing: border-box;
 		.month-num {
 			display: flex;
 			justify-content: center;
@@ -266,37 +319,44 @@
 			border-radius: 40rpx;
 		}
 	}
-	.vipList, .profitList{
+	.viphead, .profithead {
+		padding: 10rpx 0;
+		text-align: center;
+		font-size: 28rpx;
+		font-weight: bold;
+		margin-top: 20rpx;
+	}
+	.vipheader,.profitheader{
 		box-sizing: border-box;
-		background-color: #fff;
-		min-height: 800rpx;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 30rpx;
+		color: rgba($color: #000000, $alpha: 0.6);
+		text-align: center;
+		padding: 10rpx 0;
+	}
+	.vipheader>text{
+		width: 33.33%;
+		display: block;
+	}
+	.profitheader>text{
+		width: 20%;
+	}
+	/deep/.vipList, .profitList{	
+		height: 600rpx;
+		// height: 600rpx;
+		overflow: auto;
+		box-sizing: border-box;
+		background-color: #fff !important;
 		border-radius: 40rpx 40rpx 0 0;
 		padding: 10rpx 0;
-		.viphead, .profithead {
-			text-align: center;
-			font-size: 28rpx;
-			font-weight: bold;
-			margin-top: 20rpx;
+		/deep/.cover-container {
+			background-color: #fff !important;
 		}
 		.vipitem, .profititem{
 			margin-top: 20rpx;
-			.vipheader,.profitheader{
-				box-sizing: border-box;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				font-size: 30rpx;
-				color: rgba($color: #000000, $alpha: 0.6);
-				text-align: center;
-				
-			}
-			.vipheader>text{
-				width: 33.33%;
-				display: block;
-			}
-			.profitheader>text{
-				width: 20%;
-			}
+			background-color: #fff !important;
 			.vipcontent,.profitcontent {
 				display: flex;
 				flex-direction: row;
@@ -305,6 +365,7 @@
 				font-size: 24rpx;
 				margin:  20rpx 0;
 				text-align: center;
+				// background-color: #fff;
 				
 			}
 			.vipcontent>text {

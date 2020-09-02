@@ -101,7 +101,7 @@
 			},
 			async search () {
 				uni.showLoading({
-					title:'搜索中...',
+					title:'查询中...',
 					mask: true
 				})
 				const { data } = await this.Request({
@@ -131,9 +131,9 @@
 					})
 				}
 			},
-			toOrder (oid) {
+			toOrder (id) {
 				uni.navigateTo({
-					url: './orderDetail?oid=' + oid
+					url: './orderDetail?id=' + id
 				})
 			},
 			toProfit (id) {

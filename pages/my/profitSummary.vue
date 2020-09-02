@@ -31,16 +31,19 @@
 				activeColor="#4481EB"
 				pillsBorderRadius="40rpx"
 			></v-tabs> -->
+			<!-- 月份 -->
 			<view class="tabs">
 				<view :class="['tab-item', monthstate === 1 ? 'active-tab' : '' ]" @click="changeDte(1,month1)">{{month1}}月</view>
 				<view :class="['tab-item', monthstate === 2 ? 'active-tab' : '' ]" @click="changeDte(2,month2)">{{month2}}月</view>
 				<view :class="['tab-item', monthstate === 3 ? 'active-tab' : '' ]" @click="changeDte(3,month3)">本月</view>
 			</view>
 		</view>
+		<!-- 分润会员tab切换 -->
 		<view class="tabbar">
 			<view :class="['vip-profit', type === 3 ? 'active' : '']" @click="changeVipProfit(3,month)">会员</view>
 			<view :class="['vip-profit', type === 1 ? 'active' : '']" @click="changeVipProfit(1,month)">分润</view>
 		</view>
+		<!-- 切换内容 -->
 		<view class="" v-if="type === 3">
 			<view class="viphead">收益金额</view>
 			<view class="vipitem">
@@ -69,11 +72,12 @@
 				</view>
 			<view class="profitList">
 				<view class="profititem">
+					<!-- 下拉刷新 -->
 					<load-refresh
 					  ref="loadRefresh"
 					  :isRefresh="true"
 					  :refreshTime="800"
-					  :heightReduce="600"
+					  :heightReduce="10"
 					  :backgroundCover="'#F3F5F5'"
 					  :pageNo="currPage"
 					  :totalPageNo="totalPage" 
@@ -91,8 +95,6 @@
 					   </view>
 					  </view>
 					</load-refresh>
-					
-						 
 				</view>
 			</view>
 		</view>
@@ -165,7 +167,7 @@
 			refresh () {
 				  this.getInfo(this.year,this.month,this.type)
 				  this.$refs.loadRefresh.runRefresh()
-			},
+			},// 获取时间
 			getTime () {
 				var date = new Date(),
 				year = date.getFullYear(),
@@ -183,7 +185,7 @@
 				this.month3 = month
 				this.month = month
 		
-			},
+			}, // 获取分润信息
 			async getInfo (years,month,type) {
 				const { data } = await this.Request({
 					method: 'GET',
@@ -207,7 +209,7 @@
 				this.personal= data.data
 				this.daylist = data.data.daylist
 				this.$refs.loadRefresh.loadOver()
-			console.log(data);
+			// console.log(data);
 			}
 		}
 	}
@@ -344,7 +346,7 @@
 		width: 20%;
 	}
 	/deep/.vipList, .profitList{	
-		height: 600rpx;
+		height: 800rpx;
 		// height: 600rpx;
 		overflow: auto;
 		box-sizing: border-box;

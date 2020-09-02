@@ -79,16 +79,22 @@ export default {
 			stardate: '',
 			enddate: '',
 			usertoken: '',
-			profitList: ''
+			profitList: '',
+			id:''
 		}
 	},
-	onLoad() {
+	onLoad(option) {
 		uni.getStorage({
 			key: 'usertoken',
 			success: (res) => {
 				this.usertoken = res.data
+				this.id = res.data.cre_id
 			}
 		})
+		if (option.id !== undefined) {
+			this.id = option.id
+		}
+		
 	},
 	components:{
 		wPicker
@@ -120,7 +126,7 @@ export default {
 				url: '/OrderPart/arelist',
 				data: {
 					token: this.usertoken.token,
-					cre_id: this.usertoken.cre_id,
+					cre_id: this.id,
 					start_time: this.stardate,
 					end_time: this.enddate
 				}

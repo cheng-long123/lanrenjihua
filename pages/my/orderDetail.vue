@@ -84,7 +84,8 @@ export default {
 			enddate: '',
 			usertoken: '',
 			orderList: '',
-			id: ''
+			cre_id: '',
+			id: '',
 		}
 	},
 	onLoad(option) {
@@ -92,12 +93,14 @@ export default {
 			key: 'usertoken',
 			success: (res) => {
 				this.usertoken = res.data
-				this.id = res.data.cre_id
+				this.cre_id = res.data.cre_id
 			}
 		})
-		if (option.id !== undefined) {
-			this.id = option.id
-		}
+		this.id = option.id
+		// if (option.id !== undefined) {
+		// 	this.id = option.id
+		// }
+		console.log(option.id);
 	},
 	components:{
 		wPicker
@@ -129,7 +132,7 @@ export default {
 				url: '/OrderPart/orderlist',
 				data: {
 					token: this.usertoken.token,
-					cre_id: this.id,
+					cre_id: this.id || this.cre_id,
 					start_time: this.stardate,
 					end_time: this.enddate
 				}

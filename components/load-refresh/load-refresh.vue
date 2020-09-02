@@ -227,7 +227,7 @@
 		width: 100%;
 		margin-top: -100rpx;
 		.list{
-			width: 100%;
+			// width: 100%;
 			.load-more{
 				font-size: 20rpx;
 				text-align: center;

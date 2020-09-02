@@ -121,7 +121,7 @@
 				  personal: '',
 				  daylist: [],
 				  bottomTips: '',
-				  currPage: 12, // 当前页码
+				  currPage: 30, // 当前页码
 				  totalPage: ''
 			}
 		},
@@ -322,7 +322,7 @@
 		}
 	}
 	.viphead, .profithead {
-		padding: 10rpx 0;
+		padding: 20rpx 0;
 		text-align: center;
 		font-size: 28rpx;
 		font-weight: bold;
@@ -336,7 +336,7 @@
 		font-size: 30rpx;
 		color: rgba($color: #000000, $alpha: 0.6);
 		text-align: center;
-		padding: 10rpx 0;
+		padding: 20rpx 0;
 	}
 	.vipheader>text{
 		width: 33.33%;
@@ -346,7 +346,8 @@
 		width: 20%;
 	}
 	/deep/.vipList, .profitList{	
-		height: 800rpx;
+		overflow: hidden;
+		height: 668rpx;
 		// height: 600rpx;
 		overflow: auto;
 		box-sizing: border-box;

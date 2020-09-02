@@ -145,7 +145,7 @@ methods:{
 		
 	},
 	toLogin () {
-		uni.redirectTo({
+		uni.reLaunch({
 		    url: `../login/index`,
 		    animationType: 'pop-in',
 		    animationDuration: 200

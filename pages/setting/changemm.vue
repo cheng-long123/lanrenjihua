@@ -29,6 +29,7 @@
 			}
 		},
 		onLoad() {
+			// 获取token
 			uni.getStorage({
 				key: 'usertoken',
 				success: (res) => {
@@ -37,6 +38,7 @@
 			})
 		},
 		methods: {
+			// 修改密码
 			async updatePsd () {
 				const { data } = await this.Request({
 					method: 'POST',

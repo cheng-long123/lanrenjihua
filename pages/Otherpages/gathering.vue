@@ -62,7 +62,7 @@
 		methods: {
 			// 获取卡号？？
 			getCradList (e) {
-				console.log(e);
+				// console.log(e);
 				this.index = e.target.value
 			}, //获取支付卡号
 			async getXingList () {
@@ -146,6 +146,11 @@
 						title: '收款成功',
 						icon: 'none'
 					})
+					setTimeout( () => {
+						uni.switchTab({
+							url: '../index/index'
+						})
+					},1500)
 				} else if (data.status === 2) {
 					uni.hideLoading()
 					uni.showToast({
@@ -164,7 +169,7 @@
 						icon: 'none'
 					})
 				}
-				console.log(data);
+				// console.log(data);
 			}
 		},
 		onLoad() {

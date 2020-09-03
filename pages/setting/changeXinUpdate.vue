@@ -51,6 +51,7 @@ export default {
 	   changeXin (e) {
 	   	this.index = e.target.value
 	   	this.moren = this.cardlist[e.target.value]
+			//遍历卡列表
 			for (let i = 0; i < this.cardinfoList.length; i++ ) {
 				if (this.cardinfoList[i].accountNumber === this.moren) {
 					this.cardinfo = this.cardinfoList[i]
@@ -66,7 +67,7 @@ export default {
 		// 		}
 		// }) 
 		// console.log(data);
-	   },
+	   }, // 获取卡列表
 	  async getCardList() {
 	  		   const { data } = await this.Request({
 	  			   method: 'GET',
@@ -81,7 +82,7 @@ export default {
 				   this.cardlist.push(data.data[i].accountNumber) 
 			   }
 			   // console.log(data);
-	  },
+	  },// 修改
 	  async confirm () {
 		  const { data } = await this.Request({
 			  method: 'POST',

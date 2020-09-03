@@ -104,7 +104,11 @@ methods:{
 				title: '计划提交成功',
 				icon: 'none',
 			})
-			
+			setTimeout( ()=> {
+				uni.redirectTo({
+					url: '../index/index'
+				})
+			},1500)
 		} else if (data.status === 2) {
 			uni.showToast({
 				title: data.msg,

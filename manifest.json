@@ -2,7 +2,7 @@
     "name" : "懒人计划",
     "appid" : "__UNI__9B7ACDE",
     "description" : "懒人计划",
-    "versionName" : "1.2.0",
+    "versionName" : "2.2.1",
     "versionCode" : 20200902,
     "transformPx" : false,
     /* 5+App特有相关 */
@@ -132,27 +132,31 @@
         "enable" : false
     },
     "h5" : {
-        "title" : "懒人计划",
-        "domain" : "http://dh.weifoupay.com",
         "devServer" : {
-            "port" : "3306",
+            "port" : 3306,
             "disableHostCheck" : true,
             "proxy" : {
-                "/polyv" : {
-                    "target" : "http://dh.weifoupay.com",
+                "/api" : {
+                    "target" : "http://dh.weifoupay.com", // 需要跨域的域名
                     "changeOrigin" : true,
-                    "secure" : true,
+                    "secure" : false,
                     "pathRewrite" : {
-                        "/polyv" : "/polyv" //从定向
+                        "^/api" : "" //匹配请求路径里面有 /api 替换成 
                     }
                 }
             },
-            // "proxy" : "http://dh.weifoupay.com",
             "https" : false
         },
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
+        },
         "router" : {
-            "mode" : "hash",
-            "base" : "/payapi/Index/index"
-        }
+            "base" : "/payapi/",
+            "mode" : "hash"
+        },
+        "title" : "懒人计划",
+        "domain" : "http://dh.weifoupay.com"
     }
 }

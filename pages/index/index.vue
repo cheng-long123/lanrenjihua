@@ -355,6 +355,7 @@ export default {
 	   		   if (!data.data) {
 	   			   if (this.card_msg.df === 1) {
 	   				   // console.log(this.card_msg);
+					    //跳转到手动还款页面
 	   				   uni.navigateTo({
 	   				   			url: '../Otherpages/manual?card_id=' + this.card_msg.cid + 
 	   							'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
@@ -363,6 +364,7 @@ export default {
 	   				   })
 	   			   } else {
 					  // let cardmsg =  encodeURIComponent(JSON.stringify(this.card_msg))
+					    //跳转到新增信用卡
 	   				   uni.navigateTo({
 	   				   			url: '../Otherpages/addCreditCard?card_id=' + this.card_msg.cid +
 	   				   			'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
@@ -394,13 +396,15 @@ export default {
 		   if (!data.data) {
 			   if (this.card_msg.df === 1) {
 				   // console.log(this.card_msg);
+				   //跳转到一键还款页面
 				   uni.navigateTo({
-				   			url: '../Otherpages/manual?card_id=' + this.card_msg.cid +
+				   			url: '../Otherpages/autoRefund?card_id=' + this.card_msg.cid +
 				   			'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
 				   			 '&fee=' + this.fee + '&bank_name=' + this.card_msg.bannk_name + '&quota=' + this.card_msg.quota +
 				   			 '&bill_day=' + this.card_msg.bill_day + '&repayment=' + this.card_msg.repayment 
 				   })
 			   } else {
+				   //跳转到新增信用卡
 				   uni.navigateTo({
 				   			url: '../Otherpages/addCreditCard?card_id=' + this.card_msg.cid +
 				   			'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
@@ -420,43 +424,49 @@ export default {
    	  
      }, //极速还款
 	 async fastRefund (item) {
-		 const { data } = await this.Request({
-		 		   method: 'GET',
-		 		   url: '/Plan/get_bankStatus',
-		 		   data: {
-		 			   token: this.userToken.token,
-		 			   cid: this.card_msg.cid
-		 		   }
+		 uni.showToast({
+			 title: '此功能维护中',
+			 duration: 2000,
+			 icon: 'none'
 		 })
-		 if (data.status === 4) {
-		 		   this.baseLogout()
-		 } else {
-		 		   if (!data.data) {
-		 			   if (this.card_msg.df === 1) {
-		 				   // console.log(this.card_msg);
-		 				   uni.navigateTo({
-		 				   			url: '../Otherpages/manual?card_id=' + this.card_msg.cid +
-		 				   			'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
-		 				   			 '&fee=' + this.fee + '&bank_name=' + this.card_msg.bannk_name + '&quota=' + this.card_msg.quota +
-		 				   			 '&bill_day=' + this.card_msg.bill_day + '&repayment=' + this.card_msg.repayment 
-		 				   })
-		 			   } else {
-		 				   uni.navigateTo({
-		 				   			url: '../Otherpages/addCreditCard?card_id=' + this.card_msg.cid + 
-		 							'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
-		 							 '&bank_name=' + this.card_msg.bannk_name + '&bill_day=' + this.card_msg.bill_day + '&quota=' + this.card_msg.quota +
-									 '&repayment=' + this.card_msg.repayment + '&expired=' + this.card_msg.expired + '&cvv2=' + this.card_msg.cvv2
-		 				   })
-		 			   }
-		 		   } else {
-		 			   uni.showToast({
-		 			   	title: '当前信用卡已有计划正在执行',
-		 				duration: 2000,
-		 				icon: 'none'
-		 			   })
-		 		   }
-		 }
-	 },// 还款详情
+		//  const { data } = await this.Request({
+		//  		   method: 'GET',
+		//  		   url: '/Plan/get_bankStatus',
+		//  		   data: {
+		//  			   token: this.userToken.token,
+		//  			   cid: this.card_msg.cid
+		//  		   }
+		//  })
+		//  if (data.status === 4) {
+		//  		   this.baseLogout()
+		//  } else {
+		//  		   if (!data.data) {
+		//  			   if (this.card_msg.df === 1) {
+		//  				   // console.log(this.card_msg);
+		//  				   uni.navigateTo({
+		//  				   			url: '../Otherpages/fastRefund?card_id=' + this.card_msg.cid +
+		//  				   			'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
+		//  				   			 '&fee=' + this.fee + '&bank_name=' + this.card_msg.bannk_name + '&quota=' + this.card_msg.quota +
+		//  				   			 '&bill_day=' + this.card_msg.bill_day + '&repayment=' + this.card_msg.repayment 
+		//  				   })
+		//  			   } else {
+		//  				   uni.navigateTo({
+		//  				   			url: '../Otherpages/addCreditCard?card_id=' + this.card_msg.cid + 
+		//  							'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
+		//  							 '&bank_name=' + this.card_msg.bannk_name + '&bill_day=' + this.card_msg.bill_day + '&quota=' + this.card_msg.quota +
+		// 							 '&repayment=' + this.card_msg.repayment + '&expired=' + this.card_msg.expired + '&cvv2=' + this.card_msg.cvv2
+		//  				   })
+		//  			   }
+		//  		   } else {
+		//  			   uni.showToast({
+		//  			   	title: '当前信用卡已有计划正在执行',
+		//  				duration: 2000,
+		//  				icon: 'none'
+		//  			   })
+		//  		   }
+		//  }
+	 },
+	 // 还款详情
 	 planDetails () {
 		 let weihao = this.card_msg.accountNumber.substring(this.card_msg.accountNumber.length - 4)
 		 uni.navigateTo({
@@ -537,6 +547,7 @@ onShow() {
 			}
 		})
 	}
+	// 判断是否登录
 	var loginRes = this.checkLogin();
 		if (!loginRes) {
 			return false;

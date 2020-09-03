@@ -72,19 +72,20 @@ import wPicker from "@/components/w-picker/w-picker.vue"
 export default {
 	data() {
 		return {
-			isshow: false,
+			isshow: false, // 显示隐藏
 			visible1: false,
 			visible2: false,
 			current: true,
-			stardate: '',
-			enddate: '',
-			usertoken: '',
-			profitList: '',
-			id:'',
-			cre_id: ''
+			stardate: '', // 开始时间
+			enddate: '', // 结束时间
+			usertoken: '', // 用户token
+			profitList: '', // 数据
+			id:'', // 团队管理传的id
+			cre_id: '' // 用户id
 		}
 	},
 	onLoad(option) {
+		// 获取本地存储的token
 		uni.getStorage({
 			key: 'usertoken',
 			success: (res) => {
@@ -95,9 +96,10 @@ export default {
 		// if (option.id !== undefined) {
 		// 	this.id = option.id
 		// }
+		// 接收团队管理传过来的id
 		this.id = option.id
 		
-	},
+	},// 注册组件
 	components:{
 		wPicker
 	},
@@ -105,7 +107,7 @@ export default {
 		// 开始、
 		onStardate () {
 			this.visible1 = true
-		},
+		}, 
 		stardConfirm (e) {
 			// console.log(e);
 			this.stardate = e.result
@@ -118,7 +120,7 @@ export default {
 			// console.log(e);
 			this.enddate = e.result
 			console.log(this.enddate);
-		},
+		}, // 获取查询的数据
 		async getProfitlist () {
 			uni.showLoading({
 				mask: true
@@ -133,7 +135,8 @@ export default {
 					end_time: this.enddate
 				}
 			})
-			console.log(data);
+			// console.log(data);
+			//成功返回
 			if (data.status === 1) {
 				uni.hideLoading()
 				if (data.msg === "当日无数据") {
@@ -150,12 +153,14 @@ export default {
 						icon: 'none'
 					})
 				}
+				// 错误
 			} else if (data.status === 2) {
 				uni.hideLoading()
 				uni.showToast({
 					title: data.msg,
 					icon: 'none'
 				})
+				// 登录异常
 			} else if (data.status === 4) {
 				this.baseLogout()
 			} else {
@@ -167,7 +172,7 @@ export default {
 					icon: 'none'
 				})
 			}
-		},
+		},// 跳转到分润详情
 		toProfitParticulars (id) {
 			uni.navigateTo({
 				url: './profitParticulars?id=' + id
@@ -175,11 +180,13 @@ export default {
 		}
 	},
 	watch: {
+		// 开始日期变化 从新获取数据
 		stardate () {
 			if (this.stardate !== '' && this.enddate !== '') {
 				this.getProfitlist()
 			}
 		},
+		// 结束时间变化 从新获取数据
 		enddate () {
 			if (this.stardate !== '' && this.enddate !== '') {
 				this.getProfitlist()

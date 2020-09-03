@@ -1,5 +1,6 @@
 <template>
 	<view class="setting" >
+		 <!-- 昵称 -->
 		<view class="top">
 			<view class="setting_name" @click="updateName">
 				<text class="name">昵称</text>
@@ -8,6 +9,8 @@
 					<image src="../../static/image/right-btn.png" mode=""></image>
 				</view>
 			</view>
+			<!-- 昵称结束 -->
+			<!-- 昵称弹出框 -->
 			<wyb-popup ref="update_name" zIndex="22" type="bottom" height="400" width="500" radius="6" >
 			    <view class="popup-content">
 			        <view class="name">
@@ -20,11 +23,15 @@
 					</view>
 			    </view>
 			</wyb-popup>
+			<!-- 昵称弹出框结束 -->
+			<!-- ID -->
 			<view class="user_id">
 				<text class="id">ID</text>
 				<text class="text">{{userinfo.number}}</text>
 			</view>
+			<!-- ID结束 -->
 		</view>
+		<!-- 修改 -->
 		<view class="update">
 			<view class="setting_xiugai"  @click="jiejiUpdate">
 				<text class="xiugai_text" >储蓄卡卡号修改</text>
@@ -39,6 +46,8 @@
 				<image class="xiugai_right" src="../../static/image/right-btn.png" mode=""></image>
 			</view>
 		</view>
+		<!-- 修改接结束 -->
+		<!-- 借记卡修改弹出层 -->
 		<wyb-popup ref="card_update" type="bottom" height="400" width="500" radius="6" :showCloseIcon="true">
 		    <view class="card_content">
 		        <text class="update_text">借记卡号修改</text>
@@ -49,6 +58,8 @@
 				</view>
 		    </view>
 		</wyb-popup>
+		<!-- 借记卡修改弹出层结束 -->
+		<!-- 版本号 -->
 		<view class="bottom">
 			<view class="banben">
 				<text class="banben_text">版本号</text>
@@ -59,6 +70,7 @@
 				
 			</view>
 		</view>
+		<!-- 版本号节结束 -->
 	</view>
 </template>
 
@@ -67,11 +79,11 @@
 	export default {
 		data() {
 			return {
-				userinfo: {},
-				usertoken: '',
-				nickname: '',
-				bank_card: '',
-				version: ''
+				userinfo: {}, //用户数据
+				usertoken: '', // 用户token
+				nickname: '', //用户昵称
+				bank_card: '',//用户卡
+				version: '' //版本号
 			}
 		},
 		components:{
@@ -79,13 +91,16 @@
 		},
 		onLoad() {
 			// #ifdef APP-PLUS
+			// 获取版本号
 			this.getVersion()
 			// this.version = plus.runtime.version
 			// #endif
+			// 获取本地token
 			uni.getStorage({
 				key: 'usertoken',
 				success: (res) => {
 					this.usertoken = res.data
+					// 获取用户信息
 					this.getUserInfo()
 				}
 			})
@@ -109,22 +124,24 @@
 				this.nickname = data.data.nickname
 				// console.log(this.userinfo);
 			},
+			// 点击显示修改昵称弹出层
 			updateName () {
 				
 				this.$refs.update_name.show() // 显示
 				// uni.navigateTo({
 				// 	url: './nickname?name=' + this.userinfo.nickname + '&number=' + this.userinfo.number
 				// })
-			},
+			}, // 关闭修改昵称弹出层
 			call () {
 				this.$refs.update_name.hide() // 关闭
-			},
+			},// 退出设置
 			 tuichu () {
 				 uni.navigateBack({
 				 })
 			 },
 			 //修改昵称
 			async submit () {
+				// 判断
 				if (this.userinfo.nickName === this.nickname ) {
 					return uni.showToast({
 							title: '不能与当前昵称一致',
@@ -136,6 +153,7 @@
 							icon: 'none'
 					})
 				}
+				// 发送请求
 				const { data } = await this.Request({
 					method: 'POST',
 					url: '/Userforeign/user_update',
@@ -182,7 +200,7 @@
 			},
 			updatecall () {
 				this.$refs.card_update.hide() // 显示
-			},
+			},// 借记卡修改
 			async updateCard () {
 				const { data } = await this.Request({
 					method: 'POST',
@@ -206,7 +224,7 @@
 				} else if (data.status === 4) {
 					this.baseLogout()
 				}
-			},
+			}, // 获取版本号
 			getVersion ()  {
 				plus.runtime.getProperty( plus.runtime.appid,  ( wgtinfo ) => {
 					  this.version = wgtinfo.version

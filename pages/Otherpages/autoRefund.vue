@@ -49,7 +49,7 @@ export default {
 			current: 0,
 		},
 		pre_money: '',
-		day_num: '',
+		day_num: 1,
 		highestNum: [{
 				value: "1"
 			}, {
@@ -57,7 +57,11 @@ export default {
 			}, {
 				value: "3"
 			}],
-		Meterrate: ''
+		Meterrate: '',
+		bank_name: '',
+		quota: '',
+		bill_day: '',
+		repayment: ''
       }
    },
    onLoad(option) {
@@ -66,7 +70,10 @@ export default {
 	this.cardinfo.holderName = option.holderName
 	this.cardinfo.accountNumber = option.accountNumber
 	this.cardinfo.fee = option.fee / 100
-	
+	this.bank_name = option.bank_name
+	this.quota = option.quota
+	this.bill_day = option.bill_day
+	this.repayment = option.repayment
 	// this.cardinfo = JSON.parse(option)
 	uni.getStorage({
 		key: 'usertoken',
@@ -161,10 +168,14 @@ methods:{
 				icon: 'none',
 			})
 			setTimeout( ()=> {
+				var weihao = this.cardinfo.accountNumber.substring(this.cardinfo.accountNumber.length - 4)
 				uni.redirectTo({
-					url: '../index/index'
+					url: './planDetails?card_id=' + this.cardinfo.card_id + '&weihao=' + weihao +
+					'&bannk_name=' + this.bank_name + '&quota=' + this.quota + '&bill_day=' + this.bill_day +
+					 '&repayment=' + this.repayment
 				})
 			},1500)
+			
 		}
 		// console.log(data);
 	}

@@ -86,7 +86,7 @@ export default {
 			accountNumber: '',
 			fee: '',
 			pre_money: '',
-			day_num: '1',
+			day_num: 1,
 			timeList: [],
 			timeStr: '',
 			calculate: '',
@@ -270,7 +270,7 @@ methods:{
 							'&bannk_name=' + this.bank_name + '&quota=' + this.quota + '&bill_day=' + this.bill_day +
 							 '&repayment=' + this.repayment
 						})
-					},2000)
+					},1500)
 				} else if (data.status === 2) {
 					uni.showToast({
 						title: data.msg,

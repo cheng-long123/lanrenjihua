@@ -4,7 +4,7 @@
 
 		<view class="">
 			<view class="position-relative ">
-				<swiper :indicator-dots="true" :autoplay="false" :interval="3000" :duration="1000" style="height: 1246rpx;">
+				<swiper :indicator-dots="true" :autoplay="false" @change="swiperChange" :interval="3000" :duration="1000" style="height: 1246rpx;">
 					<block v-for="(item,index) in imgfromapi" :key='index'>
 						<swiper-item>
 							<view class="">
@@ -161,12 +161,15 @@
 		},
 
 		methods: {
+			swiperChange (e) {
+				this.shareimage = this.imgfromapi[e.target.current].curl
+			},
 			async getimgformapi() {
 				const { data } = await this.Request({
 					url: '/Info/advertisement'
 				})
 				this.$data.imgfromapi = data.data
-				
+				console.log(data);
 			},
 			async geterweima() {
 				const { data } = await this.Request({
@@ -177,6 +180,7 @@
 						token: this.$data.token
 					},
 				})
+				console.log(data);
 				if (data.status === 4) {
 					this.baseLogout()
 				} else {
@@ -210,33 +214,35 @@
 					duration:1500
 				})
 				//#endif
-				this.toImage()
-				const that = this
+				// this.toImage()
+				// const that = this
 				uni.share({
+					title: '懒人计划',
 					provider: "weixin",
 					scene: "WXSceneSession",
 					type: 2,
-					imageUrl: this.shareimage,
-					success: function(res) {
+					imageUrl: 'http://dh.weifoupay.com' + this.shareimage,
+					success: (res) => {
+						this.shareimage = ''
 						uni.showToast({
 							title: '已分享',
 							duration: 2000
 						});
-						that.showhongbao = !that.showhongbao
+						// that.showhongbao = !that.showhongbao
 					},
 					//微信需要先授权才能分享，所以第一次会报错，此处待优化
-					fail: function(err) {
+					fail: (err) => {
 						uni.share({
 							provider: "weixin",
 							scene: "WXSceneSession",
 							type: 2,
-							imageUrl: this.shareimage,
-							success: function(res) {
+							imageUrl: 'http://dh.weifoupay.com' + this.shareimage,
+							success: (res) => {
 								uni.showToast({
 									title: '已分享',
 									duration: 2000
 								});
-								that.showhongbao = !that.showhongbao
+								// that.showhongbao = !that.showhongbao
 							},
 						});
 					}
@@ -287,7 +293,7 @@
 						overwrite: true,
 					}, res => {
 						console.log(res); // 图片地址  
-						this.shareimage = res.target
+						this.shareimage = res.target 
 					}, error => {
 						console.log(JSON.stringify(error)); // 保存失败信息  
 					});
@@ -302,11 +308,15 @@
 
 			toImage() {
 				const that = this;
+				let pages = getCurrentPages();
+				let page = pages[pages.length - 1];
+				let bitmap = null;
 				/* 获取屏幕信息 */
-				let ws = this.$mp.page.$getAppWebview();
-				let bitmap = new plus.nativeObj.Bitmap('test');
+				let currentWebview  = page.$getAppWebview();
+				
+				 bitmap = new plus.nativeObj.Bitmap('test');
 				// 将webview内容绘制到Bitmap对象中
-				ws.draw(
+				currentWebview.draw(
 					bitmap,
 					function(e) {
 						/* 获取base64 */
@@ -321,14 +331,16 @@
 									'_doc/share.jpg', {},
 									async (i) => {
 											console.log(i.target)
-											that.shareimage = i.target
+											
 											// console.log('保存图片成功：' + JSON.stringify(i));
 											uni.saveImageToPhotosAlbum({
 												filePath: i.target,
 												success: function() {
+													
 													/* 清除 */
 													bitmap.clear();
 													// console.log('保存成功,请到相册中查看')
+													that.shareimage = i.target
 												},
 												fail(e) {
 													// console.log('保存失败')

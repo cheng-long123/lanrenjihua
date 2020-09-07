@@ -84,7 +84,7 @@
 						cre_id: this.usertoken.cre_id
 					}
 				})
-				console.log(data);
+				// console.log(data);
 				if (data.status === 1) {
 					this.userinfo = data.data
 				} else if (data.status === 4) {
@@ -100,7 +100,7 @@
 						token: this.usertoken.token,
 					}
 				})
-				console.log(data);
+				// console.log(data);
 				if (data.status === 1) {
 					this.vipInfo = data.data
 				} else if (data.status === 4) {
@@ -137,7 +137,7 @@
 						phone: this.userinfo.bank_phone
 					}
 				})
-				console.log(data);
+				// console.log(data);
 				if (data.status === 1) {
 					uni.hideLoading()
 					var img = data.img

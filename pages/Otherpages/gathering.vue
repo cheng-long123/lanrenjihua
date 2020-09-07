@@ -109,7 +109,7 @@
 				} else if (data.status === 4) {
 					this.baseLogout()
 				}
-				console.log(data);
+				// console.log(data);
 			},//商户收款
 			async confirmSubmit () {
 				if (this.choosezfkh[0] == '支付卡号') {

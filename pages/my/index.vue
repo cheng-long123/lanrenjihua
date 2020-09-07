@@ -140,7 +140,7 @@ export default {
 				// this.cre_id = res.data.cre_id
 				// this.token = res.data.token
 				this.userToken = res.data
-				console.log(res)
+				// console.log(res)
 				// 获取信息
 				this.getUserInfo()
 			}
@@ -157,7 +157,7 @@ export default {
 				// this.cre_id = res.data.cre_id
 				// this.token = res.data.token
 				this.userToken = res.data
-				console.log(res)
+				// console.log(res)
 				// 获取信息
 				this.getUserInfo()
 			}
@@ -201,7 +201,7 @@ export default {
 			 else if (data.status === 4) {
 				this.baseLogout()
 			}
-			console.log(this.userInfo)
+			// console.log(this.userInfo)
 		}, // 退出登录
 		quitLogin () {
 			uni.showModal({
@@ -402,6 +402,9 @@ export default {
 		background-color: #f4f4f6;
 		border-radius: 50rpx;
 		padding: 44rpx 50rpx;
+		/* #ifdef H5 */
+		margin-bottom: 80rpx;
+		/* #endif */
 		.head {
 			font-size: 38rpx;
 			color: #333333;

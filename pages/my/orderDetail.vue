@@ -100,7 +100,7 @@ export default {
 		// if (option.id !== undefined) {
 		// 	this.id = option.id
 		// }
-		console.log(option.id);
+		// console.log(option.id);
 	},
 	components:{
 		wPicker

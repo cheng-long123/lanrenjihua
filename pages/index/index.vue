@@ -222,7 +222,7 @@ export default {
 	} else if (data.status === 4) {
 		this.baseLogout()
 	}
-	console.log(data);
+	// console.log(data);
    }, // 返回会员等级
    async DoMember () {
 	   const { data } = await this.Request({
@@ -475,8 +475,8 @@ export default {
 			 '&repayment=' + this.card_msg.repayment + '&weihao=' + weihao + '&bannk_name=' + this.card_msg.bannk_name
 		 })
 	}, // 版本更新
-	async getrenovate () {
-		// #ifdef APP-PLUS
+	 getrenovate () {
+		 // #ifdef APP-PLUS
 		plus.runtime.getProperty(plus.runtime.appid,async (wgtinfo) => {
 			if (this.platform == 'android') {
 					this.version = 1
@@ -486,29 +486,34 @@ export default {
 			const { data } = await this.Request({
 				method: 'GET',
 				url: '/Edition/renovate',
-				type: this.version
+				data: {
+					type: this.version
+				}
 			})
-		})
 			if (data.status === 1) {
-				this.$nextTick(() =>{
-					this.$refs.renovate.show() // 显示
-					// console.log(123);
-				})
+				
 				if (wgtinfo.version < data.data.version) {
+					this.$nextTick(() =>{
+						this.$refs.renovate.show() // 显示
+						// console.log(123);
+					})
 					this.download_url = data.data.download_url
 				}
 			}
+		})
 			// #endif
 		// console.log(data);
 	},
 	updateApp () {
+		// #ifdef APP-PLUS
 		plus.runtime.openURL(this.download_url)
+		// #endif
 	},
 	getStsyem () {
 		uni.getSystemInfo({
 			success: (res) => {
 				this.platform = res.platform
-				console.log(res);
+				// console.log(res);
 			}
 		})
 	}
@@ -683,6 +688,9 @@ onPullDownRefresh () {
    }
 /* 账户管理 */
 .account {
+	/* #ifdef H5 */
+	margin-bottom: 120rpx;
+	/* #endif */
 		.head{
 			display: flex;
 			justify-content: space-between;

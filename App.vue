@@ -4,7 +4,9 @@
 
 	export default {
 		onLaunch: function() {
+			// #ifdef APP-PLUS
 			plus.navigator.closeSplashscreen()
+			 // #endif
 			// uni.getStorage({
 			// 	key: 'usertoken',
 			// 	success() {

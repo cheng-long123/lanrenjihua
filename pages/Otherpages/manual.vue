@@ -133,6 +133,7 @@ watch: {
 	
 	// 时间列表
 	timeList() {
+
 		if (this.$data.pre_money > 500 && this.range.data != '' && this.day_num != '') {
 			this.getCalculate();
 		}
@@ -150,6 +151,7 @@ methods:{
 	 },
 	 confirm(e) {
 		 this.range = e.range
+		 this.getCalculate();
 		 // console.log(this.time);
 		 // this.timeList = []
 			// for (var i = 0; i < this.info.selected.length; i++) {

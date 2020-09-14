@@ -398,6 +398,32 @@
 				}
 			}
         }
+        ,{
+            "path" : "pages/Otherpages/fastPayment",
+            "style" : {
+				"navigationBarTitleText": "快捷支付",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "快捷支付",
+						"titleSize": "16px",
+						"titleColor":"#4481EB"
+					}
+				}
+			}
+        }
+        ,{
+            "path" : "pages/Otherpages/addPassCard",
+            "style" : {
+				"navigationBarTitleText": "传话绑卡",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "传话绑卡",
+						"titleSize": "16px",
+						"titleColor":"#4481EB"
+					}
+				}
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

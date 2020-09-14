@@ -4,7 +4,7 @@
 
 		<view class="">
 			<view class="position-relative ">
-				<swiper :indicator-dots="true" :autoplay="false" @change="swiperChange" :interval="3000" :duration="1000" style="height: 1246rpx;">
+				<swiper  :autoplay="false" @change="swiperChange" :interval="3000" :duration="1000" style="height: 1246rpx;">
 					<block v-for="(item,index) in imgfromapi" :key='index'>
 						<swiper-item>
 							<view class="">
@@ -162,7 +162,7 @@
 
 		methods: {
 			swiperChange (e) {
-				this.shareimage = this.imgfromapi[e.target.current].curl
+				// this.shareimage = this.imgfromapi[e.target.current].curl
 			},
 			async getimgformapi() {
 				const { data } = await this.Request({
@@ -206,7 +206,7 @@
 					url: 'myredpocket'
 				})
 			},
-			formSubmit() {
+			async formSubmit() {
 				//#ifdef H5
 				uni.showToast({
 					title:'请截屏保存后进行分享!',
@@ -214,14 +214,14 @@
 					duration:1500
 				})
 				//#endif
-				// this.toImage()
+				this.toImage()
 				// const that = this
-				uni.share({
+				await uni.share({
 					title: '懒人计划',
 					provider: "weixin",
 					scene: "WXSceneSession",
 					type: 2,
-					imageUrl: 'http://dh.weifoupay.com' + this.shareimage,
+					imageUrl: this.shareimage,
 					success: (res) => {
 						this.shareimage = ''
 						uni.showToast({
@@ -232,11 +232,12 @@
 					},
 					//微信需要先授权才能分享，所以第一次会报错，此处待优化
 					fail: (err) => {
+						this.shareimage = ''
 						uni.share({
 							provider: "weixin",
 							scene: "WXSceneSession",
 							type: 2,
-							imageUrl: 'http://dh.weifoupay.com' + this.shareimage,
+							imageUrl: this.shareimage,
 							success: (res) => {
 								uni.showToast({
 									title: '已分享',
@@ -245,6 +246,9 @@
 								// that.showhongbao = !that.showhongbao
 							},
 						});
+					},
+					complete: () => {
+						this.shareimage = ''
 					}
 				});
 			},
@@ -278,7 +282,7 @@
 			// 	});
 			// },
 			//获取屏幕截图
-			getImage() {
+			async getImage() {
 				let pages = getCurrentPages();
 				let page = pages[pages.length - 1];
 				// console.log(pages.length);
@@ -287,7 +291,7 @@
 				bitmap = new plus.nativeObj.Bitmap('amway_img');
 				// console.log(pages,page,ws,bitmap)
 				// 将webview内容绘制到Bitmap对象中  
-				ws.draw(bitmap, () => {
+				await ws.draw(bitmap, () => {
 					// 保存图片到本地  
 					bitmap.save("_doc/adrawScreen.jpg", {
 						overwrite: true,
@@ -306,7 +310,7 @@
 				});
 			},
 
-			toImage() {
+			async toImage() {
 				const that = this;
 				let pages = getCurrentPages();
 				let page = pages[pages.length - 1];
@@ -316,31 +320,36 @@
 				
 				 bitmap = new plus.nativeObj.Bitmap('test');
 				// 将webview内容绘制到Bitmap对象中
-				currentWebview.draw(
+				await currentWebview.draw(
 					bitmap,
-					function(e) {
+					(e) => {
 						/* 获取base64 */
-						that.test = bitmap.toBase64Data();
+						this.test = bitmap.toBase64Data();
 						/* 加载base64编码 */
 						bitmap.loadBase64Data(
 							bitmap.toBase64Data(),
-							function() {
+							() => {
 								// console.log('加载Base64图片数据成功');
 								/* 保存图片 */
 								bitmap.save(
 									'_doc/share.jpg', {},
 									async (i) => {
 											console.log(i.target)
-											
+											this.shareimage = i.target
 											// console.log('保存图片成功：' + JSON.stringify(i));
-											uni.saveImageToPhotosAlbum({
+											await uni.saveImageToPhotosAlbum({
 												filePath: i.target,
 												success: function() {
 													
 													/* 清除 */
 													bitmap.clear();
 													// console.log('保存成功,请到相册中查看')
-													that.shareimage = i.target
+													uni.showToast({
+														title:'保存成功，请到相册中查看！',
+														duration: 1500,
+														icon: 'none'
+													})
+													
 												},
 												fail(e) {
 													// console.log('保存失败')

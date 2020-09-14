@@ -65,10 +65,10 @@
 				<text class="banben_text">版本号</text>
 				<view class="banben_right">{{version}}</view>
 			</view>
-			<view class="banben"  @click="tuichu">
+			<!-- <view class="banben"  @click="tuichu">
 				<text class="banben_text">退出</text>
 				
-			</view>
+			</view> -->
 		</view>
 		<!-- 版本号节结束 -->
 	</view>
@@ -135,10 +135,10 @@
 			call () {
 				this.$refs.update_name.hide() // 关闭
 			},// 退出设置
-			 tuichu () {
-				 uni.navigateBack({
-				 })
-			 },
+			 // tuichu () {
+				//  uni.navigateBack({
+				//  })
+			 // },
 			 //修改昵称
 			async submit () {
 				// 判断

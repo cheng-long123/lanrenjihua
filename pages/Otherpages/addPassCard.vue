@@ -274,6 +274,9 @@
 						duration: 2000,
 						icon: "none",
 					});
+					uni.navigateTo({
+						url: '../index/index'
+					})
 				} else {
 					uni.showToast({
 						title: '绑卡失败',
@@ -337,7 +340,7 @@
 			background:linear-gradient(to left,#15BE73, #08BD9E, #16A085);
 			font-size: 20rpx;
 			color: #fff;
-		}
+		} 
 	}
 	.btn {
 		border-radius: 40rpx;
@@ -372,7 +375,7 @@
 			border-radius: 40rpx;
 			font-size: 28rpx;
 			border: 1rpx solid #E9EAED;
-			color: #808080;
+			color: #4481EB;
 		}
 	}
 }

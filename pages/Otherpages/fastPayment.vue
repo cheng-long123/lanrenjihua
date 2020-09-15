@@ -1,7 +1,8 @@
 <template>
 	<view class="shuokuan">
 		<view class="user_info">
-			输入信息
+			<text>输入信息</text>
+			<text style="font-size: 28rpx; color: #4481EB;" @click="toAddPassCard">添加信用卡</text>
 		</view>
 		<view class="form">
 			<view class="user_input">
@@ -13,7 +14,7 @@
 				<input type="text" v-model="form.identity" placeholder="身份证号"/>
 			</view>
 			<view class="user_card">
-				 <text class="user_text" style="font-size: 28rpx; margin-bottom: 15rpx;">银行卡号</text>
+				 <text class="user_text" style="font-size: 28rpx; margin-bottom: 15rpx;">信用卡号</text>
 				<picker class="picker" :range="choosezfkh"  :value="index"  @change="getCradList" @click="getXingList">
 					<view>{{choosezfkh[index]}}</view>
 				</picker>
@@ -22,21 +23,25 @@
 				<!-- </view> -->
 			</view>
 			<view class="user_input">
-				 <text class="user_text">信用卡签约号</text>
-				<input type="text" v-model="form.bind_code" placeholder="信用卡签约号"/>
+				 <text class="user_text">收款金额</text>
+				<input type="text" v-model="money" placeholder="收款金额"/>
 			</view>
 			<view class="user_input">
+				 <text class="user_text">结算卡号</text>
+				<input type="text" v-model="form.bank_card" placeholder="信用卡签约号"/>
+			</view>
+		<!-- 	<view class="user_input">
+				 <text class="user_text">信用卡签约号</text>
+				<input type="text" v-model="bind_code" placeholder="信用卡签约号"/>
+			</view> -->
+			<!-- <view class="user_input">
 				 <text class="user_text">支付账号</text>
 				<input type="text" v-model="form.chuan_paynum" placeholder="支付账号"/>
-			</view>
-			<view class="user_input">
-				 <text class="user_text">收款金额</text>
-				<input type="text" v-model="form.money" placeholder="收款金额"/>
-			</view>
+			</view> -->
 			<view class="register-verify">
 				<input type="text" v-model="form.code" placeholder="请输入短信验证码" />
 				<view class="verify-btn" v-if="!isShowCode" @click="getCode">
-					发送验证码
+					获取验证码
 				</view>
 				<view class="verify-btn" v-else style="color: #808080;">
 					重发{{ time }}s
@@ -51,60 +56,75 @@
 	export default {
 		data() {
 			return {
-				usertoken: '',
-				form: {
-					bank_name: '', // 姓名
-					identity: '', //身份证号
-					bind_code: '', //信用卡签约号
-					chuan_paynum: '', //支付卡号
-					address: '', //城市
-					money: '' ,//金额
-					fee: 0.006, // 费率
-					excess_money: 2, //笔数费
-					code: ''
-				},
-				choosezfkh: ['银行卡号'],
+				// usertoken: '',
+				// form: {
+				// 	bank_name: '', // 姓名
+				// 	identity: '', //身份证号
+				// 	bind_code: '', //信用卡签约号
+				// 	chuan_paynum: '', //支付卡号
+				// 	address: '', //城市
+				// 	money: '' ,//金额
+				// },
+				bind_code: '',
+				money: '',
+				fee: 0.006, // 费率
+				excess_money: 2, //笔数费
+				code: '',
+				choosezfkh: ['请选择信用卡'],
 				index: 0,
 				isShowCode: false,
 				time: 60,
 				order: ''
 			}
 		},
+		props:{
+			form: {
+				type: Object
+			},
+			usertoken: {
+				type: Object
+			}
+		},
 		onLoad() {
-			uni.getStorage({
-				key: 'usertoken',
-				success: (res) => {
-					this.usertoken = res.data
-					this.getUserInfo()
-					this.getXingList()
-				}
-			})
+			// uni.getStorage({
+			// 	key: 'usertoken',
+			// 	success: (res) => {
+			// 		this.usertoken = res.data
+			// 		this.getUserInfo()
+			// 		this.getXingList()
+			// 	}
+			// })
 			this.choosezfkh = ['银行卡号']
 		},
 		methods: {
-			// 获取用户信息
-			async getUserInfo () {
-				// console.log(this.usertoken);
-				const { data } = await this.Request({
-					method: 'GET',
-					url: '/Userforeign/user_query',
-					data: {
-						token: this.usertoken.token,
-						cre_id: this.usertoken.cre_id
-					}
+			toAddPassCard () {
+				uni.navigateTo({
+					url: 'addPassCard'
 				})
-				if (data.status === 1) {
-					console.log(data);
-					this.form.bank_name = data.data.bank_name
-					this.form.identity = data.data.identity
-					this.form.chuan_paynum = data.data.chuan_paynum
-					// this.form.address = data.data.address
-					this.form.bank_card = data.data.bank_card
-				} else if (data.status === 4) {
-					this.baseLogout()
-				}
-				// console.log(data);
 			},
+			// 获取用户信息
+			// async getUserInfo () {
+			// 	// console.log(this.usertoken);
+			// 	const { data } = await this.Request({
+			// 		method: 'GET',
+			// 		url: '/Userforeign/user_query',
+			// 		data: {
+			// 			token: this.usertoken.token,
+			// 			cre_id: this.usertoken.cre_id
+			// 		}
+			// 	})
+			// 	if (data.status === 1) {
+			// 		console.log(data);
+			// 		// this.form.bank_name = data.data.bank_name
+			// 		// this.form.identity = data.data.identity
+			// 		// this.form.chuan_paynum = data.data.chuan_paynum
+			// 		// // this.form.address = data.data.address
+			// 		// this.form.bank_card = data.data.bank_card
+			// 	} else if (data.status === 4) {
+			// 		this.baseLogout()
+			// 	}
+			// 	// console.log(data);
+			// },
 			getCradList (e) {
 				// console.log(e);
 				this.index = e.target.value
@@ -132,7 +152,7 @@
 						}
 					} else {
 						this.choosezfkh.push(data.data[i].accountNumber)
-						this.form.bind_code = data.data[i].bind_code
+						this.bind_code = data.data[i].bind_code
 					}
 				}
 				// console.log(data);
@@ -153,11 +173,11 @@
 						holder_name: this.form.bank_name,
 						idCard: this.form.identity,
 						accountNumber: this.choosezfkh[this.index],
-						bind_code: this.form.bind_code,
+						bind_code: this.bind_code,
 						account_number: this.form.chuan_paynum,
-						money: this.form.money,
-						fee: this.form.fee,
-						excess_money: this.form.excess_money,
+						money: this.money,
+						fee: this.fee,
+						excess_money: this.excess_money,
 					}
 				})
 				if (data.status == 1) {
@@ -186,7 +206,7 @@
 				}
 			},
 			async confastPayment () {
-				if (this.form.code === '') {
+				if (this.code === '') {
 					return uni.showToast({
 						title: '验证码不能为空',
 						icon: 'none'
@@ -196,7 +216,7 @@
 					method: 'POST',
 					url: '/Chuanhuaapp/payconfirm',
 					data: {
-						code: this.form.code,
+						code: this.code,
 						order: this.order
 					}
 				})
@@ -222,6 +242,9 @@
 	padding: 50rpx;
 	/* background-color: #fff; */
 	.user_info {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		margin: 30rpx 0;
 		font-size: 40rpx;
 		font-weight: 600;
@@ -316,7 +339,7 @@
 		border-radius: 40rpx;
 		font-size: 28rpx;
 		border: 1rpx solid #E9EAED;
-		color: #808080;
+		color: #4481EB;
 	}
 }
 .register-btn {

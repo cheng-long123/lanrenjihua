@@ -1,72 +1,99 @@
 <template>
 	<view class="shuokuan">
-		<view class="user_info">
-			输入信息
-		</view>
-		<view class="form">
-			<view class="user_input">
-				 <text class="user_text" style="font-size: 32rpx;">姓名</text>
-				<input type="text" v-model="form.bank_name" placeholder="姓名"/>
-			</view>
-			<view class="user_input">
-				 <text class="user_text">身份证</text>
-				<input type="text" v-model="form.identity" placeholder="身份证号"/>
-			</view>
-			<view class="user_card">
-				 <text class="user_text" style="font-size: 28rpx; margin-bottom: 15rpx;">支付卡号</text>
-				<picker class="picker" :range="choosezfkh"  :value="index"  @change="getCradList" @click="getXingList">
-					<view>{{choosezfkh[index]}}</view>
-				</picker>
-				<!-- <view class="add_card">
-					+添加信用卡
-				</view> -->
-			</view>
-			<view class="user_input">
-				 <text class="user_text">预留手机号</text>
-				<input type="text" v-model="form.bank_phone" placeholder="预留手机号"/>
-			</view>
-			<view class="user_input">
-				 <text class="user_text">收款金额</text>
-				<input type="text" v-model="form.money" placeholder="收款金额"/>
-			</view>
-			<view class="user_input">
-				 <text class="user_text">结算卡号</text>
-				<input type="text" v-model="form.bank_card" placeholder="结算卡号"/>
-			</view>
-			<view class="user_input">
-				 <text class="user_text">城市</text>
-				<input type="text" v-model="form.address" placeholder="落款城市"/>
-			</view>
-		</view>
-		<button class="btn" @click="confirmSubmit">提交</button>
+		   <view style="margin-top: 20upx;">
+		             <zzx-tabs :items="items" activeColor="#4481EB" :current="current" @clickItem="onClickItem" @click="submitCard" ref="mytabs">
+		             </zzx-tabs>
+		        </view> 
+		        <view >
+		            <view v-show="current === 0">
+						<dfgathering :form="userInfo" :usertoken="usertoken" ></dfgathering>
+		                
+		            </view>
+		            <view v-show="current === 1" >
+		                <fastPayment :form="userInfo" :usertoken="usertoken" ></fastPayment>
+		            </view>
+		        </view>
 	</view>
 </template>
 
 <script>
+	import zzxTabs from "@/components/zzx-tabs/zzx-tabs.vue"
+	import fastPayment from "./fastPayment.vue"
+	import dfgathering from "./dfgathering.vue"
 	export default {
 		data() {
 			return {
 				choosezfkh: ['支付卡号'],
 				index: 0,
 				usertoken: '',
-				form: {
-					bank_name: '',
-					identity: '',
-					bank_phone: '',
-					bank_card: '',
-					address: '',
-					money: ''
-				}
+				items: ['收款1','收款2'],
+				current: 0,
+				userInfo: {},
+				cardList: [],
+				bind_code: ''
 			}
 		},
+		components:{
+			zzxTabs,
+			fastPayment,
+			dfgathering
+		},
 		methods: {
-			// 获取卡号？？
-			getCradList (e) {
-				// console.log(e);
-				this.index = e.target.value
-			}, //获取支付卡号
+			submitCard () {
+			
+			},
+			 onClickItem(e) {
+				 if (this.current === 0) {
+					 if (this.userInfo.chuan_paynum === null) {
+						 return uni.showModal({
+						  title: '提示',
+						  content: '您还没有注册，是否注册',
+						  success:  (res) => {
+							  if (res.confirm) {
+								  this.current = e.currentIndex
+								  uni.navigateTo({
+									url: '../register/chuanRegister'
+								  })
+								  // console.log('用户点击确定');
+							  } else if (res.cancel) {
+								  this.current = e.currentIndex
+								  // console.log('用户点击取消');
+							  }
+						  }
+						 });
+					 }
+					 // for (let i = 0; i < this.cardlist.length; i++) {
+					 //   if (this.cardlist[i].includes('bind_code') === null) { 
+					 // 	  // console.log(123);
+					 // 	  uni.showModal({
+					 // 		  title: '提示',
+					 // 		  content: '您还没有绑卡，是否绑卡',
+					 // 		  success: (res) => {
+					 // 			  if (res.confirm) {
+						// 			  this.current = e.currentIndex
+					 // 				  uni.navigateTo({
+					 // 					url: 'addPassCard'
+					 // 				  })
+					 // 				  // console.log('用户点击确定');
+					 // 			  } else if (res.cancel) {
+						// 			  this.current = e.currentIndex
+					 // 				  // console.log('用户点击取消');
+					 // 			  }
+					 // 		  }
+					 // 	  });
+					 //   }
+					 // }
+				 }
+				 this.current = e.currentIndex
+				 console.log(e);
+			},
+		// 	// 获取卡号？？
+		// 	getCradList (e) {
+		// 		// console.log(e);
+		// 		this.index = e.target.value
+		// 	}, //获取支付卡号
 			async getXingList () {
-				this.choosezfkh = []
+				// this.choosezfkh = []
 				const { data } = await this.Request({
 					method: 'POST',
 					url: '/Creditcard/card_list',
@@ -75,20 +102,29 @@
 						token: this.usertoken.token
 					}
 				})
-				for (var i = 0; i < data.data.length; i++) {
-					if (data.data[i].df === 1) {
-						this.choosezfkh.push(data.data[i].accountNumber)
-						if (this.choosezfkh.length === 0) {
-							this.choosezfkh = ['请选择支付卡号']
-							uni.showToast({
-								title: "暂无可选择信用卡",
-								icon: "none",
-							});
-						}
-					}
-				}
-				// console.log(data);
-				// console.log(this.choosezfkh);
+				this.cardlist = data.data
+				console.log(data)
+				// for (var i = 0; i < data.data.length; i++) {
+				// 	if (data.data[i].bind_code === null) {
+				// 		// this.choosezfkh.push(data.data[i].accountNumber)
+				// 		if (this.choosezfkh.length === 0) {
+				// 			this.choosezfkh = ['请选择支付卡号']
+				// 			uni.showToast({
+				// 				title: "暂无可选择信用卡",
+				// 				icon: "none",
+				// 			});
+				// 		}
+					// } else {
+					// 	// this.choosezfkh.push(data.data[i].accountNumber)
+					// 	this.bind_code = data.data[i].bind_code
+					// }
+				// }
+			// 	console.log(data);
+			// 	 if (data.status == 1) {
+			// 		 this.cardList = data.data
+			// 	 }
+			// 	// console.log(data);
+			// 	// console.log(this.choosezfkh);
 			},
 			// 获取用户信息
 			async getUserInfo () {
@@ -100,77 +136,74 @@
 						cre_id: this.usertoken.cre_id
 					}
 				})
+				console.log(data);
 				if (data.status === 1) {
-					this.form.bank_name = data.data.bank_name
-					this.form.identity = data.data.identity
-					this.form.bank_phone = data.data.bank_phone
-					this.form.address = data.data.address
-					this.form.bank_card = data.data.bank_card
+						this.userInfo = data.data
 				} else if (data.status === 4) {
 					this.baseLogout()
 				}
 				// console.log(data);
 			},//商户收款
-			async confirmSubmit () {
-				if (this.choosezfkh[0] == '支付卡号') {
-					return uni.showToast({
-						title: '请选择支付卡号',
-						icon: 'none'
-					})
-				}
-				if (this.form.money === '') {
-					return uni.showToast({
-						title: '请输入金额',
-						icon: 'none'
-					})
-				}
-				uni.showLoading({
-					mask: true
-				})
-				const {data} = await this.Request({
-					method: 'POST',
-					url: '/Samecard/card_tm',
-					data: {
-						holderName: this.form.bank_name,
-						idCard: this.form.identity,
-						number: this.usertoken.number,
-						accountNumber: this.choosezfkh[this.index],
-						settlement: this.form.bank_card,
-						money: this.form.money,
-						token: this.usertoken.token,
-					}
-				})
-				if (data.status === 1) {
-					uni.hideLoading()
-					uni.showToast({
-						title: '收款成功',
-						icon: 'none'
-					})
-					setTimeout( () => {
-						uni.switchTab({
-							url: '../index/index'
-						})
-					},1500)
-				} else if (data.status === 2) {
-					uni.hideLoading()
-					uni.showToast({
-						title: '提交失败',
-						icon: 'none'
-					})
-					setTimeout( () => {
-						uni.switchTab({
-							url: '../index/index'
-						})
-					},1500)
-				} else {
-					uni.hideLoading()
-					uni.showToast({
-						title: data.msg,
-						icon: 'none'
-					})
-				}
-				// console.log(data);
-			}
+			// async confirmSubmit () {
+			// 	if (this.choosezfkh[0] == '支付卡号') {
+			// 		return uni.showToast({
+			// 			title: '请选择支付卡号',
+			// 			icon: 'none'
+			// 		})
+			// 	}
+			// 	if (this.form.money === '') {
+			// 		return uni.showToast({
+			// 			title: '请输入金额',
+			// 			icon: 'none'
+			// 		})
+			// 	}
+			// 	uni.showLoading({
+			// 		mask: true
+			// 	})
+			// 	const {data} = await this.Request({
+			// 		method: 'POST',
+			// 		url: '/Samecard/card_tm',
+			// 		data: {
+			// 			holderName: this.form.bank_name,
+			// 			idCard: this.form.identity,
+			// 			number: this.usertoken.number,
+			// 			accountNumber: this.choosezfkh[this.index],
+			// 			settlement: this.form.bank_card,
+			// 			money: this.form.money,
+			// 			token: this.usertoken.token,
+			// 		}
+			// 	})
+			// 	if (data.status === 1) {
+			// 		uni.hideLoading()
+			// 		uni.showToast({
+			// 			title: '收款成功',
+			// 			icon: 'none'
+			// 		})
+			// 		setTimeout( () => {
+			// 			uni.switchTab({
+			// 				url: '../index/index'
+			// 			})
+			// 		},1500)
+			// 	} else if (data.status === 2) {
+			// 		uni.hideLoading()
+			// 		uni.showToast({
+			// 			title: '提交失败',
+			// 			icon: 'none'
+			// 		})
+			// 		setTimeout( () => {
+			// 			uni.switchTab({
+			// 				url: '../index/index'
+			// 			})
+			// 		},1500)
+			// 	} else {
+			// 		uni.hideLoading()
+			// 		uni.showToast({
+			// 			title: data.msg,
+			// 			icon: 'none'
+			// 		})
+			// 	}
+			// 	// console.log(data);
+			// }
 		},
 		onLoad() {
 			uni.getStorage({
@@ -183,7 +216,7 @@
 				},
 				
 			})
-			this.choosezfkh = ['支付卡号']
+		// 	this.choosezfkh = ['支付卡号']
 		}
 	}
 </script>
@@ -191,7 +224,6 @@
 <style lang='scss' scoped>
 .shuokuan {
 	box-sizing: border-box;
-	padding: 50rpx;
 	/* background-color: #fff; */
 	.user_info {
 		margin: 30rpx 0;

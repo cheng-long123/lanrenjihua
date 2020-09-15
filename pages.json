@@ -114,7 +114,8 @@
 				"app-plus": {
 					"titleNView": {
 						"titleText": "新增信用卡",
-						"titleSize": "16px"
+						"titleSize": "16px",
+						"titleColor":"#4481EB"
 					}
 				}
 			}
@@ -423,6 +424,23 @@
 					}
 				}
 			}
+        }
+        ,{
+            "path" : "pages/register/chuanRegister",
+            "style" : {
+				"navigationBarTitleText": "传话注册",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "传话注册",
+						"titleSize": "16px",
+						"titleColor":"#4481EB"
+					}
+				}
+			}
+        }
+        ,{
+            "path" : "pages/Otherpages/dfgathering",
+            "style" : {}
         }
     ],
 	"globalStyle": {

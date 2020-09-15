@@ -83,7 +83,10 @@
 				usertoken: '', // 用户token
 				nickname: '', //用户昵称
 				bank_card: '',//用户卡
-				version: '' //版本号
+				version: '', //版本号
+				user_id: '',
+				holder_name: '',
+				idCard: ''
 			}
 		},
 		components:{
@@ -120,8 +123,12 @@
 						cre_id: this.usertoken.cre_id
 					}
 				})
+				console.log(data);
 				this.userinfo = data.data
 				this.nickname = data.data.nickname
+				this.holder_name = data.data.bank_name
+				this.user_id = data.data.chuan_id
+				this.idCard = data.data.identity
 				// console.log(this.userinfo);
 			},
 			// 点击显示修改昵称弹出层
@@ -202,13 +209,22 @@
 				this.$refs.card_update.hide() // 显示
 			},// 借记卡修改
 			async updateCard () {
+				if (this.bank_card === '') {
+					return uni.showToast({
+						title: '内容不能为空',
+						icon: 'none'
+					})
+				}
 				const { data } = await this.Request({
 					method: 'POST',
-					url: '/Change/Jcard',
+					url: '/Chuanhuaapp/photoUpload',
 					data: {
 						cre_id: this.usertoken.cre_id,
 						token: this.usertoken.token,
-						bank_card: this.bank_card
+						bank_card: this.bank_card,
+						user_id: this.user_id,
+						holder_name: this.holder_name,
+						idCard: this.idCard
 					}
 				})
 				uni.showToast({

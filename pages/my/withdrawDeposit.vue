@@ -61,12 +61,16 @@
 				this.nowHours = hour
 			},
 			async fetchMoney () {
-				if (this.money < 1000) {
-					uni.showToast({
-						title: '提现金额不能少于1000',
+				if (this.money == '') {
+					return uni.showToast({
+						title: '金额不能为空',
 						icon: 'none'
 					})
-					return
+				} else if (this.money < 100) {
+					return uni.showToast({
+						title: '提现金额不能少于100',
+						icon: 'none'
+					})
 				} else if (this.nowHours < 7 || this.nowHours >= 21) {
 					uni.showToast({
 						title: '当前不在可提现时间内',
@@ -74,7 +78,9 @@
 					})
 					return
 				}
-				uni.showLoading()
+				uni.showLoading({
+					mask: true
+				})
 				const { data } = await this.Request({
 					method: 'POST',
 					url: '/Cashout/exchange',

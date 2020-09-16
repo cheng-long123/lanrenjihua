@@ -194,6 +194,9 @@
 				}
 				if (this.form.bill_day % 1 == 0 && this.form.bill_day <= 31 && this.form.bill_day >= 1 && this.form.repayment % 1 ==
 					0 && this.form.repayment <= 31 && this.form.repayment >= 1) {
+						uni.showLoading({
+							mask: true
+						})
 					const { data } = await this.Request({
 						method: 'POST',
 						url:　'/Chuanhuaapp/bindcard_do',
@@ -215,6 +218,7 @@
 						}
 					})
 					if (data.status === 1) {
+						uni.hideLoading()
 						this.order = data.order
 						this.tf_token = data.tf_token
 						uni.showToast({
@@ -235,12 +239,14 @@
 						},1000)
 						// console.log(data)
 					} else if (data.status === 2) {
+						uni.hideLoading()
 						uni.showToast({
 							title: data.msg,
 							icon: 'none'
 						})
 					}
 				} else {
+					uni.hideLoading()
 					uni.showToast({
 						title: '请输入正确的账单日或还款日',
 						duration: 2000,

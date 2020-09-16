@@ -66,10 +66,12 @@
 		},
 		props:{
 			form: {
-				type: Object
+				type: Object,
+				required: false
 			},
 			usertoken: {
-				type: Object
+				type: Object,
+				required: true
 			}
 		},
 		methods: {
@@ -84,7 +86,7 @@
 				this.index = e.target.value
 			}, //获取支付卡号
 			async getXingList () {
-				console.log(this.usertoken);
+				// console.log(this.usertoken);
 				this.choosezfkh = []
 				const { data } = await this.Request({
 					method: 'POST',

@@ -17,7 +17,7 @@
 				<input type="text" v-model="bank_phone" placeholder="绑卡手机号" />
 			</view>
 			<view class="register-form">
-				<input type="text" v-model="bank_card" placeholder="银行卡号" />
+				<input type="text" v-model="bank_card" placeholder="结算卡号" />
 			</view>
 			<view class="register-form">
 				<input type="text" v-model="idCard_end" placeholder="身份证截止日期 例:2020-09-15" />
@@ -83,6 +83,9 @@ methods:{
 				icon: 'none',
 				});
 		}
+		uni.showLoading({
+			mask: true
+		})
 		const { data } = await this.Request({
 			method: 'POST',
 			url: '/Chuanhuaapp/register_do',
@@ -95,9 +98,10 @@ methods:{
 				idCard_end: this.idCard_end
 			}
 		})
-		if (data.status === 1) {
+		if (data.status == 1) {
 			this.registerSubmit()
 		} else {
+			uni.hideLoading()
 			uni.showToast({
 				title: data.msg,
 				duration: 2000,
@@ -114,19 +118,24 @@ methods:{
 			}
 		})
 		if (data.status == 1) {
-			uni.showToast({
-				title: '注册成功',
-				icon: 'none'
-			})
-			setTimeout( () => {
-				uni.navigateBack({
-				})
-			},1500)
-		} else {
+			uni.hideLoading()
 			uni.showToast({
 				title: data.msg,
 				icon: 'none'
 			})
+			setTimeout( () => {
+				uni.navigateTo({
+					url: '../index/index'
+				})
+			},1500)
+		} else if (data.status == 2) {
+			uni.hideLoading()
+			uni.showToast({
+				title: data.msg,
+				icon: 'none'
+			})
+		} else {
+			this.baseLogout()
 		}
 	}
 },

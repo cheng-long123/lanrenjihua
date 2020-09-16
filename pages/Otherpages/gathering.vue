@@ -217,6 +217,18 @@
 				
 			})
 		// 	this.choosezfkh = ['支付卡号']
+		},
+		onShow() {
+			uni.getStorage({
+				key: 'usertoken',
+				success: (res) => {
+					this.usertoken = res.data
+					this.getUserInfo()
+					this.getXingList()
+					// console.log(res);
+				},
+				
+			})
 		}
 	}
 </script>

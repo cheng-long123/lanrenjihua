@@ -74,15 +74,19 @@
 				index: 0,
 				isShowCode: false,
 				time: 60,
-				order: ''
+				order: '',
+				bank_codeList: [],
+				bank_name: ''
 			}
 		},
 		props:{
 			form: {
-				type: Object
+				type: Object,
+				required: false
 			},
 			usertoken: {
-				type: Object
+				type: Object,
+				required: true
 			}
 		},
 		onLoad() {
@@ -128,6 +132,8 @@
 			getCradList (e) {
 				// console.log(e);
 				this.index = e.target.value
+				this.bank_name = this.bank_codeList[e.target.value]
+				// console.log(this.bank_name);
 			}, //获取支付卡号
 			async getXingList () {
 				this.choosezfkh = []
@@ -153,6 +159,7 @@
 					} else {
 						this.choosezfkh.push(data.data[i].accountNumber)
 						this.bind_code = data.data[i].bind_code
+						this.bank_codeList.push(data.data[i].bank_name)
 					}
 				}
 				// console.log(data);
@@ -165,6 +172,9 @@
 						icon: 'none'
 					})
 				}
+				uni.showLoading({
+					mask: true
+				})
 				const { data } = await this.Request({
 					method: 'POST',
 					url: '/Chuanhuaapp/tquickpay_do',
@@ -178,9 +188,11 @@
 						money: this.money,
 						fee: this.fee,
 						excess_money: this.excess_money,
+						bank_code: this.bank_name
 					}
 				})
 				if (data.status == 1) {
+					uni.hideLoading()
 					this.order = data.order
 					uni.showToast({
 						title: '验证码已发送',
@@ -199,6 +211,7 @@
 						}
 					},1000)
 				} else if (data.status == 2) {
+					uni.hideLoading()
 					uni.showToast({
 						title: '获取验证码失败',
 						icon: 'none'
@@ -212,6 +225,9 @@
 						icon: 'none'
 					})
 				}
+				uni.showLoading({
+					mask: true
+				})
 				const { data } = await this.Request({
 					method: 'POST',
 					url: '/Chuanhuaapp/payconfirm',
@@ -221,11 +237,18 @@
 					}
 				})
 				if (data.status == 1) {
+					uni.hideLoading()
 					uni.showToast({
 						title: '收款成功',
 						icon:'none'
 					})
+					setTimeout( () => {
+						uni.navigateTo({
+							url: '../index/index'
+						})
+					},1500)
 				} else if (data.status == 2) {
+					uni.hideLoading()
 					uni.showToast({
 						title: data.msg,
 						icon: 'none'

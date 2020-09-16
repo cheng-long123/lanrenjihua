@@ -14,7 +14,7 @@
 			</view>
 			<view class="user_input">
 				 <text class="user_text">信用卡号</text>
-				<input type="text" v-model="form.cardNumber" placeholder="银行卡号"/>
+				<input type="text" v-model="form.cardNumber" placeholder="信用卡号"/>
 			</view>
 			<view class="user_card">
 				 <text class="user_text" style="font-size: 28rpx; margin-bottom: 15rpx;">银行名称</text>

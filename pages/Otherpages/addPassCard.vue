@@ -13,8 +13,8 @@
 				<input type="text" v-model="form.identity" placeholder="身份证号"/>
 			</view>
 			<view class="user_input">
-				 <text class="user_text">银行卡号</text>
-				<input type="text" v-model="form.cardNumber" placeholder="银行卡号"/>
+				 <text class="user_text">信用卡号</text>
+				<input type="text" v-model="form.cardNumber" placeholder="信用卡号"/>
 			</view>
 			<view class="user_card" @click="getBankName">
 				 <text class="user_text" style="font-size: 28rpx; margin-bottom: 15rpx;">银行名称</text>
@@ -56,7 +56,7 @@
 			<view class="register-verify">
 				<input type="text" v-model="code" placeholder="请输入短信验证码" />
 				<view class="verify-btn" v-if="!isShowCode" @click="getCode">
-					发送验证码
+					获取验证码
 				</view>
 				<view class="verify-btn" v-else style="color: #808080;">
 					重发{{ time }}s
@@ -185,11 +185,26 @@
 			}, //提交绑卡
 			async  getCode () {
 				// console.log(this.bank)
-				if (this.form.cardNumber === undefined) {
+				if (this.form.chuan_id === null && this.form.chuan_paynum == null) {
+					return uni.showModal({
+					 title: '提示',
+					 content: '您还没有注册，是否注册',
+					 success:  (res) => {
+						  if (res.confirm) {
+							  uni.navigateTo({
+								url: '../register/chuanRegister'
+							  })
+							  // console.log('用户点击确定');
+						  } else if (res.cancel) {
+							  // console.log('用户点击取消');
+						  }
+					 }
+					});
+				}else if (this.form.cardNumber === '') {
 					return uni.showToast({title: '信用卡号不能为空',icon: 'none'})
-				} else if (this.form.cvv === undefined) {
+				} else if (this.form.cvv === '') {
 					return uni.showToast({title: 'cvv不能为空',icon: 'none'})
-				} else if (this.form.quota === undefined) {
+				} else if (this.form.quota === '') {
 					return uni.showToast({title: '信用额度不能为空',icon: 'none'})
 				}
 				if (this.form.bill_day % 1 == 0 && this.form.bill_day <= 31 && this.form.bill_day >= 1 && this.form.repayment % 1 ==
@@ -244,6 +259,16 @@
 							title: data.msg,
 							icon: 'none'
 						})
+					} else {
+					
+					setTimeout( () => {
+						uni.hideLoading()
+						uni.showToast({
+							title: '获取验证码失败',
+							icon: 'none'
+						})
+					},15000)
+					
 					}
 				} else {
 					uni.hideLoading()
@@ -252,7 +277,7 @@
 						duration: 2000,
 						icon: "none",
 					});
-				}
+				} 
 				
 			},
 			async confirmSubmit () {

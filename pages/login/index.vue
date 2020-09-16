@@ -21,15 +21,16 @@
 				
 			</view>
 			<view class="denglu-img">
-				<image class="image" src="../../static/image/weixin.png" mode=""></image>
-				<image class="image" src="../../static/image/qq.png" mode=""></image>
-				<image class="image" src="../../static/image/weibo.png" mode=""></image>
+				<image class="image" src="../../static/image/weixin.png" mode="" @click="KjLogin"></image>
+				<image class="image" src="../../static/image/qq.png" mode="" @click="KjLogin"></image>
+				<image class="image" src="../../static/image/weibo.png" mode="" @click="KjLogin"></image>
 			</view>
     </view>
 </template>
 <script>
 // import login from '../../api/api.js'
 import request from '../../api/request.js'
+import {　checkMobile,checkPassword　} from '../../utils/index.js'
 export default {
    data() {
       return {
@@ -46,6 +47,22 @@ export default {
 methods:{
 	//登录
 	   async login () {
+		   if (this.phone == '') {
+			   return uni.showToast({
+			   	title: '手机号不能为空',
+				icon: 'none'
+			   })
+		   } else if (!checkMobile(this.phone)) {
+			   return uni.showToast({
+			   	title: '手机号格式错误',
+			   	icon: 'none'
+			   })
+		   } else if (this.password == '') {
+			   return uni.showToast({
+			   	title: '密码不能为空',
+				icon: 'none'
+			   })
+		   }
 		   uni.showLoading({
 		       title: '登陆中'
 		   });
@@ -85,6 +102,13 @@ methods:{
 			})
 		}
 		// console.log(res)
+	},
+	KjLogin () {
+		uni.showToast({
+			title: "此功能未开通",
+			duration: 2000,
+			icon: 'none'
+		})
 	}
 },
    mounted() {

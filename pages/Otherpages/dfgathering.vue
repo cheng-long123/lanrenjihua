@@ -96,7 +96,14 @@
 						token: this.usertoken.token
 					}
 				})
-				console.log(data);
+				// console.log(data);
+				if (data.data.length === 0){
+					this.choosezfkh = ['请选择支付卡号']
+					return uni.showToast({
+						title: "暂无可选择信用卡",
+						icon: "none",
+					});
+				}
 				for (var i = 0; i < data.data.length; i++) {
 					if (data.data[i].df === 1) {
 						this.choosezfkh.push(data.data[i].accountNumber)

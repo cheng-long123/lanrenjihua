@@ -2,8 +2,8 @@
     "name" : "懒人计划",
     "appid" : "__UNI__9B7ACDE",
     "description" : "懒人计划",
-    "versionName" : "2.2.2",
-    "versionCode" : 20200904,
+    "versionName" : "2.2.3",
+    "versionCode" : 20200916,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {

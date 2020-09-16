@@ -39,7 +39,7 @@
 				<input type="text" v-model="form.chuan_paynum" placeholder="支付账号"/>
 			</view> -->
 			<view class="register-verify">
-				<input type="text" v-model="form.code" placeholder="请输入短信验证码" />
+				<input type="text" v-model="code" placeholder="请输入短信验证码" />
 				<view class="verify-btn" v-if="!isShowCode" @click="getCode">
 					获取验证码
 				</view>
@@ -98,7 +98,7 @@
 			// 		this.getXingList()
 			// 	}
 			// })
-			this.choosezfkh = ['银行卡号']
+			this.choosezfkh = ['请选择信用卡']
 		},
 		methods: {
 			toAddPassCard () {
@@ -146,9 +146,19 @@
 					}
 				})
 				console.log(data)
+				if (data.data.length === 0){
+					this.choosezfkh = ['请选择支付卡号']
+					return uni.showToast({
+						title: "暂无可选择信用卡",
+						icon: "none",
+					});
+				}
 				for (var i = 0; i < data.data.length; i++) {
-					if (data.data[i].bind_code === null) {
+					if (data.data[i].bind_code !== null) {
 						// this.choosezfkh.push(data.data[i].accountNumber)
+						this.choosezfkh.push(data.data[i].accountNumber)
+						this.bind_code = data.data[i].bind_code
+						this.bank_codeList.push(data.data[i].bank_name)
 						if (this.choosezfkh.length === 0) {
 							this.choosezfkh = ['请选择支付卡号']
 							uni.showToast({
@@ -156,17 +166,28 @@
 								icon: "none",
 							});
 						}
-					} else {
-						this.choosezfkh.push(data.data[i].accountNumber)
-						this.bind_code = data.data[i].bind_code
-						this.bank_codeList.push(data.data[i].bank_name)
-					}
+					} 
 				}
 				// console.log(data);
 				// console.log(this.choosezfkh);
 			},
 			async getCode () {
-				if (this.choosezfkh[0] === '银行卡号') {
+				if (this.form.chuan_id === null && this.form.chuan_paynum == null) {
+					return uni.showModal({
+					 title: '提示',
+					 content: '您还没有注册，是否注册',
+					 success:  (res) => {
+						  if (res.confirm) {
+							  uni.navigateTo({
+								url: '../register/chuanRegister'
+							  })
+							  // console.log('用户点击确定');
+						  } else if (res.cancel) {
+							  // console.log('用户点击取消');
+						  }
+					 }
+					});
+				} else if (this.choosezfkh[0] === '请选择信用卡') {
 					return uni.showToast({
 						title: '请选择银行卡号',
 						icon: 'none'
@@ -213,7 +234,7 @@
 				} else if (data.status == 2) {
 					uni.hideLoading()
 					uni.showToast({
-						title: '获取验证码失败',
+						title: data.msg,
 						icon: 'none'
 					})
 				}
@@ -253,6 +274,14 @@
 						title: data.msg,
 						icon: 'none'
 					})
+				} else {
+					uni.hideLoading()
+					setTimeout( () => {
+						uni.showToast({
+							title: '获取验证码失败',
+							icon: 'none'
+						})
+					},15000)
 				}
 			}
 		}

@@ -201,7 +201,7 @@ methods:{
 					border-radius: 40rpx;
 					font-size: 28rpx;
 					border: 1rpx solid #E9EAED;
-					color: #808080;
+					color: #4481EB;
 				}
 			}
 		}

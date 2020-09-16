@@ -61,7 +61,12 @@
 				this.nowHours = hour
 			},
 			async fetchMoney () {
-				if (this.money == '') {
+				if (this.userInfo.balance === 0) {
+					return uni.showToast({
+						title: '当前没有可提现余额',
+						icon: 'none'
+					})
+				} else if (this.money == '') {
 					return uni.showToast({
 						title: '金额不能为空',
 						icon: 'none'

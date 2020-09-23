@@ -9,7 +9,13 @@ class Calendar {
 		range
 	} = {}) {
 		// 当前日期
-		this.date = this.getDate(new Date()) // 当前初入日期
+		var myDate = new Date();
+		let year = myDate.getFullYear(); //完整的年份
+		let month = myDate.getMonth() + 1; //获取当前月份(0-11,0代表1月)
+		var newMonth = month.toString().padStart(2, '0');
+		let dateDay = myDate.getDate() + 1; //获取当前日(1-31)
+		var  time = year.toString() + "-" + newMonth.toString() + '-' + dateDay.toString()
+		this.date = this.getDate(time) // 当前初入日期
 		// 打点信息
 		this.selected = selected || [];
 		// 范围开始

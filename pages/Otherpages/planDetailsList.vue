@@ -53,6 +53,7 @@ export default {
 					token: this.usertoken.token
 				}
 			})
+			// console.log(data);
 			if (data.status === 1) {
 				this.planList = data.data
 				// console.log(data);

@@ -105,6 +105,12 @@ export default {
 				}
 			},
 			async shiming () {
+				if (this.region == ''  ) {
+					return uni.showToast({
+						title: '请选择省市区',
+						icon: 'none'
+					})
+				}
 				uni.showLoading({
 					mask: true
 				})
@@ -132,7 +138,7 @@ export default {
 						duration: 2000,
 						icon: 'none'
 					})
-					setTimeout(()=> {
+					setTimeout(() => {
 						uni.redirectTo({
 							url: './index'
 						})
@@ -165,6 +171,7 @@ export default {
 				} else if (data.status === 4) {
 					this.baseLogout()
 				} else {
+					uni.hideLoading()
 					uni.showToast({
 						title: data.msg,
 						icon: 'none'

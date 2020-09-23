@@ -20,7 +20,7 @@
 				<view class="uni-calendar__header-btn-box" @click.stop="next">
 					<view class="uni-calendar__header-btn uni-calendar--right"></view>
 				</view>
-				<text class="uni-calendar__backtoday" @click="backtoday">回到今天</text>
+				<!-- <text class="uni-calendar__backtoday" @click="backtoday">回到今天</text> -->
 
 			</view>
 			<view class="uni-calendar__box">
@@ -223,7 +223,7 @@
 			 * 变化触发
 			 */
 			change() {
-				if (!this.insert) return
+				if (this.insert) return
 				this.setEmit('change')
 			},
 			/**

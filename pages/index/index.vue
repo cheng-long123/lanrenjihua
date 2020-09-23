@@ -91,8 +91,8 @@
 				<text>智能还款</text>
 			</view>
 			<view  class="nav" @click="cardApplyfor">
-				<image  src="../../static/image/shenqing.png" mode=""></image>
-				<text>信用卡申请</text>
+				<image  src="../../static/image/zhifubao.png" mode=""></image>
+				<text>花呗</text>
 			</view>
 		</view>
 		<!-- 账户管理 -->
@@ -112,7 +112,7 @@
 					<view class="account-money ">
 						<text class="account-num">总额度<text class="sum-money">￥{{item.quota}}</text></text>
 						<text class="account-date">账单日<text class="bill">{{item.bill_day}}</text></text>
-						<text class="account-rate">费率<text class="rate">{{fee}}%</text></text>
+						<text class="account-rate">费率<text class="rate">{{fee1}}%</text></text>
 				   </view>
 				   
 			    </view>	
@@ -170,7 +170,8 @@ export default {
 			 },
 			 userToken: '', // 用户token
 			 card_list: [], // 信用卡列表
-			 fee: '',
+			 fee1: '',
+			 fee: 0.006,
 			 level_name: '',
 			 fee_2: '',
 			 R16_fee: '',
@@ -235,7 +236,7 @@ export default {
 	   })
 	   if (data.status === 1) {
 			this.level_name = data.data.level_name
-			this.fee = (data.data.fee * 10000) / 100
+			this.fee1 = (data.data.fee * 10000) / 100
 			this.fee2 = (data.data.fee_2 * 10000) / 100
 			this.R16_fee=(data.data.R16_fee * 10000) / 100
 			// console.log(this.R16_fee)
@@ -321,10 +322,9 @@ export default {
 	   })
    }, // 信用卡申请
    cardApplyfor () {
-	   uni.showToast({
-	   	title: '此功能未开通',
-		icon: 'none'
-	   })
+		uni.navigateTo({
+			url: '../Otherpages/huaBei'
+		})
    },
    popup (item, index) {
 	   this.card_msg = item
@@ -360,7 +360,7 @@ export default {
 	   				   			url: '../Otherpages/manual?card_id=' + this.card_msg.cid + 
 	   							'&holderName=' + this.card_msg.holderName + '&accountNumber=' + this.card_msg.accountNumber +
 	   							 '&fee=' + this.fee + '&bank_name=' + this.card_msg.bannk_name + '&quota=' + this.card_msg.quota +
-								 '&bill_day=' + this.card_msg.bill_day + '&repayment=' + this.card_msg.repayment 
+								 '&bill_day=' + this.card_msg.bill_day + '&repayment=' + this.card_msg.repayment
 	   				   })
 	   			   } else {
 					  // let cardmsg =  encodeURIComponent(JSON.stringify(this.card_msg))
@@ -676,10 +676,12 @@ onPullDownRefresh () {
 		  flex-direction: column;
 		  justify-content: center;
 		  align-items: center;
+		  
 	  }
      image {
        width: 120rpx;
        height: 120rpx;
+	   
      }
 	text{
 		font-size: 24rpx;

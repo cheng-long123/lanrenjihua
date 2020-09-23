@@ -271,7 +271,7 @@
 				return style
 			},
 			close() {
-				this.maskClickClose && this.hide()
+				this.$emit('maskClose')
 			},
 			show() {
 				this.root = this.processStyle()

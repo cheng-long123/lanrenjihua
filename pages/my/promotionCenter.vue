@@ -206,7 +206,7 @@
 					url: 'myredpocket'
 				})
 			},
-			async formSubmit() {
+			 formSubmit() {
 				//#ifdef H5
 				uni.showToast({
 					title:'请截屏保存后进行分享!',
@@ -216,7 +216,7 @@
 				//#endif
 				this.toImage()
 				// const that = this
-				await uni.share({
+				 uni.share({
 					title: '懒人计划',
 					provider: "weixin",
 					scene: "WXSceneSession",
@@ -233,18 +233,10 @@
 					//微信需要先授权才能分享，所以第一次会报错，此处待优化
 					fail: (err) => {
 						this.shareimage = ''
-						uni.share({
-							provider: "weixin",
-							scene: "WXSceneSession",
-							type: 2,
-							imageUrl: this.shareimage,
-							success: (res) => {
-								uni.showToast({
-									title: '已分享',
-									duration: 2000
-								});
-								// that.showhongbao = !that.showhongbao
-							},
+						uni.showToast({
+							title: err.errMsg,
+							duration: 2000,
+							icon: 'none'
 						});
 					},
 					complete: () => {
@@ -282,7 +274,7 @@
 			// 	});
 			// },
 			//获取屏幕截图
-			async getImage() {
+			 getImage() {
 				let pages = getCurrentPages();
 				let page = pages[pages.length - 1];
 				// console.log(pages.length);
@@ -291,7 +283,7 @@
 				bitmap = new plus.nativeObj.Bitmap('amway_img');
 				// console.log(pages,page,ws,bitmap)
 				// 将webview内容绘制到Bitmap对象中  
-				await ws.draw(bitmap, () => {
+				 ws.draw(bitmap, () => {
 					// 保存图片到本地  
 					bitmap.save("_doc/adrawScreen.jpg", {
 						overwrite: true,
@@ -310,8 +302,8 @@
 				});
 			},
 
-			async toImage() {
-				const that = this;
+			 toImage() {
+				// const that = this;
 				let pages = getCurrentPages();
 				let page = pages[pages.length - 1];
 				let bitmap = null;
@@ -320,7 +312,7 @@
 				
 				 bitmap = new plus.nativeObj.Bitmap('test');
 				// 将webview内容绘制到Bitmap对象中
-				await currentWebview.draw(
+				 currentWebview.draw(
 					bitmap,
 					(e) => {
 						/* 获取base64 */
@@ -333,22 +325,22 @@
 								/* 保存图片 */
 								bitmap.save(
 									'_doc/share.jpg', {},
-									async (i) => {
+										(i) => {
 											console.log(i.target)
 											this.shareimage = i.target
 											// console.log('保存图片成功：' + JSON.stringify(i));
-											await uni.saveImageToPhotosAlbum({
+											 uni.saveImageToPhotosAlbum({
 												filePath: i.target,
 												success: function() {
 													
 													/* 清除 */
 													bitmap.clear();
 													// console.log('保存成功,请到相册中查看')
-													uni.showToast({
-														title:'保存成功，请到相册中查看！',
-														duration: 1500,
-														icon: 'none'
-													})
+													// uni.showToast({
+													// 	title:'保存成功，请到相册中查看！',
+													// 	duration: 1500,
+													// 	icon: 'none'
+													// })
 													
 												},
 												fail(e) {

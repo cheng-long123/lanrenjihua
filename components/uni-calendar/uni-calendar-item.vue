@@ -26,7 +26,7 @@
 				'uni-calendar-item--before-checked':weeks.beforeMultiple,
 				'uni-calendar-item--multiple': weeks.multiple,
 				'uni-calendar-item--after-checked':weeks.afterMultiple,
-				}">今天</text>
+				}"></text>
 			<text v-if="lunar&&!weeks.extraInfo" class="uni-calendar-item__weeks-lunar-text" :class="{
 				'uni-calendar-item--isDay-text':weeks.isDay,
 				'uni-calendar-item--isDay':calendar.fullDate === weeks.fullDate && weeks.isDay,
@@ -35,7 +35,7 @@
 				'uni-calendar-item--multiple': weeks.multiple,
 				'uni-calendar-item--after-checked':weeks.afterMultiple,
 				'uni-calendar-item--disable':weeks.disable,
-				}">{{weeks.isDay?'今天': (weeks.lunar.IDayCn === '初一'?weeks.lunar.IMonthCn:weeks.lunar.IDayCn)}}</text>
+				}">{{weeks.lunar.IDayCn}}</text>
 			<text v-if="weeks.extraInfo&&weeks.extraInfo.info" class="uni-calendar-item__weeks-lunar-text" :class="{
 				'uni-calendar-item--extra':weeks.extraInfo.info,
 				'uni-calendar-item--isDay-text':weeks.isDay,
@@ -124,7 +124,7 @@
 		width: 8px;
 		height: 8px;
 		border-radius: 8px;
-		background-color: $uni-color-error;
+		background-color: #4481EB;
 
 	}
 
@@ -134,39 +134,39 @@
 	}
 
 	.uni-calendar-item--isDay-text {
-		color: $uni-color-primary;
+		// color: $uni-color-primary;
 	}
 
 	.uni-calendar-item--isDay {
-		background-color: #4481EB;
-		opacity: 0.8;
-		color: #fff;
+		// background-color: #4481EB;
+		// opacity: 1;
+		// color: #4481EB;
 		// border-radius: 50%;
 	}
 
 	.uni-calendar-item--extra {
-		color: $uni-color-error;
+		// color: $uni-color-error;
 		opacity: 0.8;
 	}
 
 	.uni-calendar-item--checked {
-		background-color: #4481EB;
-		color: #fff;
-		opacity: 0.8;
+		// background-color: #4481EB;
+		color: #4481EB;
+		opacity: 1;
 	}
 
 	.uni-calendar-item--multiple {
-		background-color: #4481EB;
+		// background-color: #4481EB;
 		color: #fff;
 		opacity: 0.8;
 	}
 	.uni-calendar-item--before-checked {
-		background-color: #005BEA;
+		// background-color: #005BEA;
 		color: #fff;
 		// border-radius: 50%;
 	}
 	.uni-calendar-item--after-checked {
-		background-color: #005BEA;
+		// background-color: #005BEA;
 		color: #fff;
 		// border-radius: 50%;
 	}

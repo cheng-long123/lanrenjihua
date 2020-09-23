@@ -2,8 +2,8 @@
     "name" : "懒人计划",
     "appid" : "__UNI__9B7ACDE",
     "description" : "懒人计划",
-    "versionName" : "2.2.3",
-    "versionCode" : 20200916,
+    "versionName" : "2.2.7",
+    "versionCode" : 20200923,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -64,7 +64,8 @@
                         "UniversalLinks" : ""
                     }
                 },
-                "ad" : {}
+                "ad" : {},
+                "payment" : {}
             },
             "splashscreen" : {
                 "iosStyle" : "common",
@@ -153,7 +154,7 @@
             }
         },
         "router" : {
-            "base" : "/payapi/",
+            "base" : "/static/statice/",
             "mode" : "hash"
         },
         "title" : "懒人计划",

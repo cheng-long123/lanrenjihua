@@ -451,6 +451,19 @@
 				}
 			}
         }
+        ,{
+            "path" : "pages/Otherpages/huaBei",
+            "style" : {
+				"navigationBarTitleText": "花呗收款",
+				"app-plus": {
+					"titleNView": {
+						"titleText": "花呗收款",
+						"titleSize": "16px",
+						"titleColor":"#4481EB"
+					}
+				}
+			}
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

@@ -92,25 +92,28 @@
 					data: {
 						amount: this.money,
 						cre_id: this.usertoken.cre_id,
+						token: this.usertoken.token,
 						number: this.usertoken.number,
 						accountNumber: this.userInfo.bank_card,
 						holderName: this.userInfo.bank_name
 					}
 				})
+				console.log(data);
 				if ( data.status === 1 ) {
-					uni.hideLoding()
+					uni.hideLoading()
 					uni.showToast({
 						title: data.msg,
 						duration: 2000,
 						icon: 'none'
 					})
-					setTimeout( () => {
-						uni.switchTab({
-							url: './index'
-						})
-					},1500)
+					this.money = ''
+					// setTimeout( () => {
+					// 	uni.switchTab({
+					// 		url: './index'
+					// 	})
+					// },2000)
 				} else {
-					uni.hideLoding()
+					uni.hideLoading()
 					uni.showToast({
 						title: data.msg,
 						duration: 2000,

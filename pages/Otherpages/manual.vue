@@ -32,11 +32,11 @@
 			    :insert="info.insert"
 				:range="info.range"
 				:selected="info.selected"
-			    @confirm="confirm"
 				@change="change"
+			    @confirm="confirm"
 			     />
-			<view v-if="range === ''" class="open_btn" @click="open">选择时间</view>
-			<view  v-else class="date" @click="open">{{range.before}}至{{range.after}}</view>
+			<view v-if="timeList == ''" class="open_btn" @click="open">选择时间</view>
+			<view  v-else class="date" @click="open">{{timeStr}}</view>
 		</view>
 		<view class="radio_content">
 			<view class="day">
@@ -68,7 +68,7 @@ export default {
 			startDate: '',
 			endDate: '',
 			lunar: true,
-			range: true,
+			range: false,
 			insert: false,
 			selected: [],
 		},
@@ -101,7 +101,7 @@ export default {
    	this.card_id = option.card_id
    	this.holderName = option.holderName
    	this.accountNumber = option.accountNumber
-   	this.fee = option.fee / 100
+   	this.fee = option.fee
 	this.bank_name = option.bank_name
 	this.quota = option.quota
 	this.bill_day = option.bill_day
@@ -148,10 +148,40 @@ watch: {
 methods:{
   open(){
 		 this.$refs.calendar.open();
+		 console.log(this.time);
+		 // this.info.insert = true
+	 },
+	 change (e) {
+	 		 // console.log(e);
+	 			var index = null;
+	 			for (var i = 0; i < this.info.selected.length; i++) {
+	 
+	 				if (this.info.selected[i].date == e.fulldate) {
+	 					index = i;
+	 					break;
+	 				}
+	 			}
+	 
+	 			if (index != null) {
+	 				this.info.selected.splice(index, 1);
+	 			} else {
+	 				this.info.selected.push({
+	 					date: e.fulldate,
+	 				})
+	 			}
+	 			console.log(this.timeStr);
+	 			console.log(this.timeList);
 	 },
 	 confirm(e) {
-		 this.range = e.range
-		 this.getCalculate();
+		 // this.range = e.range
+		 this.timeList = []
+		 for (var i = 0; i < this.info.selected.length; i++) {
+		 	this.timeList.push(this.info.selected[i].date)
+		 }
+		 this.timeStr = this.timeList.toString()
+		  this.getCalculate();
+		 console.log(this.timeList);
+		 console.log(this.timeStr);
 		 // console.log(this.time);
 		 // this.timeList = []
 			// for (var i = 0; i < this.info.selected.length; i++) {
@@ -163,24 +193,6 @@ methods:{
 		 // console.log(this.range.data.toString());
 		 // console.log(e);
 		 // console.log(this.timeList);
-	 },
-	 change (e) {
-			// var index = null;
-			// for (var i = 0; i < this.info.selected.length; i++) {
-
-			// 	if (this.info.selected[i].date == e.fulldate) {
-			// 		index = i;
-			// 		break;
-			// 	}
-			// }
-
-			// if (index != null) {
-			// 	this.info.selected.splice(index, 1);
-			// } else {
-			// 	this.info.selected.push({
-			// 		date: e.fulldate,
-			// 	})
-			// }
 	 },
 	 radioChange (e) {
 	 	for (let i = 0; i < this.highestNum.length; i++) {
@@ -208,7 +220,7 @@ methods:{
 				data: {
 					token: this.usertoken.token,
 					money: this.pre_money,
-					days: this.range.data.length,
+					days: this.timeList.length,
 					counts: this.day_num || 1,
 					fee: this.fee
 				}
@@ -245,7 +257,7 @@ methods:{
 						cre_id: this.usertoken.cre_id,
 						number: this.usertoken.number,
 						pre_money: this.pre_money,
-						repayment_date: this.range.data.toString(),
+						repayment_date: this.timeStr,
 						day_num: this.day_num,
 						card_id: this.card_id,
 						accountNumber: this.accountNumber,

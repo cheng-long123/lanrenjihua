@@ -27,14 +27,14 @@
 			 <!-- 金额 -->
 			<view class="user-money">
 				<view class="left-money" @click="toprofitSummary">
-					<text class="left-money">{{ userInfo.balance == 0 ? 0.00  : userInfo.balance }}</text>
+					<text class="left-money">{{ userInfo.total == null ? 0.00  : userInfo.total }}</text>
 					<text class="left-text">分润</text>
 				</view>
 				<view class="border">
 					
 				</view>
 				<view class="right-balance">
-					<text class="rightmoney">{{userInfo.total == null ? 0.00 : userInfo.total }}</text>
+					<text class="rightmoney">{{userInfo.balance == 0 ? 0.00 : userInfo.balance }}</text>
 					<text class="right-text">余额</text>
 				</view>
 			</view>
@@ -188,6 +188,7 @@ export default {
 				},
 				
 			})
+			console.log(data);
 			if (data.status === 1) {
 				
 				this.userInfo = data.data

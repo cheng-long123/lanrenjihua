@@ -69,7 +69,7 @@ export default {
 	this.cardinfo.card_id = option.card_id
 	this.cardinfo.holderName = option.holderName
 	this.cardinfo.accountNumber = option.accountNumber
-	this.cardinfo.fee = option.fee / 100
+	this.cardinfo.fee = option.fee
 	this.bank_name = option.bank_name
 	this.quota = option.quota
 	this.bill_day = option.bill_day

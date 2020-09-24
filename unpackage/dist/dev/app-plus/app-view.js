@@ -20469,18 +20469,6 @@ var render = function() {
                   }
                 },
                 [_vm._v("请截屏保存二维码支付")]
-              ),
-              _c(
-                "v-uni-view",
-                {
-                  attrs: { _i: 24 },
-                  on: {
-                    click: function($event) {
-                      return _vm.$handleViewEvent($event)
-                    }
-                  }
-                },
-                [_vm._v("保存图片")]
               )
             ],
             1
@@ -20491,8 +20479,8 @@ var render = function() {
       _c(
         "v-uni-button",
         {
-          staticClass: _vm._$g(25, "sc"),
-          attrs: { _i: 25 },
+          staticClass: _vm._$g(24, "sc"),
+          attrs: { _i: 24 },
           on: {
             click: function($event) {
               return _vm.$handleViewEvent($event)

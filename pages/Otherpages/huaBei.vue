@@ -44,9 +44,6 @@
 		         :loadMake="tkiqrcode.loadMake"
 		         @result="qrR" />
 				 <view class="qrcode-text" @click="longtap">请截屏保存二维码支付</view>
-				 <view class="" @click="longtap">
-				 	保存图片
-				 </view>
 		    </view>
 			
 		</wyb-popup>

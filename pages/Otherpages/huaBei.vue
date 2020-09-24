@@ -30,7 +30,7 @@
 				</view> -->
 			</view>
 		</view>
-		<wyb-popup ref="pay" z-index="22" type="center" height="400" width="500" radius="6" @maskClose="maskClose">
+		<wyb-popup ref="pay" z-index="22" type="center" height="400" width="500" radius="6" @maskClose="maskClose" @longtap="longtap">
 		    <view class="popup-content" @longtap="longtap">
 		      <tki-qrcode
 				 class="tki-qrcode"
@@ -44,6 +44,9 @@
 		         :loadMake="tkiqrcode.loadMake"
 		         @result="qrR" />
 				 <view class="qrcode-text" @click="longtap">请截屏保存二维码支付</view>
+				 <view class="" @click="longtap">
+				 	保存图片
+				 </view>
 		    </view>
 			
 		</wyb-popup>
@@ -181,8 +184,8 @@
 				})
 				console.log(data)
 				if (data.status == 1) {
-					this.tkiqrcode.val = data.data
 					uni.hideLoading()
+					this.tkiqrcode.val = data.data
 					this.$refs.pay.show() // 显示
 					this.qrR()
 				} else {
@@ -209,36 +212,21 @@
 			},
 			qrR (res) {
 				this.tkiqrcode.img = res;
-				console.log(res);
-				console.log(this.tkiqrcode.val);
+				// console.log(res);
+				// console.log(this.tkiqrcode.val);
 			},// 长按保存图片
 			longtap (){
-				console.log(this.tkiqrcode);
-			// 保存到本地
-			let bitmap = new plus.nativeObj.Bitmap("test");
-			bitmap.loadBase64Data(this.tkiqrcode.img, function(){  
-				console.log("加载Base64图片数据成功");  
-				bitmap.save("_doc/test.png",{},function(i){  
-						// console.log('保存图片成功：'+JSON.stringify(i));
+				console.log(this.tkiqrcode.img);
+				uni.saveImageToPhotosAlbum({
+					filePath: this.tkiqrcode.img,
+					success: function () {
 						uni.showToast({
-							title: "保存成功",
-							duration: 2000,
-							icon: 'none'
-						})
-						// bitmap.clear();
-					},function(e){  
-						// onsole.log('保存图片失败：'+JSON.stringify(e));
-						uni.showToast({
-							title: "保存失败",
-							duration: 2000,
-							icon: 'none'
-						})
-						bitmap.clear();
-					});  
-			}, function(){  
-				// console.log('加载Base64图片数据失败：'+JSON.stringify(e));
-				bitmap.clear();
-			}); 
+							title: '二维码保存成功',
+							icon: 'success',
+							duration: 2000
+						});
+					}
+				});
 			},
 		}
 	}

@@ -1,7 +1,5 @@
 <template>
 	<view class="mybankcard">
-
-
 		<view class="">
 			<view class="position-relative ">
 				<swiper  :autoplay="false" @change="swiperChange" :interval="3000" :duration="1000" style="height: 1246rpx;">
@@ -133,7 +131,6 @@
 			});
 			this.getimgformapi()
 		},
-
 		onNavigationBarButtonTap(e) {
 			this.formSubmit();
 		},
@@ -162,6 +159,8 @@
 
 		methods: {
 			swiperChange (e) {
+				console.log(e);
+				
 				// this.shareimage = this.imgfromapi[e.target.current].curl
 			},
 			async getimgformapi() {
@@ -169,7 +168,7 @@
 					url: '/Info/advertisement'
 				})
 				this.$data.imgfromapi = data.data
-				console.log(data);
+				
 			},
 			async geterweima() {
 				const { data } = await this.Request({
@@ -180,7 +179,6 @@
 						token: this.$data.token
 					},
 				})
-				console.log(data);
 				if (data.status === 4) {
 					this.baseLogout()
 				} else {
@@ -206,7 +204,8 @@
 					url: 'myredpocket'
 				})
 			},
-			 formSubmit() {
+			async formSubmit() {
+				
 				//#ifdef H5
 				uni.showToast({
 					title:'请截屏保存后进行分享!',
@@ -215,9 +214,9 @@
 				})
 				//#endif
 				this.toImage()
+				
 				// const that = this
-				 uni.share({
-					title: '懒人计划',
+				await uni.share({
 					provider: "weixin",
 					scene: "WXSceneSession",
 					type: 2,
@@ -231,12 +230,22 @@
 						// that.showhongbao = !that.showhongbao
 					},
 					//微信需要先授权才能分享，所以第一次会报错，此处待优化
-					fail: (err) => {
-						this.shareimage = ''
-						uni.showToast({
-							title: err.errMsg,
-							duration: 2000,
-							icon: 'none'
+					fail: (err)=> {
+						
+						uni.share({
+							provider: "weixin",
+							scene: "WXSceneSession",
+							type: 2,
+							imageUrl: this.shareimage,
+							success: (res) => {
+								this.shareimage = ''
+								uni.showToast({
+									title: '分享失败',
+									duration: 2000,
+									icon: 'none'
+								});
+								// that.showhongbao = !that.showhongbao
+							},
 						});
 					},
 					complete: () => {
@@ -274,7 +283,8 @@
 			// 	});
 			// },
 			//获取屏幕截图
-			 getImage() {
+			async getImage() {
+				this.shareimage = ''
 				let pages = getCurrentPages();
 				let page = pages[pages.length - 1];
 				// console.log(pages.length);
@@ -283,13 +293,13 @@
 				bitmap = new plus.nativeObj.Bitmap('amway_img');
 				// console.log(pages,page,ws,bitmap)
 				// 将webview内容绘制到Bitmap对象中  
-				 ws.draw(bitmap, () => {
+				ws.draw(bitmap, () => {
 					// 保存图片到本地  
 					bitmap.save("_doc/adrawScreen.jpg", {
 						overwrite: true,
 					}, res => {
 						console.log(res); // 图片地址  
-						this.shareimage = res.target 
+						this.shareimage = res.target
 					}, error => {
 						console.log(JSON.stringify(error)); // 保存失败信息  
 					});
@@ -301,20 +311,19 @@
 					check: true, // 设置为检测白屏  
 				});
 			},
-
-			 toImage() {
+				
+			async toImage() {
 				// const that = this;
 				let pages = getCurrentPages();
 				let page = pages[pages.length - 1];
 				let bitmap = null;
 				/* 获取屏幕信息 */
-				let currentWebview  = page.$getAppWebview();
-				
+				let ws = page.$getAppWebview();
 				 bitmap = new plus.nativeObj.Bitmap('test');
 				// 将webview内容绘制到Bitmap对象中
-				 currentWebview.draw(
+				await ws.draw(
 					bitmap,
-					(e) => {
+					(e)=> {
 						/* 获取base64 */
 						this.test = bitmap.toBase64Data();
 						/* 加载base64编码 */
@@ -324,24 +333,20 @@
 								// console.log('加载Base64图片数据成功');
 								/* 保存图片 */
 								bitmap.save(
-									'_doc/share.jpg', {},
-										(i) => {
+									'_doc/share.jpg', {
+									},
+									 async (i) => {
 											console.log(i.target)
 											this.shareimage = i.target
 											// console.log('保存图片成功：' + JSON.stringify(i));
-											 uni.saveImageToPhotosAlbum({
+											await uni.saveImageToPhotosAlbum({
 												filePath: i.target,
 												success: function() {
-													
+											
 													/* 清除 */
 													bitmap.clear();
-													// console.log('保存成功,请到相册中查看')
-													// uni.showToast({
-													// 	title:'保存成功，请到相册中查看！',
-													// 	duration: 1500,
-													// 	icon: 'none'
-													// })
 													
+													// console.log('保存成功,请到相册中查看')
 												},
 												fail(e) {
 													// console.log('保存失败')
@@ -380,7 +385,9 @@
 </script>
 
 <style lang="scss" scoped>
-
+.position-relative{
+	height: 100%;
+}
 	.hidehongbao {
 		width: 80rpx;
 		height: 80rpx;
